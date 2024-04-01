@@ -1,0 +1,22 @@
+.btn_nav{
+    background: #1A4BB3;
+    border: none;
+    border-radius: 10px;
+    opacity: .76;
+    width: 100px;
+   
+}
+.list_item:hover{
+    color: #1A4BB3;
+}
+button.navbar-toggler{
+    background: white;
+}
+.list_item.collapse {
+    color: aqua;
+}
+@media (max-width: 991px) {
+    .list_item{
+        margin-left: 5px !important;
+    }
+  };
