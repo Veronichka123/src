@@ -8,7 +8,9 @@ import Contacts from '../pages/Contacts';
 import Registration from '../pages/Registration';
 import Login from '../pages/Login';
 import logo from './dosaaf_logo.png';
+import My_page from '../pages/My_page';
 import '../styles/header.css';
+
 class Header extends Component {
     render() {
         return (
@@ -54,6 +56,7 @@ class Header extends Component {
                         <Route exact path='/about' Component={About_us} />
                         <Route exact path='/contacts' Component={Contacts} />
                         <Route exact path='/registration' Component={Registration} />
+                        <Route exact path='/my_page' Component={My_page} />
                         <Route exact path='/login' Component={Login} />
                     </Routes>
                 </Router>

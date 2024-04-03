@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class personal_profile extends Component {
+class Sidebar extends Component {
     render() {
         return (
             <div>
-                iuwGIUCDVWDEUI
+                meow
             </div>
         );
     }
 }
 
-export default personal_profile;
+export default Sidebar;
