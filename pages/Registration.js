@@ -38,7 +38,7 @@ function Registration() {
 
     return (
         <>
-            <Form className='form_registration mx-auto px-5 py-4 mb-5 bg-white mt-2'>
+            <Form className='form_registration mx-auto px-5 py-4 mb-5 bg-white mt-3'>
                 <Container>
                     <Image
                         src={logo}
