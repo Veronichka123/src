@@ -1,0 +1,27 @@
+.test-card{
+    background-color: #F5F5F5;
+    border-radius: 20px;
+    border: 1px solid rgba(81, 137, 204, .5);
+}
+.test-status{
+    font-size: 20px;
+}
+
+.tets-percent{
+    font-size: 26px;
+}
+.btn-test-not-done{
+    background: #1A4BB3;
+    border: none;
+    border-radius: 10px;
+    opacity: .76;
+    height: 35px;
+    width: 150px;
+}
+.btn-test-done{
+    background: #637587;
+    border: none;
+    border-radius: 10px;
+    height: 35px;
+    width: 150px;
+}

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import My_page from './My_page';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
+import {Route, Routes } from 'react-router-dom';
 
 
 class Home extends Component {

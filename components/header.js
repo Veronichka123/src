@@ -9,6 +9,8 @@ import Registration from '../pages/Registration';
 import Login from '../pages/Login';
 import logo from './dosaaf_logo.png';
 import My_page from '../pages/My_page';
+import Requests from '../pages/RequestsService ';
+import Testing from '../pages/Testing';
 import '../styles/header.css';
 
 class Header extends Component {
@@ -16,13 +18,13 @@ class Header extends Component {
         return (
             <>
                 <Navbar expand='lg' className='border-bottom border-2 shadow-sm'>
-                    <Container>
+                    <Container fluid>
                         <Navbar.Brand href="/">
                             <img
                                 src={logo}
                                 height="60"
                                 width="60"
-                                className='d-inline-block'
+                                className=''
                                 alt='Logo'
                             />{' '} ДОСААФ КОСТРОМА
 
@@ -58,6 +60,8 @@ class Header extends Component {
                         <Route exact path='/registration' Component={Registration} />
                         <Route exact path='/my_page' Component={My_page} />
                         <Route exact path='/login' Component={Login} />
+                        <Route exact path='/requests' Component={Requests} />
+                        <Route exact path='/testing' Component={Testing} />
                     </Routes>
                 </Router>
 

@@ -3,13 +3,14 @@ import { Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import '../styles/registration.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import logo from '../components/dosaaf_logo.png';
 import Image from 'react-bootstrap/Image';
 import { Link } from 'react-router-dom';
 import Login from './Login';
 import { useState } from "react";
 import axios from "axios";
+
 
 
 

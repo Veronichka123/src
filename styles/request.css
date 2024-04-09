@@ -1,0 +1,34 @@
+body{
+    overflow-x:hidden;
+}
+.info_reguest_user{
+    background-color: #F5F5F5;
+    width: 96%;
+    border-radius: 30px;
+}
+
+.description-reguest{
+    font-size: 18px;
+}
+
+.btn_reguest{
+    background: #1A4BB3;
+    border: none;
+    border-radius: 10px;
+    opacity: .76;
+    height: 30px;
+    width: 180px;
+}
+
+.my_reguest{
+    width: 96%;
+    margin-right: 4%;
+}
+
+.request-title{
+    font-size: 16px;
+    color: rgba(0, 0, 0, .65)
+}
+.success-reguest{
+    color: #6F9965;
+}
