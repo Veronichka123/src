@@ -1,0 +1,32 @@
+.service-cards{
+    background-color: #F5F5F5;
+    border-radius: 20px;
+    border: 2px solid rgba(81, 137, 204, .3);
+}
+.btn-service{
+    background: #1A4BB3;
+    border: none;
+    border-radius: 10px;
+    opacity: .76;
+    height: 35px;
+    width: 180px;
+}
+.border-price{
+    width: 50%;
+    border-radius: 10px;
+}
+.request-control-input{
+    background-color: #EFF4FB;
+    border: 0;
+    border-radius: 10px;
+    height: 45px;
+}
+
+.btn_form_reguest{
+    width: 200px;
+    background: #1A4BB3;
+    border: none;
+    border-radius: 10px;
+    opacity: .76;
+    height: 40px;
+}

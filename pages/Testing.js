@@ -19,10 +19,10 @@ function requests(props) {
                         <h5 className='border-bottom p-2 border-primary border-opacity-50'>ТЕСТИРОВАНИЕ</h5>
                     </Container>
 
-                    <Container className='info_reguest_user mt-2 px-5 py-3 d-flex justify-content-around'>
+                    <Container className='info_reguest_testing mt-2 px-5 py-3 d-flex justify-content-around'>
                         <Container>
                             <h5>Выполняйте тренировочные экзаменационные тесты</h5>
-                            <p className='text-secondary lead description-reguest'>Это позволит Вам более качетвенно подготовиться к экзамену по приобретению оружия.</p>
+                            <p className='text-secondary lead description-test'>Это позволит Вам более качетвенно подготовиться к экзамену по приобретению оружия.</p>
                         </Container>
                         <img
                             src={test_icon}
@@ -32,7 +32,7 @@ function requests(props) {
                             alt='Logo'
                         />
                     </Container>
-                    <Container className='my_reguest'>
+                    <Container className='my-testing{'>
                         <Row>
                             <Col>
                                 <Container className='p-4 center-block text-center my-3 test-card'>
@@ -65,7 +65,7 @@ function requests(props) {
                                     <h5>Тест по владению оружием 4</h5>
                                     <p className='test-status mt-4'>Пройдено</p>
                                     <p className='fw-bold text-secondary tets-percent mt-4'>60%</p>
-                                    <Button type="submit" href='/' className="my-2 d-flex justify-content-center align-items-center btn-test-done mx-auto d-block">Пройти</Button>
+                                    <Button type="submit" href='/' className="d-flex justify-content-center align-items-center btn-test-done mx-auto d-block">Пройти</Button>
                                 </Container>
                             </Col>
                         </Row>

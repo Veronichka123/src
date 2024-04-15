@@ -1,0 +1,20 @@
+.panel-cards{
+    background-color: #F5F5F5;
+    border-radius: 20px;
+    border: 1px solid rgba(81, 137, 204, .5);
+}
+
+.btn-admin-panel-cards{
+    background: #1A4BB3;
+    border: none;
+    border-radius: 10px;
+    opacity: .76;
+    height: 35px;
+    width: 180px;
+}
+
+.my_panel_admin{
+    width: 90%;
+    margin-right: 10%;
+    
+}

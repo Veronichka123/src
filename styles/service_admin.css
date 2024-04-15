@@ -1,0 +1,73 @@
+.btn-admin-service {
+    background: #1A4BB3;
+    border: none;
+    border-radius: 10px;
+    opacity: .76;
+    height: 35px;
+    width: 120px;
+}
+
+.btn-admin-chapter-edit {
+    background: #1A4BB3;
+    border: none;
+    border-radius: 10px;
+    opacity: .76;
+    height: 35px;
+    width: 200px;
+}
+
+.btn-admin-chapter-delete {
+    background: #DA3232;
+    border: none;
+    border-radius: 10px;
+    opacity: .76;
+    height: 35px;
+    width: 200px;
+}
+
+.admin-card-service {
+    background: #F5F5F5;
+    border-radius: 20px;
+    border: 1px solid rgba(81, 137, 204, .5);
+    width: 80%;
+}
+
+.btn-admin-service-edit {
+    background: #1A4BB3;
+    border: none;
+    border-radius: 10px;
+    opacity: .76;
+    height: 35px;
+    width: 120px;
+}
+
+.btn-admin-service-delete {
+    background: #DA3232;
+    border: none;
+    border-radius: 10px;
+    opacity: .76;
+    height: 35px;
+    width: 120px;
+}
+
+.chapter-services {
+    background: #EFF4FB;
+    border-radius: 10px;
+
+}
+
+.btn-plus-service {
+    background: #1A4BB3;
+    opacity: .76;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 35px;
+    text-align: center;
+    
+}
+
+.title-chapter{
+    font-size: 20px;
+}
+

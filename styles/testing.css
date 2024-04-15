@@ -25,3 +25,16 @@
     height: 35px;
     width: 150px;
 }
+.description-test{
+    font-size: 18px;
+}
+.my-testing{
+    width: 96%;
+    margin-right: 4%;
+}
+
+.info_reguest_testing{
+    background-color: #F5F5F5;
+    width: 96%;
+    border-radius: 30px;
+}

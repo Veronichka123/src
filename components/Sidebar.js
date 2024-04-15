@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import requests from '../pages/RequestsService ';
 import testing from '../pages/Testing';
-
+import panel_admin from '../pages/Panel_admin';
 
 class Sidebar extends Component {
     render() {
@@ -44,7 +44,7 @@ class Sidebar extends Component {
                                 </a>
                             </li>
                             <li class="nav-item text-white fs-4 mt-3">
-                                <a href="/" class="nav-link text-dark fs-5" aria-current="page">
+                                <a href="panel_admin" class="nav-link text-dark fs-5" aria-current="page">
                                     <i className='bi bi-person-lines-fill'></i>
                                     <span className='ms-2 d-none d-sm-inline'>Панель администратора</span>
                                 </a>
@@ -74,6 +74,7 @@ class Sidebar extends Component {
             <Routes>
                 <Route exact path='/requests' Component={requests} />
                 <Route exact path='/testing' Component={testing} />
+                <Route exact path='/panel_admin' Component={panel_admin} />
             </Routes>
             </>
         );

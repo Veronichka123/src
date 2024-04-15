@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class About_us extends Component {
+class Chapter_modal extends Component {
     render() {
         return (
             <div>
-                About
+                Мяу
             </div>
         );
     }
 }
 
-export default About_us;
+export default Chapter_modal;
