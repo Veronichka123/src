@@ -64,10 +64,41 @@
     border-radius: 50%;
     font-size: 35px;
     text-align: center;
-    
+
 }
 
-.title-chapter{
+.title-chapter {
     font-size: 20px;
 }
 
+.chapter-service-control-input {
+    background-color: #EFF4FB;
+    border: 0.5px solid #5189CC;
+    border-radius: 10px;
+    height: 45px;
+}
+
+.btn_form_chapter-service {
+    width: 150px;
+    background: #1A4BB3;
+    border: none;
+    border-radius: 10px;
+    opacity: .76;
+    height: 40px;
+}
+
+.chapter-service-description-input {
+    background-color: #EFF4FB;
+    border: 0.5px solid #5189CC;
+    border-radius: 10px;
+    height: 150px;
+}
+
+.btn_delete_chapter-service{
+    width: 150px;
+    background: #DA3232;
+    border: none;
+    border-radius: 10px;
+    opacity: .76;
+    height: 40px;
+}

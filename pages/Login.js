@@ -31,12 +31,13 @@ function Login() {
             .then((response) => {
                 setResponse(response.data);
                 localStorage.setItem('token', response.data['token'])
-                console.log(response.data);
+                window.location.assign("/my_page");
             })
             .catch((error) => {
                 console.log(error);
             });
     };
+
     return (
         <>
             <Form className='form_registration mx-auto px-5 py-4 mb-5 bg-white mt-3'>
