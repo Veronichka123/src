@@ -10,6 +10,9 @@ import { Form } from 'react-bootstrap';
 import axios from 'axios';
 
 function Service_admin(props) {
+
+    const HOST = '26.252.162.70:8080';
+
     const [ShowEditChapter, SetShowEdChapter] = useState(false);
     const [ShowCreateChapter, SetShowCrChapter] = useState(false);
     const [ShowCreateService, SetShowCrService] = useState(false);
@@ -34,7 +37,7 @@ function Service_admin(props) {
     //запрос всех разделов с услугами
     useEffect(() => {
         axios
-            .get("http://25.43.21.15:8080/service/all")  //получаем все данные услуг
+            .get("http://" + HOST + "/service/all")  //получаем все данные услуг
             .then((response) => {
                 setServiceSections(response.data);
             })
@@ -46,7 +49,7 @@ function Service_admin(props) {
     //Создание услуги
     const addService = () => {
         axios
-            .post("http://25.43.21.15:8080/service?serviceSectionId=" + serviceSectionId, dataService) //отправляем id раздела, данные об услуге
+            .post("http://" + HOST + "/service?serviceSectionId=" + serviceSectionId, dataService) //отправляем id раздела, данные об услуге
             .then((response) => {
                 const serviceResponse = response.data; //получаем услугу
                 const index = serviceSections.findIndex(item => item.id === serviceResponse['sectionId']); //Ищем нужный раздел
@@ -74,8 +77,6 @@ function Service_admin(props) {
                 console.log(error);
             });
 
-
-
     };
 
     //Изменение полей в модальном окне добавления раздела
@@ -86,7 +87,7 @@ function Service_admin(props) {
     //Создание раздела
     const addServiceSection = (e) => {
         axios
-            .post("http://25.43.21.15:8080/service/section", dataServiceSection)
+            .post("http://" + HOST + "/service/section", dataServiceSection)
             .then((response) => {
                 setServiceSections(prevServices => [...prevServices, response.data])
                 SetShowCrChapter(false);
@@ -116,7 +117,7 @@ function Service_admin(props) {
         if (serviceId === -1) return;
 
         axios
-            .get("http://25.43.21.15:8080/service/" + serviceId)
+            .get("http://" + HOST + "/service/" + serviceId)
             .then((response) => {
                 setServiceName(response.data['name']);
                 SetShowDelService(true);
@@ -128,7 +129,7 @@ function Service_admin(props) {
 
     const handleDeleteService = (event) => {
         axios
-            .delete("http://25.43.21.15:8080/service/" + serviceId)
+            .delete("http://" + HOST + "/service/" + serviceId)
             .then((response) => {
                 const deletedServiceId = response.data;
 
@@ -159,7 +160,7 @@ function Service_admin(props) {
 
     const handleDeleteChapter = (event) => {
         axios
-        .delete("http://25.43.21.15:8080/service/section/" + deleteServiceSectionId)
+        .delete("http://" + HOST + "/service/section/" + deleteServiceSectionId)
         .then((response) => {
             const deletedServiceSectionId = response.data;
 
@@ -183,7 +184,7 @@ function Service_admin(props) {
         if (deleteServiceSectionId === -1) return;
 
         axios
-            .get("http://25.43.21.15:8080/service/section/" + deleteServiceSectionId)
+            .get("http://" + HOST + "/service/section/" + deleteServiceSectionId)
             .then((response) => {
                 setServiceSectionName(response.data['name']);
                 SetShowDelServiceChapter(true);
@@ -234,7 +235,7 @@ function Service_admin(props) {
                                     )) : <p>Услуг еще не создано</p>}
                                 </Row>
                                 <Container className='d-flex justify-content-start' fluid>
-                                    <Button className='btn-plus-service fw-light d-flex justify-content-center align-items-center' data-section={serviceSection.id} onClick={handleShowModalAddService}>+</Button>
+                                    <Button className='btn-plus-service fw-light d-flex justify-content-center align-items-center' data-section={serviceSection.id} onClick={handleShowModalAddService}><i className='bi bi-plus'></i></Button>
                                     <p className='text-secondary ms-3 d-block mt-auto'>Добавить услугу в раздел</p>
                                 </Container>
                             </Container>
@@ -296,7 +297,7 @@ function Service_admin(props) {
                             <Form.Control type='text' placeholder='Введите стоимость услуги (в рублях)' name="cost" onChange={handleChangeServiceAdd} className='chapter-service-control-input mb-3' />
                         </Form.Group>
                         <Form.Group controlId='NameChapter'>
-                            <Form.Control as="textarea" placeholder='Введите описание услуги' name="description" onChange={handleChangeServiceAdd} className='chapter-service-description-input mb-3' />
+                            <Form.Control as="textarea" placeholder='Введите описание услуги' style={{whiteSpace: "pre-line"}} name="description" onChange={handleChangeServiceAdd} className='chapter-service-description-input mb-3' />
                         </Form.Group>
                         <Button className="mt-3 mb-2 btn_form_chapter-service" onClick={addService}>Сохранить</Button>
                     </Form>

@@ -1,0 +1,96 @@
+.btn-admin-news {
+    background: #1A4BB3;
+    border: none;
+    border-radius: 10px;
+    opacity: .76;
+    height: 35px;
+    width: 180px;
+}
+
+.container-news{
+    width: 100%;
+    background: #EFF4FB;
+    border-radius: 20px;
+}
+
+.admin-card-new{
+    background: #F5F5F5;
+    border-radius: 20px;
+    border: 1px solid rgba(81, 137, 204, .5);
+    width: 100%;
+}
+
+.btn-admin-new-edit {
+    background: #1A4BB3;
+    border: none;
+    border-radius: 10px;
+    opacity: .76;
+    height: 35px;
+    width: 30%;
+}
+
+.btn-admin-new-delete {
+    background: #DA3232;
+    border: none;
+    border-radius: 10px;
+    opacity: .76;
+    height: 35px;
+    width: 30%;
+}
+
+.btn-admin-new-redirect {
+    background: #1A8FB3;
+    border: none;
+    border-radius: 10px;
+    opacity: .70;
+    height: 35px;
+    width: 30%;
+}
+
+.btn_form_new {
+    width: 150px;
+    background: #1A4BB3;
+    border: none;
+    border-radius: 10px;
+    opacity: .76;
+    height: 40px;
+}
+
+.new-control-input {
+    background-color: #EFF4FB;
+    border: 0.5px solid #5189CC;
+    border-radius: 10px;
+    height: 45px;
+}
+.btn-download-photo{
+    background-color: #5189CC;
+    border: 0.5px solid #5189CC;
+    border-radius: 10px;
+    height: 45px;
+    
+}
+.new-description-input {
+    background-color: #EFF4FB;
+    border: 0.5px solid #5189CC;
+    border-radius: 10px;
+    height: 150px;
+}
+.container-phonos-links{
+    height: 250px;
+    background: #EFF4FB;
+    border-radius: 20px;
+    overflow: auto;
+}
+
+.link-photo-for-news{
+    background-color: #F5F5F5;
+    border-radius: 10px;
+    border: 1px solid rgba(81, 137, 204, .5);
+}
+.photo-format{
+    object-fit:cover;
+    border-radius: 10px;
+}
+.del-photo{
+    color: #FF0000;
+}

@@ -3,6 +3,7 @@ body{
 }
 .info_reguest_user{
     background-color: #F5F5F5;
+    border: 3px solid rgba(213, 213, 213, .6);
     width: 96%;
     border-radius: 30px;
 }
@@ -32,4 +33,5 @@ body{
 .success-reguest{
     color: #6F9965;
 }
+
 

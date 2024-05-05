@@ -11,42 +11,104 @@ import axios from 'axios';
 
 function Services() {
 
-    const [show, setShow] = useState(false);
-    const [service_name, setServiceName] = useState("");
-    const [data, setData] = useState({ id: "", name: "", surname: "", patronymic: "", email: "", phone_number: "" });
-
-    const handleChange = (event) => {
-        setData({ ...data, [event.target.name]: event.target.value });
-    };
-
-    const handleClose = () => setShow(false);
-    const handleShow = (e) => {
-        let serviceId = e.target.dataset.id;
-        setData({ ...data, id: serviceId });
-
-        axios
-            .get("http://25.43.21.15:8080/service/" + serviceId)
-            .then((response) => {
-                setServiceName(response.data['name']);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        setShow(true);
-    };
+    const HOST = '26.252.162.70:8080';
 
     const [services, setServices] = useState([]);
 
     useEffect(() => {
         axios
-            .get("http://25.43.21.15:8080/service/all")
+            .get("http://" + HOST + "/service/all")
             .then((response) => {
                 setServices(response.data);
+                console.log(response.data);
             })
             .catch((error) => {
                 console.log(error);
             });
     }, []);
+
+    const [show, setShow] = useState(false);
+    const [service_name, setServiceName] = useState("");
+    const [serviceId, setServiceId] = useState(-1);
+
+    const [userData, setUserData] = useState({ name: "", surname: "", patronymic: "", email: "" });
+    const [phoneNumber, setPhoneNumber] = useState("");
+
+
+    const handleChange = (event) => {
+        setUserData({ ...userData, [event.target.name]: event.target.value });
+    };
+
+    const handleChangePhoneNumber = (event) => {
+        setPhoneNumber(event.target.value);
+    };
+
+    const handleClose = () => {
+        setServiceId(-1);
+        setShow(false);
+    }
+
+    useEffect(() =>{
+        if (serviceId === -1) return;
+
+        axios
+            .get("http://" + HOST + "/service/" + serviceId)
+            .then((response) => {
+                setServiceName(response.data['name']);
+                setServiceId(response.data['id']);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+        if(localStorage.getItem("token")){
+            axios
+                .get("http://" + HOST + "/user",
+                    {
+                        headers: {
+                            Authorization: 'Bearer ' + localStorage.getItem("token")
+                        }
+                    })
+                .then((response) => {
+                    setUserData(response.data);
+                })
+                .catch((error) => {
+                    localStorage.removeItem("token");
+                    console.log(error);
+                });
+        }
+
+        setShow(true);
+    }, [serviceId]);
+
+    const handleShow = (e) => {
+        setServiceId(e.target.dataset.id);
+    };
+
+    const handleSendRequest = (e) => {
+        axios
+        .post("http://" + HOST + "/request?serviceId=" + serviceId,
+        {
+            "userName": userData.name,
+            "userSurname": userData.surname,
+            "userPatronymic": userData.patronymic,
+            "userEmail": userData.email,
+            "userPhoneNumber": phoneNumber
+        },
+        {
+            headers: {
+                Authorization: localStorage.getItem("token") ? 'Bearer ' + localStorage.getItem("token") : ''
+            }
+        })
+        .then((response) => {
+            setUserData(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+        setShow(false);
+        setPhoneNumber("");
+    }
 
     return (
         <>
@@ -65,7 +127,7 @@ function Services() {
                                     <Col>
                                         <Container className='py-4 px-4 mt-4 center-block service-cards'>
                                             <h6 className='mb-4'>{service.name}</h6>
-                                            <p className='text-secondary'>{service.description}</p>
+                                            <p className='text-secondary' style={{whiteSpace: "pre-line"}}>{service.description}</p>
                                             <div className='border border-secondary mb-4 border-price border-2 border-opacity-50 px-2 py-3'>
                                                 <h6 className='mb-3'>Стоимость:</h6>
                                                 <h5>{service.cost} рублей</h5>
@@ -91,26 +153,26 @@ function Services() {
                         <p className='text-secondary'>Подача заявки на услугу</p>
                         <h5 className='mb-4'>{service_name}</h5>
                         <Form.Group controlId='fromBasicRequestName'>
-                            <Form.Control value={data.name} onChange={handleChange} type='text' name="name" placeholder='Имя' className='request-control-input mb-3' />
+                            <Form.Control value={userData.name} onChange={handleChange} type='text' name="name" placeholder='Имя' className='request-control-input mb-3' />
                         </Form.Group>
 
                         <Form.Group controlId='fromBasicRequestSurname'>
-                            <Form.Control value={data.surname} onChange={handleChange} type='text' name="surname" placeholder='Фамилия' className='request-control-input mb-3' />
+                            <Form.Control value={userData.surname} onChange={handleChange} type='text' name="surname" placeholder='Фамилия' className='request-control-input mb-3' />
                         </Form.Group>
 
                         <Form.Group controlId='fromBasicRequestSurname'>
-                            <Form.Control value={data.patronymic} onChange={handleChange} type='text' name="patronymic" placeholder='Отчество' className='request-control-input mb-3' />
+                            <Form.Control value={userData.patronymic} onChange={handleChange} type='text' name="patronymic" placeholder='Отчество' className='request-control-input mb-3' />
                         </Form.Group>
 
                         <Form.Group controlId='fromBasicRequestPhoneNumber'>
-                            <Form.Control value={data.phone_number} onChange={handleChange} type='text' name="phone_number" placeholder='Номер телефона' className='request-control-input mb-3' />
+                            <Form.Control value={phoneNumber} onChange={handleChangePhoneNumber} type='text' name="phoneNumber" placeholder='Номер телефона' className='request-control-input mb-3' />
                         </Form.Group>
 
                         <Form.Group controlId='fromBasicRequestEmail'>
-                            <Form.Control value={data.email} onChange={handleChange} type='Email' name="email" placeholder='Email' className='request-control-input mb-4' />
+                            <Form.Control value={userData.email} disabled={userData.email !== "" && userData.id} onChange={userData.email !== "" && userData.id ? '' : handleChange} type='Email' name="email" placeholder='Email' className='request-control-input mb-4' />
                         </Form.Group>
                         <p className='text-center opacity-75'>После оставления заявки, с Вами свяжется сотрудник ДОСААФ</p>
-                        <Button className="mt-4 mb-3 btn_form_reguest mx-auto d-block">Отправить заявку</Button>
+                        <Button className="mt-4 mb-3 btn_form_reguest mx-auto d-block" onClick={handleSendRequest}>Отправить заявку</Button>
                     </Form>
                 </Modal.Body>
             </Modal>

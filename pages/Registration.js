@@ -17,6 +17,8 @@ import axios from "axios";
 
 function Registration() {
 
+    const HOST = '26.252.162.70:8080';
+
     const [data, setData] = useState({ name: "", surname: "", patronymic: "", email: "", password: "" });
     const [response, setResponse] = useState("");
 
@@ -27,7 +29,7 @@ function Registration() {
     const handleSubmit = (event) => {
         event.preventDefault();
         axios
-            .post("http://25.43.21.15:8080/user/signup", data)
+            .post("http://" + HOST + "/user/signup", data)
             .then((response) => {
                 setResponse(response.data);
             })

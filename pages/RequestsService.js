@@ -7,9 +7,32 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import '../styles/request.css';
 import reguest_icon from '../components/reguest.png';
 import Button from 'react-bootstrap/Button';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 
-function requests(props) {
+function RequestsService(props) {
+    const HOST = '26.252.162.70:8080';
+
+    const [requests, setRequests] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get("http://" + HOST + "/request/user",
+                {
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("token")
+                    }
+                })
+            .then((response) => {
+                setRequests(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+                localStorage.removeItem("token");
+            });
+    }, [])
+
     return (
         <Container fluid>
             <Row>
@@ -39,9 +62,9 @@ function requests(props) {
 
                         <h5 className='mt-5 mb-4'>Мои заявки</h5>
 
-                        <table class="table">
+                        <table className="table table-striped table-bordered">
                             <thead>
-                                <tr className='border-bottom border-primary border-opacity-25'>
+                                <tr className='border-bottom border-secondary border-opacity-50'>
                                     <th scope="col" className='text-secondary'>№ Заявки</th>
                                     <th scope="col" className='text-secondary'>Дата</th>
                                     <th scope="col" className='text-secondary'>Услуга</th>
@@ -49,30 +72,20 @@ function requests(props) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr className='border-bottom border-primary border-opacity-25'>
-                                    <td>6822345</td>
-                                    <td>12.01.2024</td>
-                                    <td >Сдать на права категория “B“</td>
-                                    <td className='text-success opacity-75'>Принято</td>
-                                </tr>
-                                <tr className='border-bottom border-primary border-opacity-25'>
-                                    <td>5673989</td>
-                                    <td>22.01.2024</td>
-                                    <td>Пострелять в тире (1 раз)</td>
-                                    <td className='text-danger opacity-75'>Отклонено</td>
-                                </tr>
-                                <tr className='border-bottom border-primary border-opacity-25'>
-                                    <td>9876304</td>
-                                    <td>28.02.2024</td>
-                                    <td>Пострелять в тире (1 раз)</td>
-                                    <td className='text-primary opacity-75'>На рассмотрении</td>
-                                </tr>
-                                <tr className='border-bottom border-primary border-opacity-25'>
-                                    <td>4587698</td>
-                                    <td>28.02.2024</td>
-                                    <td>Лицензия на приобретение оружия</td>
-                                    <td className='text-primary opacity-75'>На рассмотрении</td>
-                                </tr>
+                                {requests.map((requestUser) => (
+                                    <tr className='border-bottom border-secondary border-opacity-25'>
+                                        <td>{requestUser.id}</td>
+                                        <td>{' ' + requestUser["date"].substring(8, 10) + '.' +
+                                            requestUser["date"].substring(5, 7) + '.' +
+                                            requestUser["date"].substring(0, 4)}</td>
+                                        <td >{requestUser.serviceName}</td>
+                                        {requestUser.status === "STATUS_EXAMINE" ?
+                                            <td className='text-primary opacity-75'>На рассмотрении</td> :
+                                            requestUser.status === "STATUS_ACCEPTED" ? <td className='text-success opacity-75'>Принято</td> :
+                                                <td className='text-danger opacity-75'>Отклонено</td>
+                                        }
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
 
@@ -91,4 +104,4 @@ function requests(props) {
     );
 }
 
-export default requests;
+export default RequestsService;

@@ -3,29 +3,32 @@ import { Route, Routes } from 'react-router-dom';
 import '../styles/sidebar.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import requests from '../pages/RequestsService ';
+import requests from '../pages/RequestsService';
 import testing from '../pages/Testing';
 import panel_admin from '../pages/Panel_admin';
 import axios from 'axios';
 
 class Sidebar extends Component {
+
+    
     constructor(props) {
         super(props);
         this.state = { role: null }
+        this.HOST = '26.252.162.70:8080';
     }
 
     componentDidMount() {
         if (localStorage.getItem("token")) {
             
             axios
-                .get("http://25.43.21.15:8080/user",
+                .get("http://" + this.HOST + "/user",
                     {
                         headers: {
                             Authorization: 'Bearer ' + localStorage.getItem("token") //the token is a variable which holds the token
                         }
                     })
                 .then((response) => {
-                    this.setState({ role: response.data['authorities'][0]['authority']});
+                    this.setState({ role: response.data['roles'][0]['name']});
                 })
                 .catch((error) => {
                     console.log(error);
