@@ -1,6 +1,8 @@
+.home-cnt{
+    width: 90%;
+}
 .banner-cnt{
     background-color: #EAE9EF;
-    width: 90%;
     border-radius: 0 0 20px 20px;
 }
 .banner-title{
@@ -10,6 +12,7 @@
 .function-banner{
     background-color: #FFFFFF;
     width: 90%;
+    height: 110px;
     border-radius: 15px;
     transition: all .2s ease-in-out;
     cursor: pointer;
@@ -28,4 +31,26 @@
     width: 250px;
     height: 50px;
     border-radius: 20px;
+}
+
+.anons-text{
+    
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    height: 500px;
+    
+    
+}
+.anons-image{
+    object-fit: cover;
+    border-radius: 15px;
+    width: 100%;
+    height: 500px  
+}
+.anons-title{
+    color: #1A4BB3;
+    font-size: 20px;
+}
+.anons-info{
+    font-size: 16px;
 }
