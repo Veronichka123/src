@@ -10,7 +10,8 @@
     height: 100%;
     position: absolute;
 }
-.go-to-preview-photo{
+
+.go-to-preview-photo {
     position: absolute;
     z-index: 2;
     width: 20%;
@@ -20,17 +21,46 @@
     top: 75%;
     right: 7%;
 }
-.go-to-all-photo{
+
+.go-to-all-photo {
     position: absolute;
     z-index: 2;
     width: 100%;
     height: 100%;
     background: rgba(70, 70, 70, 0.9);
     border-radius: 15px;
+    cursor: pointer;
 }
-.new-all-card{
+
+.new-all-card {
     background-color: #FFFFFF;
     border-radius: 20px;
     border: 0.5px solid rgba(180, 195, 227, 0.9);
 }
 
+.photo-in-gallery {
+    aspect-ratio: 1;
+    position: relative;
+    display: inline-block;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+        transform: scale(1.08);
+    }
+}
+
+.format-selected-photo {
+
+
+    width: 100%;
+    height: 70vh;
+    
+  
+}
+.selected-img{
+    width: 100%; /* Гибкость – наше всё */
+    height: auto; /* Доверьтесь автоматике */
+    object-fit: contain; /* Исключаем искажения пропорций */
+    
+}

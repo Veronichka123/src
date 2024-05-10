@@ -48,6 +48,8 @@ function Service_admin(props) {
 
     //Создание услуги
     const addService = () => {
+        console.log(dataService);
+        console.log(serviceSectionId);
         axios
             .post("http://" + HOST + "/service?serviceSectionId=" + serviceSectionId, dataService) //отправляем id раздела, данные об услуге
             .then((response) => {
@@ -235,7 +237,7 @@ function Service_admin(props) {
                                     )) : <p>Услуг еще не создано</p>}
                                 </Row>
                                 <Container className='d-flex justify-content-start' fluid>
-                                    <Button className='btn-plus-service fw-light d-flex justify-content-center align-items-center' data-section={serviceSection.id} onClick={handleShowModalAddService}><i className='bi bi-plus'></i></Button>
+                                    <Button className='btn-plus-service fw-light d-flex justify-content-center align-items-center' data-section={serviceSection.id} onClick={handleShowModalAddService}><i className='bi bi-plus icon_disabled'></i></Button>
                                     <p className='text-secondary ms-3 d-block mt-auto'>Добавить услугу в раздел</p>
                                 </Container>
                             </Container>
