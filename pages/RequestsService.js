@@ -12,13 +12,11 @@ import axios from 'axios';
 
 
 function RequestsService(props) {
-    const HOST = '26.252.162.70:8080';
-
     const [requests, setRequests] = useState([]);
 
     useEffect(() => {
         axios
-            .get("http://" + HOST + "/request/user",
+            .get("/request/user",
                 {
                     headers: {
                         Authorization: 'Bearer ' + localStorage.getItem("token")

@@ -16,9 +16,6 @@ import axios from "axios";
 
 
 function Login() {
-
-    const HOST = '26.252.162.70:8080';
-
     const [data, setData] = useState({ email: "", password: "" });
     const [response, setResponse] = useState("");
 
@@ -29,7 +26,7 @@ function Login() {
     const handleSubmit = (event) => {
         event.preventDefault();
         axios
-            .post("http://" + HOST + "/user/signin", data)
+            .post("/user/signin", data)
             .then((response) => {
                 setResponse(response.data);
                 localStorage.setItem('token', response.data['token'])

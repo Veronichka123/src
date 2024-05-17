@@ -11,14 +11,12 @@ import axios from 'axios';
 
 function My_page(props) {
 
-    const HOST = '26.252.162.70:8080';
-
     const [user, setUser] = useState(null);
 
     useEffect(() => {
         if (localStorage.getItem("token")) {
             axios
-                .get("http://" + HOST + "/user",
+                .get("/user",
                     {
                         headers: {
                             Authorization: 'Bearer ' + localStorage.getItem("token") //the token is a variable which holds the token

@@ -1,0 +1,38 @@
+.footer {
+    margin-top: auto;
+}
+
+.footer-w {
+    width: 90%;
+}
+
+.partners-title {
+    background: #EAE9EF;
+    width: 200px;
+    border-radius: 10px 10px 0 0;
+
+}
+.hr_partners{
+    border: none;
+    width: 100%;
+    height: 2px;
+    background-color: gray;
+}
+.photo-cnt-partner{
+    background-color: #FFFFFF;
+    aspect-ratio: 1;
+    position: relative;
+    &:hover {
+        transform: scale(1.08);
+    }
+    border-radius: 10px;
+}
+.photo-partner{
+    width: 100%; /* Гибкость – наше всё */
+    height: 100%; /* Доверьтесь автоматике */
+    object-fit: contain; /* Исключаем искажения пропорций */
+}
+.organization-info-footer{
+    background: #FFFFFF;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2);
+}

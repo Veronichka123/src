@@ -16,6 +16,7 @@ import Service_admin from '../pages/Service_admin';
 import Request_admin from '../pages/Request_admin';
 import News_admin from '../pages/News_admin';
 import New from '../pages/New';
+import Partners_admin from '../pages/Partners_admin';
 import '../styles/header.css';
 import axios from 'axios';
 
@@ -23,14 +24,13 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.state = { user: null }
-        this.HOST = '26.252.162.70:8080';
     }
 
     componentDidMount() {
         if (localStorage.getItem("token")) {
             
             axios
-                .get("http://" + this.HOST + "/user",
+                .get("/user",
                     {
                         headers: {
                             Authorization: 'Bearer ' + localStorage.getItem("token")
@@ -68,7 +68,7 @@ class Header extends Component {
                             <Nav className="ms-auto">
                                 <Nav.Link href='/' className='list_item'>ГЛАВНАЯ</Nav.Link>
                                 <Nav.Link href='/services' className='ms-5 list_item'>УСЛУГИ</Nav.Link>
-                                <Nav.Link href='/contacts' className='ms-5 list_item'>НОВОСТИ</Nav.Link>
+                                <Nav.Link href='/news' className='ms-5 list_item'>НОВОСТИ</Nav.Link>
                                 <Nav.Link href='/contacts' className='ms-5 list_item'>КОНТАКТЫ</Nav.Link>
                             </Nav>
                             <Nav className="ms-auto">
@@ -88,7 +88,7 @@ class Header extends Component {
                     <Routes>
                         <Route exact path='/' Component={Home} />
                         <Route exact path='/services' Component={Services} />
-                        <Route exact path='/contacts' Component={News} />
+                        <Route exact path='/news' Component={News} />
                         <Route exact path='/new' Component={New} />
                         <Route exact path='/registration' Component={Registration} />
                         <Route exact path='/my_page' Component={My_page} />
@@ -99,6 +99,7 @@ class Header extends Component {
                         <Route exact path='/service_admin' Component={Service_admin} />
                         <Route exact path='/request_admin' Component={Request_admin} />
                         <Route exact path='/news_admin' Component={News_admin} />
+                        <Route exact path='/partners_admin' Component={Partners_admin} />
                     </Routes>
                 </Router>
 

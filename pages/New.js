@@ -6,276 +6,239 @@ import Image from 'react-bootstrap/Image';
 import '../styles/new.css';
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { Modal } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect, useRef, createRef } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
+import axios from 'axios';
+import { useSearchParams } from 'react-router-dom';
 
 function New(props) {
     const [PhotoGalleryShow, setPhotoGalleryShow] = useState(false);
     const [PhotoInCarouselShow, setPhotoInCarouselShow] = useState(false);
+
+    const [isGalleryShowing, setGalleryShowing] = useState(false);
+
+    const [newsData, setNewsData] = useState(null);
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const [chousenPicture, setChousenPicture] = useState(null);
+
+    const [index, setIndex] = useState(-1);
+
+    const handleSelect = (selectedIndex, e) => {
+        chousenPicture.classList.remove('active');
+        if (e.target.className.includes('prev')) {
+            if (index == 0) {
+                setIndex(newsData.pictures.length - 1);
+            }
+            else {
+                setIndex(parseInt(index) - 1);
+            }
+        }
+        else if (e.target.className.includes('next')) {
+            if (index < newsData.pictures.length - 1) {
+                setIndex(parseInt(index) + 1);
+            }
+            else {
+                setIndex(0);
+            }
+        }
+    };
+
+
+    const handleShowImage = (e) => {
+        if (e.target.getAttribute("data-gallery") !== "false") {
+            setGalleryShowing(true);
+        }
+        setIndex(e.target.getAttribute("data-index"));
+        setPhotoGalleryShow(false);
+        setPhotoInCarouselShow(true);
+    }
+
+    useEffect(() => {
+        if (index === -1) return;
+
+        console.log(index);
+
+        const el = document.getElementById('carousel_item_' + index);
+
+        if (el === null) {
+            console.log("не найден");
+            return;
+        }
+
+        setChousenPicture(el);
+
+        el.classList.add('active');
+    }, [index]);
+
+    const months = {
+        "01": "января",
+        "02": "февраля",
+        "03": "марта",
+        "04": "апреля",
+        "05": "мая",
+        "06": "июня",
+        "07": "июля",
+        "08": "августа",
+        "09": "сентября",
+        "10": "октября",
+        "11": "ноября",
+        "12": "декабря"
+    }
+
+    useEffect(() => {
+        axios
+            .get("/news/" + searchParams.get("newsId"))
+            .then((response) => {
+                setNewsData(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
     return (
         <>
-            <Container fluid className='mt-5 main-new'>
-                <h5>Зарница» завершилась тактической игрой в «Лазертаг»</h5>
-                <Row xs={3} md={4} lg={6}>
+            {newsData ?
+                <Container fluid className='mt-5 main-new p-0'>
+                    <p className='new-title fw-bold'>{newsData ? newsData.title : ""}</p>
+                    {newsData.pictures && newsData.pictures.length > 0 ?
+                        <Row xs={3} md={4} lg={6}>
+                            {newsData.pictures.length > 12 ?
+                                newsData.pictures.slice(0, 11).map((picture, i) => (
+                                    <Col>
+                                        <Container fluid className="preview-photo p-0 mt-3" onClick={handleShowImage} data-index={i} data-gallery={false}>
+                                            <div className='go-to-preview-photo d-flex justify-content-center align-items-center image_disabled'><i className='bi bi-arrows-angle-expand text-light opacity-75 image_disabled'></i></div>
+                                            <Image
+                                                src={picture.pictureLink}
+                                                height="100%"
+                                                width='100%'
+                                                className='mx-auto d-block format-preview-photo image_disabled'
+                                                alt='Logo'
+                                            />
+                                        </Container>
+                                    </Col>
+                                ))
+                                : newsData.pictures.map((picture, i) => (
+                                    <Col>
+                                        <Container fluid className="preview-photo p-0 mt-3" onClick={handleShowImage} data-index={i} data-gallery={false}>
+                                            <div className='go-to-preview-photo d-flex justify-content-center align-items-center'><i className='bi bi-arrows-angle-expand text-light opacity-75 image_disabled'></i></div>
+                                            <Image
+                                                src={picture.pictureLink}
+                                                height="100%"
+                                                width='100%'
+                                                className='mx-auto d-block format-preview-photo image_disabled'
+                                                alt='Logo'
+                                            />
+                                        </Container>
+                                    </Col>
+                                ))}
+                            {newsData.pictures.length > 12 ?
+                                <Col>
+                                    <Container fluid className="preview-photo p-0 mt-3" onClick={() => setPhotoGalleryShow(true)}>
+                                        <div className='go-to-all-photo d-flex justify-content-center align-items-center'><div><p className='text-light m-0 text-center'>Увидеть все фото</p> <p className='text-light text-center m-0 pt-2 fw-bolder'>{newsData.pictures.length} фото</p></div></div>
+                                        <Image
+                                            src={newsData.pictures[11].pictureLink}
+                                            height="100%"
+                                            width='100%'
+                                            className='mx-auto d-block format-preview-photo'
+                                            alt='Logo'
+                                        />
+                                    </Container>
+                                </Col>
+                                :
+                                ""}
 
-                    <Col>
-                        <Container fluid className="preview-photo p-0 mt-3">
-                            <div className='go-to-preview-photo d-flex justify-content-center align-items-center'><i className='bi bi-arrows-angle-expand text-light opacity-75 m-1'></i></div>
-                            <Image
-                                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE4BbNI177TEIRGWm-v8HO5Dvjo7WCMTtbwiapJM7oOA&s'
-                                height="100%"
-                                width='100%'
-                                className='mx-auto d-block format-preview-photo'
-                                alt='Logo'
-                            />
-                        </Container>
-                    </Col>
+                        </Row>
+                        : ""}
 
-                    <Col>
-                        <Container fluid className="preview-photo p-0 mt-3">
-                            <div className='go-to-preview-photo d-flex justify-content-center align-items-center'><i className='bi bi-arrows-angle-expand text-light opacity-75'></i></div>
-                            <Image
-                                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE4BbNI177TEIRGWm-v8HO5Dvjo7WCMTtbwiapJM7oOA&s'
-                                height="100%"
-                                width='100%'
-                                className='mx-auto d-block format-preview-photo'
-                                alt='Logo'
-                            />
-                        </Container>
-                    </Col>
+                    <Container fluid className='d-flex justify-content-center p-0 mt-3'>
+                        <Container fluid className='new-all-card px-5 py-4'>
+                            <p className='mt-2 text-new'>{newsData.content} </p>
+                            <Container fluid className='d-flex justifi-content-start p-0'>
+                                <i class="bi bi-clock text-secondary fw-light text-date-publication me-2"></i>
+                                <p className='text-secondary fw-light text-date-publication'>Дата публикации: </p>
+                                <p className='text-secondary fw-light text-date-publication ms-2'>{newsData.creationDateTime.substring(8, 10)} {months[newsData.creationDateTime.substring(5, 7)]} {newsData.creationDateTime.substring(0, 4)} г. в {parseInt(newsData.creationDateTime.substring(11, 13)) + 3}:{newsData.creationDateTime.substring(14, 16)}</p>
+                            </Container>
 
-                    <Col>
-                        <Container fluid className="preview-photo p-0 mt-3">
-                            <div className='go-to-preview-photo d-flex justify-content-center align-items-center'><i className='bi bi-arrows-angle-expand text-light opacity-75'></i></div>
-                            <Image
-                                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE4BbNI177TEIRGWm-v8HO5Dvjo7WCMTtbwiapJM7oOA&s'
-                                height="100%"
-                                width='100%'
-                                className='mx-auto d-block format-preview-photo'
-                                alt='Logo'
-                            />
                         </Container>
-                    </Col>
-
-                    <Col>
-                        <Container fluid className="preview-photo p-0 mt-3">
-                            <div className='go-to-preview-photo d-flex justify-content-center align-items-center'><i className='bi bi-arrows-angle-expand text-light opacity-75'></i></div>
-                            <Image
-                                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE4BbNI177TEIRGWm-v8HO5Dvjo7WCMTtbwiapJM7oOA&s'
-                                height="100%"
-                                width='100%'
-                                className='mx-auto d-block format-preview-photo'
-                                alt='Logo'
-                            />
-                        </Container>
-                    </Col>
-
-                    <Col>
-                        <Container fluid className="preview-photo p-0 mt-3">
-                            <div className='go-to-preview-photo d-flex justify-content-center align-items-center'><i className='bi bi-arrows-angle-expand text-light opacity-75'></i></div>
-                            <Image
-                                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE4BbNI177TEIRGWm-v8HO5Dvjo7WCMTtbwiapJM7oOA&s'
-                                height="100%"
-                                width='100%'
-                                className='mx-auto d-block format-preview-photo'
-                                alt='Logo'
-                            />
-                        </Container>
-                    </Col>
-
-                    <Col>
-                        <Container fluid className="preview-photo p-0 mt-3">
-                            <div className='go-to-preview-photo d-flex justify-content-center align-items-center'><i className='bi bi-arrows-angle-expand text-light opacity-75'></i></div>
-                            <Image
-                                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE4BbNI177TEIRGWm-v8HO5Dvjo7WCMTtbwiapJM7oOA&s'
-                                height="100%"
-                                width='100%'
-                                className='mx-auto d-block format-preview-photo'
-                                alt='Logo'
-                            />
-                        </Container>
-                    </Col>
-
-                    <Col>
-                        <Container fluid className="preview-photo p-0 mt-3">
-                            <div className='go-to-preview-photo d-flex justify-content-center align-items-center'><i className='bi bi-arrows-angle-expand text-light opacity-75'></i></div>
-                            <Image
-                                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE4BbNI177TEIRGWm-v8HO5Dvjo7WCMTtbwiapJM7oOA&s'
-                                height="100%"
-                                width='100%'
-                                className='mx-auto d-block format-preview-photo'
-                                alt='Logo'
-                            />
-                        </Container>
-                    </Col>
-
-                    <Col>
-                        <Container fluid className="preview-photo p-0 mt-3">
-                            <div className='go-to-preview-photo d-flex justify-content-center align-items-center'><i className='bi bi-arrows-angle-expand text-light opacity-75'></i></div>
-                            <Image
-                                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE4BbNI177TEIRGWm-v8HO5Dvjo7WCMTtbwiapJM7oOA&s'
-                                height="100%"
-                                width='100%'
-                                className='mx-auto d-block format-preview-photo'
-                                alt='Logo'
-                            />
-                        </Container>
-                    </Col>
-
-                    <Col>
-                        <Container fluid className="preview-photo p-0 mt-3">
-                            <div className='go-to-preview-photo d-flex justify-content-center align-items-center'><i className='bi bi-arrows-angle-expand text-light opacity-75'></i></div>
-                            <Image
-                                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE4BbNI177TEIRGWm-v8HO5Dvjo7WCMTtbwiapJM7oOA&s'
-                                height="100%"
-                                width='100%'
-                                className='mx-auto d-block format-preview-photo'
-                                alt='Logo'
-                            />
-                        </Container>
-                    </Col>
-
-                    <Col>
-                        <Container fluid className="preview-photo p-0 mt-3">
-                            <div className='go-to-preview-photo d-flex justify-content-center align-items-center'><i className='bi bi-arrows-angle-expand text-light opacity-75'></i></div>
-                            <Image
-                                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE4BbNI177TEIRGWm-v8HO5Dvjo7WCMTtbwiapJM7oOA&s'
-                                height="100%"
-                                width='100%'
-                                className='mx-auto d-block format-preview-photo'
-                                alt='Logo'
-                            />
-                        </Container>
-                    </Col>
-
-                    <Col>
-                        <Container fluid className="preview-photo p-0 mt-3">
-                            <div className='go-to-preview-photo d-flex justify-content-center align-items-center'><i className='bi bi-arrows-angle-expand text-light opacity-75'></i></div>
-                            <Image
-                                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE4BbNI177TEIRGWm-v8HO5Dvjo7WCMTtbwiapJM7oOA&s'
-                                height="100%"
-                                width='100%'
-                                className='mx-auto d-block format-preview-photo'
-                                alt='Logo'
-                            />
-                        </Container>
-                    </Col>
-
-                    <Col>
-                        <Container fluid className="preview-photo p-0 mt-3" onClick={() => setPhotoGalleryShow(true)}>
-                            <div className='go-to-all-photo d-flex justify-content-center align-items-center'><div><p className='text-light m-0 text-center'>Увидеть все фото</p> <p className='text-light text-center m-0 pt-2 fw-bolder'>520 фото</p></div></div>
-                            <Image
-                                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE4BbNI177TEIRGWm-v8HO5Dvjo7WCMTtbwiapJM7oOA&s'
-                                height="100%"
-                                width='100%'
-                                className='mx-auto d-block format-preview-photo'
-                                alt='Logo'
-                            />
-                        </Container>
-                    </Col>
-                </Row>
-                <Container fluid className='d-flex justify-content-center p-0 mt-3'>
-                    <Container fluid className='new-all-card px-5 py-4'>
-                        <p className='mt-2'>В Лузе, небольшом городке Кировской области, юнармейцы школ выясняли, какая команда сильнее в военно-спортивной игре «Зарница».
-                            Активно помогли в организации и проведении муниципального этапа «Зарницы» председатель местного отделения ДОСААФ Полина Головяшева и член совета регионального отделения оборонного общества Александр Долматов. В этой игре, занимающей особое место в системе военно-патриотического воспитания школьников, формировании готовности молодежи к военной службе, от ДОСААФ Кировской области в координации муниципальных этапов участвуют местные отделения и образовательные учреждения оборонной организации.
-                            Юнармейцы Лузы в нынешней игре состязались в стрельбе, разборке-сборке автомата и снаряжении его магазина, строевой и физической подготовке, показывали мастерство в пользовании защитным комплектом. Все это оценивало строгое жюри, отметившее, что все юнармейские команды справились с заданиями.
-                            Лучшими командами названы «Патриот», «Витязь» и «Надежда».  Сильнейшим зарничникам вручены дипломы и памятные подарки. Приятным бонусом для юнармейцев стала тактическая игра «Лазертаг», завершившая этот день. </p>
-                        <Container fluid className='d-flex justifi-content-start p-0'>
-                            <p className='text-secondary fw-light'>Дата публикации: </p>
-                            <p className='text-secondary fw-light ms-4'>22 февраля 2024 г. в 11:16</p>
-                        </Container>
-
                     </Container>
                 </Container>
-            </Container>
+                : ""}
 
+            {newsData ?
+                <Modal
+                    size='xl'
+                    show={PhotoGalleryShow}
+                    onHide={() => setPhotoGalleryShow(false)}
+                    scrollable
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title >
+                            {newsData.title}
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className='mb-3'>
+                        <Row xs={3} md={4} lg={6}>
+                            {newsData.pictures && newsData.pictures.length > 0 ?
+                                newsData.pictures.map((picture, i) => (
+                                    <Col>
+                                        <Container fluid className="photo-in-gallery p-0 mt-3" data-index={i} onClick={handleShowImage}>
+                                            <Image
+                                                src={picture.pictureLink}
+                                                height="100%"
+                                                width='100%'
+                                                className='mx-auto d-block format-preview-photo image_disabled'
+                                                alt='Logo'
+                                            />
+                                        </Container>
+                                    </Col>
+                                ))
+                                : ""}
+                        </Row>
+                    </Modal.Body>
+                </Modal>
+                : ""}
 
-            <Modal
-                size='xl'
-                show={PhotoGalleryShow}
-                onHide={() => setPhotoGalleryShow(false)}
-                scrollable
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title >
-                        Зарница» завершилась тактической игрой в «Лазертаг»
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body className='mb-3'>
-                    <Row xs={3} md={4} lg={6}>
+            {newsData ?
+                <Modal
+                    size='lg'
+                    show={PhotoInCarouselShow}
+                    onHide={() => {
+                        setPhotoInCarouselShow(false);
+                        setIndex(-1);
+                        if (isGalleryShowing) {
+                            setPhotoGalleryShow(true);
+                            setGalleryShowing(false);
+                        }
 
-                        <Col>
-                            <Container fluid className="photo-in-gallery p-0 mt-3" onClick={() => setPhotoInCarouselShow(true)}>
-                                <Image
-                                    src='https://masterpiecer-images.s3.yandex.net/9dc518da8fa911eeb15f2aa0df1cd6e5:upscaled'
-                                    height="100%"
-                                    width='100%'
-                                    className='mx-auto d-block format-preview-photo'
-                                    alt='Logo'
-                                />
-                            </Container>
-                        </Col>
-
-                        <Col>
-                            <Container fluid className="photo-in-gallery p-0 mt-3">
-                                <Image
-                                    src='https://masterpiecer-images.s3.yandex.net/9dc518da8fa911eeb15f2aa0df1cd6e5:upscaled'
-                                    height="100%"
-                                    width='100%'
-                                    className='mx-auto d-block format-preview-photo'
-                                    alt='Logo'
-                                />
-                            </Container>
-                        </Col>
-                    </Row>
-                </Modal.Body>
-            </Modal>
-
-            <Modal
-                size='lg'
-                show={PhotoInCarouselShow}
-                onHide={() => setPhotoInCarouselShow(false)}
-                animation={false}
-                backdrop="static"
-                keyboard={false}
-                centered
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>Фото № 828</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className='mb-3'>
-
-                    <Carousel data-bs-theme="dark" interval={null} indicators={false} slide={false}>
-                        <Carousel.Item>
-                            <Container className='mx-auto d-block format-selected-photo d-flex justify-content-center'>
-                                <Image className='selected-img'
-                                    src='https://masterpiecer-images.s3.yandex.net/9dc518da8fa911eeb15f2aa0df1cd6e5:upscaled'
-                                    alt='Logo'
-                                />
-                            </Container>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <Container className='mx-auto d-block format-selected-photo d-flex justify-content-center'>
-                                <Image className='selected-img'
-                                    src='https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663255474_12-mykaleidoscope-ru-p-zlobnii-khomyak-vkontakte-12.jpg'
-                                    alt='Logo'
-                                />
-                            </Container>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <Container className='mx-auto d-block format-selected-photo d-flex justify-content-center'>
-                                <Image className='selected-img'
-                                    src='https://i0.wp.com/catandcat.ru/wp-content/uploads/2019/12/homjaki-anons.jpeg?fit=585%2C385&ssl=1'
-                                    alt='Logo'
-
-                                />
-                            </Container>
-
-                        </Carousel.Item>
-                    </Carousel>
-
-                </Modal.Body>
-            </Modal>
+                    }}
+                    animation={false}
+                    backdrop="static"
+                    keyboard={false}
+                    centered
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>Просмотр фотографии {parseInt(index) + 1} из {newsData.pictures.length}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className='mb-3'>
+                        <Carousel data-bs-theme="dark" interval={null} indicators={false} slide={false} touch={false} activeIndex={parseInt(index)} onSelect={handleSelect}>
+                            {newsData.pictures && newsData.pictures.length > 0 ?
+                                newsData.pictures.map((picture, i) => (
+                                    <Carousel.Item id={`carousel_item_` + i}>
+                                        <Container className='mx-auto d-block format-selected-photo d-flex justify-content-center'>
+                                            <Image className='selected-img'
+                                                src={picture.pictureLink}
+                                                alt='Logo'
+                                            />
+                                        </Container>
+                                    </Carousel.Item>
+                                ))
+                                : ""}
+                        </Carousel>
+                    </Modal.Body>
+                </Modal>
+                : ""}
         </>
     );
 }

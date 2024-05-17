@@ -6,18 +6,17 @@ import Button from 'react-bootstrap/Button';
 import '../styles/Services.css';
 import { Form } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
+import 'bootstrap-icons/font/bootstrap-icons.css'
 import axios from 'axios';
 
 
 function Services() {
 
-    const HOST = '26.252.162.70:8080';
-
     const [services, setServices] = useState([]);
 
     useEffect(() => {
         axios
-            .get("http://" + HOST + "/service/all")
+            .get("/service/all")
             .then((response) => {
                 setServices(response.data);
                 console.log(response.data);
@@ -48,11 +47,11 @@ function Services() {
         setShow(false);
     }
 
-    useEffect(() =>{
+    useEffect(() => {
         if (serviceId === -1) return;
 
         axios
-            .get("http://" + HOST + "/service/" + serviceId)
+            .get("/service/" + serviceId)
             .then((response) => {
                 setServiceName(response.data['name']);
                 setServiceId(response.data['id']);
@@ -61,9 +60,9 @@ function Services() {
                 console.log(error);
             });
 
-        if(localStorage.getItem("token")){
+        if (localStorage.getItem("token")) {
             axios
-                .get("http://" + HOST + "/user",
+                .get("/user",
                     {
                         headers: {
                             Authorization: 'Bearer ' + localStorage.getItem("token")
@@ -86,53 +85,66 @@ function Services() {
     };
 
     const handleSendRequest = (e) => {
+        if (phoneNumber === "" || userData.email === "" || userData.name === "" || userData.surname === "") {
+            console.log("поля не заполнены");
+            return;
+        }
         axios
-        .post("http://" + HOST + "/request?serviceId=" + serviceId,
-        {
-            "userName": userData.name,
-            "userSurname": userData.surname,
-            "userPatronymic": userData.patronymic,
-            "userEmail": userData.email,
-            "userPhoneNumber": phoneNumber
-        },
-        {
-            headers: {
-                Authorization: localStorage.getItem("token") ? 'Bearer ' + localStorage.getItem("token") : ''
-            }
-        })
-        .then((response) => {
-            setUserData(response.data);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            .post("/request?serviceId=" + serviceId,
+                {
+                    "userName": userData.name,
+                    "userSurname": userData.surname,
+                    "userPatronymic": userData.patronymic,
+                    "userEmail": userData.email,
+                    "userPhoneNumber": phoneNumber
+                },
+                {
+                    headers: {
+                        Authorization: localStorage.getItem("token") ? 'Bearer ' + localStorage.getItem("token") : ''
+                    }
+                })
+            .then((response) => {
+                setUserData(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
         setShow(false);
         setPhoneNumber("");
     }
 
     return (
         <>
-            <Container fluid>
+            <Container fluid className='p-0 main-service-cnt'>
                 <Container className='mt-2 d-flex justify-content-center' >
                     <h5 className='border-bottom p-2 border-primary border-opacity-50'>УСЛУГИ ДОСААФ КОСТРОМА</h5>
                 </Container>
                 {services.map((serviceSection) => (serviceSection.services && serviceSection.services.length > 0 ?
-                    <Container className='mt-5' fluid>
-                        <Container className='d-flex justify-content-start' fluid>
-                            <h5 className='border-bottom p-1 border-secondary border-opacity-50 border-1'>{serviceSection.name}</h5>
+                    <Container className='mt-5 p-0' fluid>
+                        <Container className='d-flex justify-content-start p-0' fluid>
+                            <p className='border-bottom px-1 border-secondary border-opacity-50 border-1 section-title'>{serviceSection.name}</p>
                         </Container>
                         <Container fluid>
-                            <Row xs={1} md={3}>
+                            <Row xs={1} md={2} lg={3}>
                                 {serviceSection['services'].map((service) => (
-                                    <Col>
-                                        <Container className='py-4 px-4 mt-4 center-block service-cards'>
-                                            <h6 className='mb-4'>{service.name}</h6>
-                                            <p className='text-secondary' style={{whiteSpace: "pre-line"}}>{service.description}</p>
-                                            <div className='border border-secondary mb-4 border-price border-2 border-opacity-50 px-2 py-3'>
-                                                <h6 className='mb-3'>Стоимость:</h6>
-                                                <h5>{service.cost} рублей</h5>
+                                    <Col className='pe-4 ps-0'>
+                                        <Container className='py-4 px-4 mt-4 center-block service-cards d-flex flex-column shadow'>
+                                            <p className='mb-4 service-title fw-bold'>{service.name}</p>
+                                            <Container className='service-description mb-1 p-0'><p className='text-secondary' style={{ whiteSpace: "pre-line" }}>{service.description}</p></Container>
+                                            <div className='border-price px-2 py-3 mb-4 border border-secondary border-opacity-50'>
+                                                <div className='d-flex flex-row py-auto'>
+                                                    
+                                                    <div className='ms-3'>
+                                                        <p className='mb-2 stoimost fw-light my-auto'>Стоимость : </p>
+                                                        <p className='price-value fw-bold my-auto'>{service.cost} ₽</p>
+                                                    </div>
+
+                                                    <i className='bi bi-wallet2 wallet px-2 py-1 me-3 shadow-sm my-auto mx-auto'></i>
+
+                                                </div>
+
                                             </div>
-                                            <Button type="submit" data-id={service.id} className="btn-service"
+                                            <Button type="submit" data-id={service.id} className="btn-service mt-auto"
                                                 onClick={handleShow}>Подать заявку</Button>
                                         </Container>
                                     </Col>

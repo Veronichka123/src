@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Container } from 'react-bootstrap';
 import '../styles/home.css';
+import '../styles/footer.css';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import 'bootstrap-icons/font/bootstrap-icons.css'
@@ -58,6 +59,7 @@ function Home(props) {
                     </Col>
                 </Row>
             </Container>
+            
         </Container>
 
 

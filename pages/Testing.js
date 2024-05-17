@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import '../styles/testing.css';
+import '../styles/footer.css';
 import test_icon from '../components/test.png';
 import Button from 'react-bootstrap/Button';
 
@@ -85,6 +86,10 @@ function requests(props) {
                 </Col>
 
             </Row>
+        <Container className='footer'>
+
+        </Container>
+
         </Container>
     );
 }

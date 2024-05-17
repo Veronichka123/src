@@ -1,12 +1,10 @@
 .cont-news {
-    background: #F2F3F7;
-
+    width: 90%;
 }
 
 .cnt-search {
-    background: #f5f5f5;
+    background: #EAE9EF;
     border-radius: 20px;
-    border: 0.5px solid rgba(81, 137, 204, .3);
 }
 
 .hrsearch {
@@ -19,14 +17,15 @@
 
 .new-card {
     background-color: #FFFFFF;
-    width: 90%;
     border-radius: 20px;
-    border: 0.5px solid rgba(180, 195, 227, 0.9);
+    height: 80vh;
+    min-height: 500px
 }
 
 .format-new-photo {
     object-fit: cover;
     border-radius: 15px;
+    height: 40vh;
 }
 
 .btn-go-to-new {
@@ -36,13 +35,11 @@
     align-items: center;
     justify-content: center;
     background: #1A4BB3;
-    opacity: .76;
     border-radius: 10px;
 }
 
 .btn-search {
     background: #1A4BB3;
-    opacity: .76;
     border-radius: 5px;
 }
 

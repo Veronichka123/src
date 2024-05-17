@@ -1,6 +1,12 @@
+.main-new{
+    width: 90%;
+}
 .preview-photo {
     aspect-ratio: 1;
     position: relative;
+    &:hover {
+        transform: scale(1.08);
+    }
 }
 
 .format-preview-photo {
@@ -63,4 +69,25 @@
     height: auto; /* Доверьтесь автоматике */
     object-fit: contain; /* Исключаем искажения пропорций */
     
+}
+
+.image_disabled{
+    pointer-events: none;
+}
+
+.preview-photo{
+    cursor: pointer;
+}
+.new-title{
+    font-size: 28px;
+    color:#1A4BB3;;
+}
+.text-new{
+    font-size: 20px;
+}
+.text-date-publication{
+    font-size: 18px;
+}
+.carousel-control-next-icon{
+  
 }

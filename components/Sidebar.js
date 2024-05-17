@@ -14,14 +14,13 @@ class Sidebar extends Component {
     constructor(props) {
         super(props);
         this.state = { role: null }
-        this.HOST = '26.252.162.70:8080';
     }
 
     componentDidMount() {
         if (localStorage.getItem("token")) {
             
             axios
-                .get("http://" + this.HOST + "/user",
+                .get("/user",
                     {
                         headers: {
                             Authorization: 'Bearer ' + localStorage.getItem("token") //the token is a variable which holds the token
@@ -46,7 +45,7 @@ class Sidebar extends Component {
             <>
             <div className='container-fluid sid'>
                 <div className='row'>
-                    <div className='bg-white col-auto  mt-2 d-flex justify-content-between flex-column sidebar-sh'>
+                    <div className='bg-white col-auto  mt-2 d-flex justify-content-between flex-column shadow sidebar-sh'>
                         <a href='/' className='text-decoration-none text-dark d-flex d-none d-sm-inline mt-3 align-itemcenter'>
                             <span className='ms-1 fs-4'>Меню</span>
                         </a>
