@@ -40,7 +40,7 @@ function Request_admin(props) {
 
                 const updatedRequests = {
                     ...item,
-                    examine: item.examine.filter(request => request.id != acceptedRequest.id) 
+                    examine: item.examine.filter(request => request.id != acceptedRequest.id)
                 };
 
                 updatedRequests.accepted.push(acceptedRequest);
@@ -66,7 +66,7 @@ function Request_admin(props) {
 
                 const updatedRequests = {
                     ...item,
-                    examine: item.examine.filter(request => request.id != rejectedRequest.id) 
+                    examine: item.examine.filter(request => request.id != rejectedRequest.id)
                 };
 
                 updatedRequests.rejected.push(rejectedRequest);
@@ -92,7 +92,7 @@ function Request_admin(props) {
 
                 const updatedRequests = {
                     ...item,
-                    rejected: item.rejected.filter(request => request.id != acceptedRequest.id) 
+                    rejected: item.rejected.filter(request => request.id != acceptedRequest.id)
                 };
 
                 updatedRequests.accepted.push(acceptedRequest);
@@ -118,7 +118,7 @@ function Request_admin(props) {
 
                 const updatedRequests = {
                     ...item,
-                    accepted: item.accepted.filter(request => request.id != rejectedRequest.id) 
+                    accepted: item.accepted.filter(request => request.id != rejectedRequest.id)
                 };
 
                 updatedRequests.rejected.push(rejectedRequest);
@@ -132,25 +132,25 @@ function Request_admin(props) {
 
     return (
         <>
-            <Container fluid>
-                <Row>
-                    <Col xs={4}><Sidebar /></Col>
-                    <Col xs={8}>
-
-                        <h5 className='text-center mt-2'>ПАНЕЛЬ АДМИНИСТРАТОРА</h5>
-                        <Container className='d-flex justify-content-center' fluid>
-                            <p className='text-secondary border-bottom border-primary border-opacity-50 text-center'>Управление заявками</p>
-                        </Container>
-                        <Container fluid className='d-flex justify-content-center mt-3'>
+            <Container fluid className='main-cnt-request-admin p-0'>
+                <p className='text-center mt-2 main-section-title mb-1'>ПАНЕЛЬ АДМИНИСТРАТОРА</p>
+                <Container className='d-flex justify-content-center' fluid>
+                    <p className='text-secondary border-bottom border-primary border-opacity-50 text-center title-subsection'>Управление заявками</p>
+                </Container>
+                <Row className='mt-3'>
+                    <Col xs={3} sm={3} md={5} lg={3}><Sidebar /></Col>
+                    <Col xs={9} sm={9} md={7} lg={9}>
+                        <Container fluid className='d-flex justify-content-center p-0'>
                             <Button className={showtab === 1 ? 'btn-new-requests active' : 'btn-new-requests'} onClick={() => handletab(1)}>Новые заявки</Button>
                             <Button className={showtab === 2 ? 'btn-accepted-requests active' : 'btn-accepted-requests'} onClick={() => handletab(2)}>Принятые заявки</Button>
                             <Button className={showtab === 3 ? 'btn-rejected-requests active' : 'btn-rejected-requests'} onClick={() => handletab(3)}>Отклоненные заявки</Button>
                         </Container>
+
                         {allRequests ?
-                            <Container fluid className='tab-content text-dark' id='pills-tabContent'>
+                            <Container fluid className='tab-content text-dark' id='pills-tabContent p-0'>
                                 <Container fluid className={showtab === 1 ? 'tab-pane fade show active' : "tab-pane fade show"}>
                                     {allRequests.examine.length != 0 ? allRequests.examine.map((request) => (
-                                        <Container fluid className='cont-new-requests px-5 py-3 mt-4'>
+                                        <Container fluid className='cont-new-requests px-5 py-3 mt-4 shadow rounded'>
                                             <p className='text-secondary mb-4'>Заявка № {request.id} от
                                                 {request.date ?
                                                     ' ' + request.date.substring(8, 10) + '.' +
@@ -171,7 +171,7 @@ function Request_admin(props) {
 
                                 <Container fluid className={showtab === 2 ? 'tab-pane fade show active' : "tab-pane fade"}>
                                     {allRequests.accepted.length != 0 ? allRequests.accepted.map((request) => (
-                                        <Container fluid className='cont-new-requests px-5 py-3 mt-4'>
+                                        <Container fluid className='cont-accept-requests px-5 py-3 mt-4 shadow rounded'>
                                             <p className='text-secondary mb-4'>Заявка № {request.id} от
                                                 {request.date ?
                                                     ' ' + request.date.substring(8, 10) + '.' +
@@ -191,7 +191,7 @@ function Request_admin(props) {
 
                                 <Container fluid className={showtab === 3 ? 'tab-pane fade show active' : "tab-pane fade"}>
                                     {allRequests.rejected.length != 0 ? allRequests.rejected.map((request) => (
-                                        <Container fluid className='cont-new-requests px-5 py-3 mt-4'>
+                                        <Container fluid className='cont-reject-requests px-5 py-3 mt-4 shadow rounded'>
                                             <p className='text-secondary mb-4'>Заявка № {request.id} от
                                                 {request.date ?
                                                     ' ' + request.date.substring(8, 10) + '.' +

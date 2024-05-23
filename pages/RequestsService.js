@@ -32,19 +32,18 @@ function RequestsService(props) {
     }, [])
 
     return (
-        <Container fluid>
-            <Row>
-                <Col xs={4}><Sidebar /></Col>
-                <Col xs={8}>
-                    <Container className='mt-2 d-flex justify-content-center' >
-                        <h5 className='border-bottom p-2 border-primary border-opacity-50'>ЗАЯВКИ</h5>
-                    </Container>
-
-                    <Container className='info_reguest_user mt-2 px-5 py-4 d-flex justify-content-around'>
+        <Container fluid className='main-cnt-erequest-service p-0'>
+            <Container className='mt-2 d-flex justify-content-center' >
+                <p className='border-bottom p-2 border-primary border-opacity-50 main-section-title'>ЗАЯВКИ</p>
+            </Container>
+            <Row className='mt-3'>
+                <Col xs={3} sm={3} md={5} lg={3}><Sidebar /></Col>
+                <Col xs={9} sm={9} md={7} lg={9}>
+                    <Container className='info_material_user px-5 py-4 d-flex justify-content-around shadow-sm'>
                         <Container>
                             <h5>Оставляйте онлайн-заявки на услуги.</h5>
-                            <p className='text-secondary lead description-reguest'>Это позволит Вам получить быстрое обслуживание прямо из дома</p>
-                            <Button type="submit" href='/' className="my-2 btn_reguest d-flex justify-content-center align-items-center">
+                            <p className='text-secondary lead description-materials'>Это позволит Вам получить быстрое обслуживание прямо из дома.</p>
+                            <Button type="submit" href='/' className="my-2 btn_go_to_service d-flex justify-content-center align-items-center shadow-sm">
                                 Перейти к услугам
                             </Button>
                         </Container>
@@ -56,31 +55,31 @@ function RequestsService(props) {
                             alt='Logo'
                         />
                     </Container>
-                    <Container className='my_reguest'>
+                    <Container fluid className='my_reguest p-0'>
 
                         <h5 className='mt-5 mb-4'>Мои заявки</h5>
 
-                        <table className="table table-striped table-bordered">
+                        <table className="table table-striped table-bordered m-0 request-table">
                             <thead>
                                 <tr className='border-bottom border-secondary border-opacity-50'>
-                                    <th scope="col" className='text-secondary'>№ Заявки</th>
-                                    <th scope="col" className='text-secondary'>Дата</th>
-                                    <th scope="col" className='text-secondary'>Услуга</th>
-                                    <th scope="col" className='text-secondary'>Статус</th>
+                                    <th scope="col" className='text-secondary size-table-text'>№Заявки</th>
+                                    <th scope="col" className='text-secondary size-table-text'>Дата</th>
+                                    <th scope="col" className='text-secondary size-table-text'>Услуга</th>
+                                    <th scope="col" className='text-secondary size-table-text'>Статус</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {requests.map((requestUser) => (
                                     <tr className='border-bottom border-secondary border-opacity-25'>
-                                        <td>{requestUser.id}</td>
-                                        <td>{' ' + requestUser["date"].substring(8, 10) + '.' +
+                                        <td className='size-table-text'>{requestUser.id}</td>
+                                        <td className='size-table-text'>{' ' + requestUser["date"].substring(8, 10) + '.' +
                                             requestUser["date"].substring(5, 7) + '.' +
                                             requestUser["date"].substring(0, 4)}</td>
-                                        <td >{requestUser.serviceName}</td>
+                                        <td className='size-table-text'>{requestUser.serviceName}</td>
                                         {requestUser.status === "STATUS_EXAMINE" ?
-                                            <td className='text-primary opacity-75'>На рассмотрении</td> :
-                                            requestUser.status === "STATUS_ACCEPTED" ? <td className='text-success opacity-75'>Принято</td> :
-                                                <td className='text-danger opacity-75'>Отклонено</td>
+                                            <td className='text-primary opacity-75 size-table-text'>На рассмотрении</td> :
+                                            requestUser.status === "STATUS_ACCEPTED" ? <td className='text-success opacity-75 size-table-text'>Принято</td> :
+                                                <td className='text-danger opacity-75 size-table-text'>Отклонено</td>
                                         }
                                     </tr>
                                 ))}

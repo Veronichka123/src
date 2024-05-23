@@ -41,6 +41,10 @@
     
     
 }
+.anons-text-without-photo{
+    background-color: #FFFFFF;
+    border-radius: 20px;
+}
 .anons-image{
     object-fit: cover;
     border-radius: 15px;
@@ -53,4 +57,14 @@
 }
 .anons-info{
     font-size: 16px;
+}
+
+.border-container-radius{
+    border-bottom-left-radius: 0!important;
+    border-bottom-right-radius: 0!important;
+}
+
+.image-container-radius{
+    border-top-left-radius: 0!important;
+    border-top-right-radius: 0!important;
 }

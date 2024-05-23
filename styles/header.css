@@ -1,24 +1,32 @@
-body{
+body {
     background: #F2F3F7;
+    overflow-x: hidden;
 }
-.btn_nav{
+
+.btn_nav {
     background: #1A4BB3;
     border: none;
     border-radius: 10px;
     width: 100px;
-   
+
 }
-.list_item:hover{
+
+.list_item:hover {
     color: #1A4BB3;
 }
-button.navbar-toggler{
+
+button.navbar-toggler {
     background: white;
 }
+
 .list_item.collapse {
     color: aqua;
 }
+
 @media (max-width: 991px) {
-    .list_item{
+    .list_item {
         margin-left: 5px !important;
     }
-  };
+}
+
+;

@@ -5,8 +5,26 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import logo from './dosaaf_logo.png';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 class Footer extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = { partners: null }
+    }
+
+    componentDidMount(){
+        axios.get('/partner/all')
+        .then((response) => {
+            this.setState({ partners: response.data});
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+
     render() {
         return (
             <Container fluid className='footer p-0'>
@@ -16,105 +34,22 @@ class Footer extends Component {
                     </Container>
                     <hr className='hr_partners mt-0'></hr>
                     <Row xs={3} md={4} lg={6}>
-                        <Col>
-                            <Container fluid className="photo-cnt-partner p-0 mt-3 d-flex flex-column border border-1 border-secondary border-opacity-50">
-                                <Image
-                                    src='https://static.mk.ru/upload/entities/2017/01/20/articles/detailPicture/bd/e0/05/bf9373712_9521764.jpg'
-                                    height="100%"
-                                    width='100%'
-                                    className='mx-auto my-auto d-block photo-partner p-1'
-                                    alt='Logo'
-                                />
-                            </Container>
-                        </Col>
-                        <Col>
-                            <Container fluid className="photo-cnt-partner p-0 mt-3 d-flex flex-column border border-1 border-secondary border-opacity-50">
-                                <Image
-                                    src='https://static.mk.ru/upload/entities/2017/01/20/articles/detailPicture/bd/e0/05/bf9373712_9521764.jpg'
-                                    height="100%"
-                                    width='100%'
-                                    className='mx-auto my-auto d-block photo-partner p-1'
-                                    alt='Logo'
-                                />
-                            </Container>
-                        </Col>
-                        <Col>
-                            <Container fluid className="photo-cnt-partner p-0 mt-3 d-flex flex-column border border-1 border-secondary border-opacity-50">
-                                <Image
-                                    src='https://static.mk.ru/upload/entities/2017/01/20/articles/detailPicture/bd/e0/05/bf9373712_9521764.jpg'
-                                    height="100%"
-                                    width='100%'
-                                    className='mx-auto my-auto d-block photo-partner p-1'
-                                    alt='Logo'
-                                />
-                            </Container>
-                        </Col>
-                        <Col>
-                            <Container fluid className="photo-cnt-partner p-0 mt-3 d-flex flex-column border border-1 border-secondary border-opacity-50">
-                                <Image
-                                    src='https://static.mk.ru/upload/entities/2017/01/20/articles/detailPicture/bd/e0/05/bf9373712_9521764.jpg'
-                                    height="100%"
-                                    width='100%'
-                                    className='mx-auto my-auto d-block photo-partner p-1'
-                                    alt='Logo'
-                                />
-                            </Container>
-                        </Col>
-                        <Col>
-                            <Container fluid className="photo-cnt-partner p-0 mt-3 d-flex flex-column border border-1 border-secondary border-opacity-50">
-                                <Image
-                                    src='https://smart-lab.ru/uploads/2024/images/21/79/60/2024/04/12/09a28a.png'
-                                    height="100%"
-                                    width='100%'
-                                    className='mx-auto my-auto d-block photo-partner p-1'
-                                    alt='Logo'
-                                />
-                            </Container>
-                        </Col>
-                        <Col>
-                            <Container fluid className="photo-cnt-partner p-0 mt-3 d-flex flex-column border border-1 border-secondary border-opacity-50">
-                                <Image
-                                    src='https://smart-lab.ru/uploads/2024/images/21/79/60/2024/04/12/09a28a.png'
-                                    height="100%"
-                                    width='100%'
-                                    className='mx-auto my-auto d-block photo-partner p-1'
-                                    alt='Logo'
-                                />
-                            </Container>
-                        </Col>
-                        <Col>
-                            <Container fluid className="photo-cnt-partner p-0 mt-3 d-flex flex-column border border-1 border-secondary border-opacity-50">
-                                <Image
-                                    src='https://хомячьецарство.рф/wp-content/uploads/2023/01/dsc_0119451-scaled.jpg'
-                                    height="100%"
-                                    width='100%'
-                                    className='mx-auto my-auto d-block photo-partner p-1'
-                                    alt='Logo'
-                                />
-                            </Container>
-                        </Col>
-                        <Col>
-                            <Container fluid className="photo-cnt-partner p-0 mt-3 d-flex flex-column border border-1 border-secondary border-opacity-50">
-                                <Image
-                                    src='https://smart-lab.ru/uploads/2024/images/21/79/60/2024/04/12/09a28a.png'
-                                    height="100%"
-                                    width='100%'
-                                    className='mx-auto my-auto d-block photo-partner p-1'
-                                    alt='Logo'
-                                />
-                            </Container>
-                        </Col>
-                        <Col>
-                            <Container fluid className="photo-cnt-partner p-0 mt-3 d-flex flex-column border border-1 border-secondary border-opacity-50">
-                                <Image
-                                    src='https://masterpiecer-images.s3.yandex.net/9dc518da8fa911eeb15f2aa0df1cd6e5:upscaled'
-                                    height="100%"
-                                    width='100%'
-                                    className='mx-auto my-auto d-block photo-partner p-1'
-                                    alt='Logo'
-                                />
-                            </Container>
-                        </Col>
+                        {this.state.partners ? this.state.partners.map(partner => (
+                                <Col>
+                                    <a href={partner.link} target='_blank'>
+                                        <Container fluid className="photo-cnt-partner p-0 mt-3 d-flex flex-column border border-1 border-secondary border-opacity-50">
+                                            <Image
+                                                src={axios.defaults.baseURL + partner.imagePath}
+                                                height="100%"
+                                                width='100%'
+                                                className='mx-auto my-auto d-block photo-partner p-1'
+                                                alt='Logo'
+                                            />
+                                        </Container>
+                                    </a>
+                                </Col>
+                        )) 
+                        : ""}
                     </Row>
                 </Container>
                 <Container fluid className='organization-info-footer p-4 mt-3 d-flex justify-content-between'>

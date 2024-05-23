@@ -1,15 +1,10 @@
-.content_for_profile{
-    background-color: #F5F5F5;
-    width: 96%;
-    border-radius: 30px;
-    border: 1.5px solid rgba(213, 213, 213, .7);
-    
+.main-cnt-my-page{
+    width: 90%;
 }
 
 .info_user{
-    border-radius: 20px;
-    border: 1px solid rgba(81, 137, 204, .5);
-    width: 65%;
+    width: 50%;
+    border-radius: 10px;
 }
 .time_registration{
     font-size: 15px;
@@ -18,9 +13,8 @@
     width: 100%;
 }
 .dinamic-tests{
-    border-radius: 20px;
-    border: 1px solid rgba(81, 137, 204, .5);
-    width: 80%;
+    width: 70%;
+    border-radius: 10px;
 }
 .select-sort{
     width: 200px;

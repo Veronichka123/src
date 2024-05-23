@@ -17,6 +17,8 @@ import Request_admin from '../pages/Request_admin';
 import News_admin from '../pages/News_admin';
 import New from '../pages/New';
 import Partners_admin from '../pages/Partners_admin';
+import Anonses_admin from '../pages/Anonses_admin';
+import Educational_materials from '../pages/Educational_materials';
 import '../styles/header.css';
 import axios from 'axios';
 
@@ -41,7 +43,7 @@ class Header extends Component {
                 })
                 .catch((error) => {
                     localStorage.removeItem("token");
-                    console.log(error);
+                    this.setState({ user: null});
                 });
         }
     }
@@ -100,6 +102,8 @@ class Header extends Component {
                         <Route exact path='/request_admin' Component={Request_admin} />
                         <Route exact path='/news_admin' Component={News_admin} />
                         <Route exact path='/partners_admin' Component={Partners_admin} />
+                        <Route exact path='/anonses_admin' Component={Anonses_admin} />
+                        <Route exact path='/educational_materials' Component={Educational_materials} />
                     </Routes>
                 </Router>
 

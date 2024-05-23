@@ -1,58 +1,59 @@
+.main-cnt-news-admin{
+    width: 90%;
+}
 .btn-admin-news {
     background: #1A4BB3;
     border: none;
     border-radius: 10px;
-    opacity: .76;
     height: 35px;
     width: 180px;
 }
 
 .container-news{
     width: 100%;
-    background: #EFF4FB;
-    border-radius: 20px;
+    background: #FFFFFF;
 }
 
 .admin-card-new{
-    background: #F5F5F5;
-    border-radius: 20px;
-    border: 1px solid rgba(81, 137, 204, .5);
+    background: #FFFFFF;
     width: 100%;
 }
 
 .btn-admin-new-edit {
-    background: #1A4BB3;
-    border: none;
     border-radius: 10px;
-    opacity: .76;
-    height: 35px;
-    width: 30%;
+    height: 37px;
+    width: 32%;
+    background-color: #FFFFFF;
+    border: 1.5px solid #1A4BB3;
+    color: #1A4BB3;
+    &:hover {
+        background-color: #1A4BB3;
+        border: 1.5px solid #1A4BB3;
+        color: #FFFFFF;
+    }
 }
 
 .btn-admin-new-delete {
-    background: #DA3232;
-    border: none;
     border-radius: 10px;
-    opacity: .76;
-    height: 35px;
-    width: 30%;
+    height: 37px;
+    width: 32%;
+    background-color: #FFFFFF;
+    border: 1.5px solid #DA3232;
+    color: #DA3232;
+
+    &:hover {
+        background-color: #DA3232;
+        border: 1.5px solid #DA3232;
+        color: #FFFFFF;
+    }
 }
 
-.btn-admin-new-redirect {
-    background: #1A8FB3;
-    border: none;
-    border-radius: 10px;
-    opacity: .70;
-    height: 35px;
-    width: 30%;
-}
 
 .btn_form_new {
     width: 150px;
     background: #1A4BB3;
     border: none;
     border-radius: 10px;
-    opacity: .76;
     height: 40px;
 }
 
@@ -93,4 +94,39 @@
 }
 .del-photo{
     color: #FF0000;
+}
+.cnt-admin-name-new{
+    height: 95px;
+}
+.admin-name-new{
+    font-size: 18px;
+    -webkit-line-clamp: 3;
+    /* Число отображаемых строк */
+    display: -webkit-box;
+    /* Включаем флексбоксы */
+    -webkit-box-orient: vertical;
+    /* Вертикальная ориентация */
+    overflow: hidden;
+    /* Обрезаем все, что не помещается в область */
+}
+.name-count-photo{
+    font-size: 18px;
+}
+.title-add-new{
+    font-size: 20px;
+
+}
+.btn-admin-new-archive{
+    border-radius: 10px;
+    height: 37px;
+    width: 32%;
+    background-color: #FFFFFF;
+    border: 1.5px solid #000000;
+    color: #000000;
+
+    &:hover {
+        background-color: #EAE9EF;
+        color: #000000;
+        border: 1.5px solid #000000;
+    }
 }

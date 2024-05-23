@@ -1,0 +1,72 @@
+.cnt-ed-material {
+    width: 90%;
+}
+
+.file-in-cnt-info {
+    font-size: 70px;
+}
+
+.material-cnt {
+    background-color: #FFFFFF;
+}
+
+.doc-icon {
+    font-size: 25px;
+}
+
+.name-material {
+    font-size: 18px;
+    font-size: 18px;
+    max-width: 100%;
+    max-height: 100%;
+    display: inline-block;
+    white-space: nowrap;
+    /* Запрещаем перенос строк */
+    overflow: hidden;
+    /* Обрезаем все, что не помещается в область */
+    text-overflow: ellipsis;
+    /* Добавляем многоточие */
+    cursor: pointer;
+
+    &:hover {
+        color: #000080 !important;
+        border-bottom: 1px solid #000080;
+    }
+
+}
+
+.download-material-icon {
+    font-size: 25px;
+    color: #1A4BB3;
+    cursor: pointer;
+
+    &:hover {
+        color: #000080 !important;
+    }
+}
+
+.material-name-icon {
+    width: 80%;
+}
+
+.info_material_user {
+    background-color: #EAE9EF;
+    border-radius: 20px;
+}
+
+.description-materials {
+    font-size: 18px;
+}
+
+.btn_go_to_test {
+    width: 300px;
+    height: 45px;
+    border-radius: 30px;
+    color: #FFFFFF;
+    background-color: #1A4BB3;
+    border: 1px solid #1A4BB3;
+    &:hover {
+        background-color: #FFFFFF;
+        color: #1A4BB3;
+    }
+}

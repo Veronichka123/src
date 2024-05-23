@@ -1,18 +1,19 @@
-body{
-    overflow-x:hidden;
+.main-cnt-erequest-service {
+    width: 90%;
 }
-.info_reguest_user{
+
+.info_reguest_user {
     background-color: #F5F5F5;
     border: 3px solid rgba(213, 213, 213, .6);
     width: 96%;
     border-radius: 30px;
 }
 
-.description-reguest{
+.description-reguest {
     font-size: 18px;
 }
 
-.btn_reguest{
+.btn_reguest {
     background: #1A4BB3;
     border: none;
     border-radius: 10px;
@@ -21,17 +22,34 @@ body{
     width: 180px;
 }
 
-.my_reguest{
+.my_reguest {
     width: 96%;
     margin-right: 4%;
 }
 
-.request-title{
+.request-title {
     font-size: 16px;
     color: rgba(0, 0, 0, .65)
 }
-.success-reguest{
+
+.success-reguest {
     color: #6F9965;
 }
-
-
+.btn_go_to_service {
+    width: 200px;
+    height: 45px;
+    border-radius: 30px;
+    color: #FFFFFF;
+    background-color: #1A4BB3;
+    border: 1px solid #1A4BB3;
+    &:hover {
+        background-color: #FFFFFF;
+        color: #1A4BB3;
+    }
+}
+.request-table{
+    max-width: 100%;
+}
+.size-table-text{
+    font-size: 16px;
+}

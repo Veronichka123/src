@@ -122,7 +122,7 @@ function New(props) {
                                 : newsData.pictures.map((picture, i) => (
                                     <Col>
                                         <Container fluid className="preview-photo p-0 mt-3" onClick={handleShowImage} data-index={i} data-gallery={false}>
-                                            <div className='go-to-preview-photo d-flex justify-content-center align-items-center'><i className='bi bi-arrows-angle-expand text-light opacity-75 image_disabled'></i></div>
+                                            <div className='go-to-preview-photo d-flex justify-content-center align-items-center image_disabled'><i className='bi bi-arrows-angle-expand text-light opacity-75 image_disabled'></i></div>
                                             <Image
                                                 src={picture.pictureLink}
                                                 height="100%"

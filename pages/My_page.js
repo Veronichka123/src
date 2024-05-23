@@ -44,15 +44,15 @@ function My_page(props) {
     }
 
     return (
-        <Container fluid>
+        <Container fluid className='main-cnt-my-page p-0'>
+            <Container className='mt-2 d-flex justify-content-center' >
+                <p className='border-bottom p-2 border-primary border-opacity-50 main-section-title'>ПРОФИЛЬ</p>
+            </Container>
             {user ?
-                <Row>
-                    <Col xs={4}><Sidebar /></Col>
-                    <Col xs={8}>
-                        <Container className='mt-2 d-flex justify-content-center' >
-                            <h5 className='border-bottom p-2 border-primary border-opacity-50'>ПРОФИЛЬ</h5>
-                        </Container>
-                        <Container className='content_for_profile mt-2 px-5 py-4 '>
+                <Row className='mt-3'>
+                    <Col xs={3} sm={3} md={5} lg={3}><Sidebar/></Col>
+                    <Col xs={9} sm={9} md={7} lg={9}>
+                        
                             <Container className='bg-white info_user mx-1 px-5 py-4 shadow-sm'>
                                 <h5 className='mb-3'>{user['name'] + ' ' + user['surname'] + ' ' + user['patronymic']}</h5>
                                 <p className='text-secondary lead time_registration'>Зарегистрирован с
@@ -84,9 +84,6 @@ function My_page(props) {
                                 />
                             </Container>
 
-
-
-                        </Container>
                     </Col>
                 </Row>
                 : ''}

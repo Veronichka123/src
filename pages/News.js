@@ -29,6 +29,14 @@ function News(props) {
 
     const [searchQuery, setSearchQuery] = useState(searchParams.get("search") ? searchParams.get("search").split(',').join(' ') : "");
 
+    const [selectDate, setSelectDate] = useState([{name: "Дате (новые)", value: "desc"}, {name: "Дате (старые)", value: "asc"}]);
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        window.addEventListener("resize", (event) => setWindowWidth(window.innerWidth));
+    })
+
     //Получаем количество созданных новостей
     useEffect(() => {
         let path = "/news/count";
@@ -66,9 +74,10 @@ function News(props) {
     useEffect(() => {
         if(!selectedPage) return;
         let query = searchParams.get("search") ?  `&query=${searchParams.get("search")}` : "";
+        let sort = searchParams.get("sort") ?  `&sort=${searchParams.get("sort")}` : "&sort=desc";
 
         axios
-            .get("/news?page=" + selectedPage + "&limit=" + newsPerPage + query)
+            .get("/news?page=" + selectedPage + "&limit=" + newsPerPage + query + sort)
             .then((response) => {
                 setAllNews(response.data);
             })
@@ -81,7 +90,7 @@ function News(props) {
         window.location.assign("/new?newsId=" + e.target.dataset.newsid)
     }
 
-    const changeLocation = (page, query) => {
+    const changeLocation = (page, query, sort) => {
         let location = '?';
 
         if(page == null && searchParams.get("page")){
@@ -92,48 +101,65 @@ function News(props) {
         }
 
         if(query == null && searchParams.get("search")){
-            location += `search=${searchParams.get("search")}`;
+            location += `search=${searchParams.get("search")}&`;
         }
         else if (query != null){
-            location += `search=${query}`;
+            location += `search=${query}&`;
+        }
+
+        if(sort == null && searchParams.get("sort")){
+            location += `sort=${searchParams.get("sort")}`;
+        }
+        else if (sort != null){
+            location += `sort=${sort}`;
         }
 
         window.location.assign(window.location.pathname + location);
     }
 
+
+    //перейти на выбранный номер пагинации
     const handlePaginationClick = (e) => {
-        changeLocation(parseInt(e.target.dataset.page), null);
+        changeLocation(parseInt(e.target.dataset.page), null, null);
     }
 
     //Перейти на предыдущую страничку
     const handlePrevPageClick = () => {
-        changeLocation(parseInt(selectedPage) - 1, null);
+        changeLocation(parseInt(selectedPage) - 1, null, null);
     }
 
     //Перейти на следующую страничку
     const handleNextPageClick = () => {
-        changeLocation(parseInt(selectedPage) + 1, null);
+        changeLocation(parseInt(selectedPage) + 1, null, null);
     }
 
     //Перейти на первую страничку
     const handleFirstPageClick = () => {
-        changeLocation(1, null);
+        changeLocation(1, null, null);
     }
 
     //Перейти на последнюю страничку
     const handleLastPageClick = () => {
-        changeLocation(pageCount, null);
+        changeLocation(pageCount, null, null);
+    }
+
+   //изменить сортировку по дате 
+    const handleDateChange = (e) => {
+        const index = selectDate.findIndex(select => select.name === e.target.value)
+        changeLocation(1, null, selectDate[index].value);
     }
 
     //Нажатие на кнопку поиска
     const handleSearch = (e) => {
         if((!searchQuery || searchQuery === "") && !searchParams.get("search")) return;
+
         else if(searchParams.get("search") && searchQuery === ""){
-            changeLocation(1, null);
+            changeLocation(1, null, null);
         }
+
         let queryLines = searchQuery.split(' ');
 
-        changeLocation(1, queryLines.join(','));
+        changeLocation(1, queryLines.join(',').replace(',,', ','), null);
     }
 
     //При вводе в поисковую строку меняем переменную
@@ -209,6 +235,27 @@ function News(props) {
         return content;
     }
 
+    //Подготовка массива с элементами для последующего отображения пагинации
+    const getPaginationItemsForPhone = () => {
+        let content = [];
+
+        let currentPage = parseInt(selectedPage);
+
+        if(currentPage != 1){
+            content.push(<Pagination.First onClick={handleFirstPageClick} className='paginationItemStyle me-1' />);
+            content.push(<Pagination.Prev onClick={handlePrevPageClick} className='paginationItemStyle me-1' />);
+        }
+        
+        content.push(<Pagination.Item data-page={selectedPage} active className='paginationItemStyle me-1'>{selectedPage}</Pagination.Item>);
+        
+        if (currentPage != pageCount){
+            content.push(<Pagination.Next onClick={handleNextPageClick} className='paginationItemStyle me-1' />);
+            content.push(<Pagination.Last onClick={handleLastPageClick} className='paginationItemStyle' />);
+        } 
+
+        return content;
+    }
+
     return (
         <>
             <Container className='cont-news mt-0 px-0 pb-4' fluid>
@@ -226,11 +273,11 @@ function News(props) {
                     <hr className='hrsearch'></hr>
                     <Container fluid className='d-flex justify-content-start'>
                         <p className='my-auto me-3'>Сортировать по: </p>
-                        <Form.Select className='select-sort '>
-                            <option defaultValue="1">Дате (новые)</option>
-                            <option defaultValue="2">Дате (старые)</option>
+                        <Form.Select className='select-sort' onChange={handleDateChange}>
+                            {selectDate.map((select) => (
+                                <option selected={select.value === searchParams.get("sort")} defaultValue={select.value}>{select.name}</option>
+                            ))}
                         </Form.Select>
-
                     </Container>
                 </Container>
 
@@ -266,10 +313,18 @@ function News(props) {
                 </Row>
                 <Pagination className='d-flex justify-content-center mt-5'>
                     {allNews ? 
+                        windowWidth < 550 ? 
+                        getPaginationItemsForPhone()
+                        :
                         getPaginationItems()
                     : ""}
-
                 </Pagination>
+                    {
+                        windowWidth < 550 && allNews ? 
+                        <p className='text-center'>Показана страница {selectedPage} из {pageCount}</p>
+                        :
+                        ""
+                    }
             </Container>
             <Routes>
                 <Route exact path='/new' Component={New} />

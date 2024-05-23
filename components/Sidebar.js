@@ -6,6 +6,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import requests from '../pages/RequestsService';
 import testing from '../pages/Testing';
 import panel_admin from '../pages/Panel_admin';
+import Educational_materials from '../pages/Educational_materials';
 import axios from 'axios';
 
 class Sidebar extends Component {
@@ -45,56 +46,56 @@ class Sidebar extends Component {
             <>
             <div className='container-fluid sid'>
                 <div className='row'>
-                    <div className='bg-white col-auto  mt-2 d-flex justify-content-between flex-column shadow sidebar-sh'>
-                        <a href='/' className='text-decoration-none text-dark d-flex d-none d-sm-inline mt-3 align-itemcenter'>
-                            <span className='ms-1 fs-4'>Меню</span>
+                    <div className='bg-white col-auto d-flex justify-content-between flex-column shadow sidebar-sh p-3'>
+                        <a href='/' className='text-decoration-none text-dark d-flex d-none d-md-inline align-itemcenter'>
+                            <span className='fs-4'>Меню</span>
                         </a>
-                        <hr className='text-secondary d-none d-sm-inline'></hr>
+                        <hr className='text-secondary d-none d-md-inline'></hr>
                         <ul className="nav nav-pills flex-column">
-                            <li className="nav-item text-white fs-4 mt-3">
-                                <a href="/" className="nav-link text-dark fs-5" aria-current="page">
-                                    <i className='bi bi-house-door'></i>
-                                    <span className='ms-2 d-none d-sm-inline'>Главная</span>
+                            <li className="nav-item text-white fs-6 cnt-names-sect">
+                                <a href="/" className="nav-link text-dark fs-5 p-1 cnt-icon-text-sidebar" aria-current="page">
+                                    <i className='bi bi-house-door icon-sidebar'></i>
+                                    <p className='ms-2 d-none d-md-inline text-sidebar'>Главная</p>
                                 </a>
                             </li>
-                            <li className="nav-item text-white fs-4 mt-3">
-                                <a href="/" className="nav-link text-dark fs-5" aria-current="page">
-                                    <i className='bi bi-book'></i>
-                                    <span className='ms-2 d-none d-sm-inline'>Учебные материалы</span>
+                            <li className="nav-item text-white fs-1 mt-2 cnt-names-sect">
+                                <a href="/educational_materials" className="nav-link text-dark fs-5 p-1 cnt-icon-text-sidebar" aria-current="page">
+                                    <i className='bi bi-book icon-sidebar'></i>
+                                    <p className='ms-2 d-none d-md-inline text-sidebar'>Учебные материалы</p>
                                 </a>
                             </li>
-                            <li className="nav-item text-white fs-4 mt-3">
-                                <a href="/testing" className="nav-link text-dark fs-5" aria-current="page">
-                                    <i className='bi bi-card-list'></i>
-                                    <span className='ms-2 d-none d-sm-inline'>Тренировочные тесты</span>
+                            <li className="nav-item text-white fs-4 mt-2 cnt-names-sect">
+                                <a href="/testing" className="nav-link text-dark fs-5 p-1 cnt-icon-text-sidebar" aria-current="page">
+                                    <i className='bi bi-card-list icon-sidebar'></i>
+                                    <p className='ms-2 d-none d-md-inline text-sidebar'>Тренировочные тесты</p>
                                 </a>
                             </li>
-                            <li className="nav-item text-white fs-4 mt-3">
-                                <a href="/requests" className="nav-link text-dark fs-5" aria-current="page">
-                                    <i className='bi bi-clipboard-check'></i>
-                                    <span className='ms-2 d-none d-sm-inline'>Заявки</span>
+                            <li className="nav-item text-white fs-4 mt-2 cnt-names-sect">
+                                <a href="/requests" className="nav-link text-dark fs-5 p-1 cnt-icon-text-sidebar" aria-current="page">
+                                    <i className='bi bi-clipboard-check icon-sidebar'></i>
+                                    <p className='ms-2 d-none d-md-inline text-sidebar'>Заявки</p>
                                 </a>
                             </li>
-                            {this.state.role == "ROLE_ADMIN" ? <li className="nav-item text-white fs-4 mt-3">
-                                <a href="panel_admin" className="nav-link text-dark fs-5" aria-current="page">
-                                    <i className='bi bi-person-lines-fill'></i>
-                                    <span className='ms-2 d-none d-sm-inline'>Панель администратора</span>
+                            {this.state.role == "ROLE_ADMIN" ? <li className="nav-item text-white fs-4 mt-2 cnt-names-sect">
+                                <a href="panel_admin" className="nav-link text-dark fs-5 p-1 cnt-icon-text-sidebar" aria-current="page">
+                                    <i className='bi bi-person-lines-fill icon-sidebar'></i>
+                                    <p className='ms-2 d-none d-md-inline text-sidebar'>Панель администратора</p>
                                 </a>
                             </li> :
                             ''}
                             
-                            <li className="nav-item text-white fs-4 mt-3">
-                                <a href="/" className="nav-link text-dark fs-5" aria-current="page">
-                                    <i className='bi bi-gear'></i>
-                                    <span className='ms-2 d-none d-sm-inline'>Настройки</span>
+                            <li className="nav-item text-white fs-4 mt-2 cnt-names-sect">
+                                <a href="/" className="nav-link text-dark fs-5 p-1 cnt-icon-text-sidebar" aria-current="page">
+                                    <i className='bi bi-gear icon-sidebar'></i>
+                                    <p className='ms-2 d-none d-md-inline text-sidebar'>Настройки</p>
                                 </a>
                             </li>
 
-                            <hr className='text-secondary mt-5'></hr>
-                            <li className="nav-item text-white fs-4 mt-2 mb-4" onClick={this.logout}>
-                                <a href="/" className="nav-link text-dark fs-5" aria-current="page">
-                                    <i className='bi bi-box-arrow-left'></i>
-                                    <span className='ms-2 d-none d-sm-inline'>Выход</span>
+                            <hr className='text-secondary mt-3 hr-with-out'></hr>
+                            <li className="nav-item text-white fs-4 " onClick={this.logout}>
+                                <a href="/" className="nav-link text-dark fs-5 p-1 cnt-icon-text-sidebar" aria-current="page">
+                                    <i className='bi bi-box-arrow-left icon-sidebar'></i>
+                                    <p className='ms-2 d-none d-md-inline text-sidebar'>Выход</p>
                                 </a>
                             </li>
 
@@ -109,6 +110,7 @@ class Sidebar extends Component {
                 <Route exact path='/requests' Component={requests} />
                 <Route exact path='/testing' Component={testing} />
                 <Route exact path='/panel_admin' Component={panel_admin} />
+                <Route exact path='/educational_materials' Component={Educational_materials} />
             </Routes>
             </>
         );

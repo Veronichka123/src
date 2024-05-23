@@ -1,34 +1,42 @@
+.main-cnt-request-admin{
+    width: 90%;
+}
 .btn-new-requests {
     width: 33.3%;
-    background: #BFCCEE;
-    border: 0.5px solid #5189CC;
+    background: #FFFFFF;
+    border: 1px solid #1A4BB3;
     border-radius: 10px 0px 0px 10px;
-    color: black;
+    color: #1A4BB3;
+    font-size: 18px;
     height: 70px;
 }
 
+
 .btn-accepted-requests {
     width: 33.3%;
-    background: #BFCCEE;
-    border: 0.5px solid #5189CC;
+    background: #FFFFFF;
+    border: 1px solid #1A4BB3;
     border-radius: 0px 0px 0px 0px;
-    color: black;
+    color: #1A4BB3;
+    font-size: 18px;
     height: 70px;
 }
 
 .btn-rejected-requests {
     width: 33.3%;
-    background: #BFCCEE;
-    border: 0.5px solid #5189CC;
+    background: #FFFFFF;
+    border: 1px solid #1A4BB3;
     border-radius: 0px 10px 10px 0px;
-    color: black;
+    color: #1A4BB3;
+    font-size: 18px;
     height: 70px;
 }
 
+
+
 .cont-new-requests {
-    background: #F5F5F5;
+    background: #FFFFFF;
     border-radius: 20px;
-    border: 3px solid rgba(81, 137, 204, .4);
 }
 
 .btn-accept-request {
@@ -36,7 +44,6 @@
     background: #1A4BB3;
     border: none;
     border-radius: 10px;
-    opacity: .76;
     height: 40px;
 }
 
@@ -45,18 +52,17 @@
     background: #DA3232;
     border: none;
     border-radius: 10px;
-    opacity: .76;
     height: 40px;
 }
 
 .cont-accept-requests {
-    background: #F5F5F5;
+    background: #FFFFFF;
     border-radius: 20px;
-    border: 3px solid rgba(111, 153, 101, .5);
+   
 }
 
 .cont-reject-requests {
-    background: #F5F5F5;
+    background: #FFFFFF;
     border-radius: 20px;
-    border: 3px solid rgba(218, 50, 50, .5);
+    
 }
