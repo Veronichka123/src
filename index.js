@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import axios from 'axios';
 
-axios.defaults.baseURL = "http://93.181.255.38:8080";
+axios.defaults.baseURL = "http://93.181.241.170:8080";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

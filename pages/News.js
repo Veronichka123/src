@@ -29,7 +29,7 @@ function News(props) {
 
     const [searchQuery, setSearchQuery] = useState(searchParams.get("search") ? searchParams.get("search").split(',').join(' ') : "");
 
-    const [selectDate, setSelectDate] = useState([{name: "Дате (новые)", value: "desc"}, {name: "Дате (старые)", value: "asc"}]);
+    const [selectDate, setSelectDate] = useState([{ name: "Дате (новые)", value: "desc" }, { name: "Дате (старые)", value: "asc" }]);
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -40,8 +40,8 @@ function News(props) {
     //Получаем количество созданных новостей
     useEffect(() => {
         let path = "/news/count";
-        
-        if(searchParams.get("search")){
+
+        if (searchParams.get("search")) {
             path += `?query=${searchParams.get("search")}`;
         }
 
@@ -61,20 +61,20 @@ function News(props) {
     }, [newsCount]);
 
     useEffect(() => {
-        if(searchParams.get("page")){
-            if(searchParams.get("page") < 1) setSelectedPage(1);
-            else if(searchParams.get("page") > pageCount) setSelectedPage(pageCount);
+        if (searchParams.get("page")) {
+            if (searchParams.get("page") < 1) setSelectedPage(1);
+            else if (searchParams.get("page") > pageCount) setSelectedPage(pageCount);
             else setSelectedPage(searchParams.get("page"))
         }
-        else{
+        else {
             setSelectedPage(1);
         }
     }, [pageCount]);
 
     useEffect(() => {
-        if(!selectedPage) return;
-        let query = searchParams.get("search") ?  `&query=${searchParams.get("search")}` : "";
-        let sort = searchParams.get("sort") ?  `&sort=${searchParams.get("sort")}` : "&sort=desc";
+        if (!selectedPage) return;
+        let query = searchParams.get("search") ? `&query=${searchParams.get("search")}` : "";
+        let sort = searchParams.get("sort") ? `&sort=${searchParams.get("sort")}` : "&sort=desc";
 
         axios
             .get("/news?page=" + selectedPage + "&limit=" + newsPerPage + query + sort)
@@ -93,24 +93,24 @@ function News(props) {
     const changeLocation = (page, query, sort) => {
         let location = '?';
 
-        if(page == null && searchParams.get("page")){
+        if (page == null && searchParams.get("page")) {
             location += `page=${searchParams.get("page")}&`;
         }
-        else if (page != null){
+        else if (page != null) {
             location += `page=${page}&`;
         }
 
-        if(query == null && searchParams.get("search")){
+        if (query == null && searchParams.get("search")) {
             location += `search=${searchParams.get("search")}&`;
         }
-        else if (query != null){
+        else if (query != null) {
             location += `search=${query}&`;
         }
 
-        if(sort == null && searchParams.get("sort")){
+        if (sort == null && searchParams.get("sort")) {
             location += `sort=${searchParams.get("sort")}`;
         }
-        else if (sort != null){
+        else if (sort != null) {
             location += `sort=${sort}`;
         }
 
@@ -143,7 +143,7 @@ function News(props) {
         changeLocation(pageCount, null, null);
     }
 
-   //изменить сортировку по дате 
+    //изменить сортировку по дате 
     const handleDateChange = (e) => {
         const index = selectDate.findIndex(select => select.name === e.target.value)
         changeLocation(1, null, selectDate[index].value);
@@ -151,9 +151,9 @@ function News(props) {
 
     //Нажатие на кнопку поиска
     const handleSearch = (e) => {
-        if((!searchQuery || searchQuery === "") && !searchParams.get("search")) return;
+        if ((!searchQuery || searchQuery === "") && !searchParams.get("search")) return;
 
-        else if(searchParams.get("search") && searchQuery === ""){
+        else if (searchParams.get("search") && searchQuery === "") {
             changeLocation(1, null, null);
         }
 
@@ -163,17 +163,17 @@ function News(props) {
     }
 
     //При вводе в поисковую строку меняем переменную
-    const handleSearchChange = (e) => { 
+    const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     }
 
     //Элемент пагинации (цифра 1, 2, 3 и тд)
     const getPaginationItem = (i, currentPage) => {
-        if(i + 1 == currentPage){
-            return <Pagination.Item active data-page={(i+1)} className='paginationItemStyle me-1'>{i + 1}</Pagination.Item>;
+        if (i + 1 == currentPage) {
+            return <Pagination.Item active data-page={(i + 1)} className='paginationItemStyle me-1'>{i + 1}</Pagination.Item>;
         }
-        else{
-            return<Pagination.Item data-page={(i+1)} onClick={handlePaginationClick} className='paginationItemStyle me-1'>{i + 1}</Pagination.Item>;
+        else {
+            return <Pagination.Item data-page={(i + 1)} onClick={handlePaginationClick} className='paginationItemStyle me-1'>{i + 1}</Pagination.Item>;
         }
     }
 
@@ -195,42 +195,42 @@ function News(props) {
 
         let currentPage = parseInt(selectedPage);
 
-        if(currentPage != 1){
+        if (currentPage != 1) {
             content.push(<Pagination.First onClick={handleFirstPageClick} className='paginationItemStyle me-1' />);
             content.push(<Pagination.Prev onClick={handlePrevPageClick} className='paginationItemStyle me-1' />);
         }
 
-        if(pageCount <= 9){
+        if (pageCount <= 9) {
             for (let i = 0; i < pageCount; i++) {
                 content.push(getPaginationItem(i, currentPage));
             }
         }
-        else if(currentPage - 3 <= 2){
+        else if (currentPage - 3 <= 2) {
             for (let i = 0; i < 7; i++) {
                 content.push(getPaginationItem(i, currentPage));
             }
 
             getLastPaginationItems(content);
         }
-        else if(currentPage + 3 > pageCount - 2){
+        else if (currentPage + 3 > pageCount - 2) {
             getFirstPaginationItems(content);
             for (let i = pageCount - 7; i < pageCount; i++) {
                 content.push(getPaginationItem(i, currentPage));
             }
         }
 
-        else{
+        else {
             getFirstPaginationItems(content);
             for (let i = currentPage - 3; i < currentPage + 2; i++) {
                 content.push(getPaginationItem(i, currentPage));
             }
             getLastPaginationItems(content);
         }
-        
-        if (currentPage != pageCount){
+
+        if (currentPage != pageCount) {
             content.push(<Pagination.Next onClick={handleNextPageClick} className='paginationItemStyle me-1' />);
             content.push(<Pagination.Last onClick={handleLastPageClick} className='paginationItemStyle' />);
-        } 
+        }
 
         return content;
     }
@@ -241,19 +241,67 @@ function News(props) {
 
         let currentPage = parseInt(selectedPage);
 
-        if(currentPage != 1){
+        if (currentPage != 1) {
             content.push(<Pagination.First onClick={handleFirstPageClick} className='paginationItemStyle me-1' />);
             content.push(<Pagination.Prev onClick={handlePrevPageClick} className='paginationItemStyle me-1' />);
         }
-        
+
         content.push(<Pagination.Item data-page={selectedPage} active className='paginationItemStyle me-1'>{selectedPage}</Pagination.Item>);
-        
-        if (currentPage != pageCount){
+
+        if (currentPage != pageCount) {
             content.push(<Pagination.Next onClick={handleNextPageClick} className='paginationItemStyle me-1' />);
             content.push(<Pagination.Last onClick={handleLastPageClick} className='paginationItemStyle' />);
-        } 
+        }
 
         return content;
+    }
+
+    const getDate = (news) => {
+        const months = {
+            1: 31,
+            2: 28,
+            3: 31,
+            4: 30,
+            5: 31,
+            6: 30,
+            7: 31,
+            8: 31,
+            9: 30,
+            10: 31,
+            11: 30,
+            12: 31
+        }
+
+        let hour = parseInt(news.creationDateTime.substring(11, 13)) + 3;
+        let minute = parseInt(news.creationDateTime.substring(14, 16));
+        let day = parseInt(news.creationDateTime.substring(8, 10));
+        let month = parseInt(news.creationDateTime.substring(5, 7));
+        let year = parseInt(news.creationDateTime.substring(0, 4));
+
+        if (hour >= 24) {
+            hour = hour - 24;
+
+            day++;
+
+            if (day > months[month]) {
+                console.log(news);
+                console.log(months[month]);
+                if (month == 2 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)) {
+                    day = 29;
+                }
+                else {
+                    month++;
+                    day = 1;
+                }
+
+                if (month > 12) {
+                    month = 1;
+                    year++;
+                }
+            }
+        }
+
+        return `${hour < 10 ? '0' + hour : hour}:${minute < 10 ? '0' + minute : minute} | ${day < 10 ? '0' + day : day}.${month < 10 ? '0' + month : month}.${year < 10 ? '0' + year : year}`;
     }
 
     return (
@@ -286,10 +334,10 @@ function News(props) {
                         <Col className='p-0'>
                             <Container fluid className='d-flex justify-content-center mt-4'>
                                 <Container fluid className='new-card shadow p-5 mx-0 d-flex flex-column'>
-                                    <h5>{news.title}</h5>
-                                    <p className='text-secondary fw-light'>{parseInt(news.creationDateTime.substring(11, 13)) + 3}:{news.creationDateTime.substring(14, 16)} | {' ' + news.creationDateTime.substring(8, 10) + '.' +
-                                        news.creationDateTime.substring(5, 7) + '.' +
-                                        news.creationDateTime.substring(0, 4)}</p>
+                                    <Container className='cnt-title-news p-0'>
+                                        <h5>{news.title}</h5>
+                                    </Container>
+                                    <p className='text-secondary fw-light'>{getDate(news)}</p>
 
                                     {news.pictures && news.pictures.length > 0 ?
 
@@ -304,7 +352,12 @@ function News(props) {
                                         : ""
                                     }
 
-                                    <p className='mt-2 text-break'>{news.content.length > 150 ? news.content.substring(0, 150) + "..." : news.content}</p>
+                                    {news.pictures && news.pictures.length > 0 ?
+
+                                        <p className='mt-2 text-break' style={{ whiteSpace: "pre-line" }}>{news.content.length > 150 ? news.content.substring(0, 150) + "..." : news.content}</p>
+                                        :
+                                        <p className='mt-2 text-break' style={{ whiteSpace: "pre-line" }}>{news.content.length > 800 ? news.content.substring(0, 800) + "..." : news.content}</p>
+                                    }
                                     <Button className='btn-go-to-new mt-auto' onClick={goToNews} data-newsId={news.id}>Узнать больше</Button>
                                 </Container>
                             </Container>
@@ -312,19 +365,19 @@ function News(props) {
                     )) : "Новостей нет"}
                 </Row>
                 <Pagination className='d-flex justify-content-center mt-5'>
-                    {allNews ? 
-                        windowWidth < 550 ? 
-                        getPaginationItemsForPhone()
-                        :
-                        getPaginationItems()
-                    : ""}
+                    {allNews ?
+                        windowWidth < 550 ?
+                            getPaginationItemsForPhone()
+                            :
+                            getPaginationItems()
+                        : ""}
                 </Pagination>
-                    {
-                        windowWidth < 550 && allNews ? 
+                {
+                    windowWidth < 550 && allNews ?
                         <p className='text-center'>Показана страница {selectedPage} из {pageCount}</p>
                         :
                         ""
-                    }
+                }
             </Container>
             <Routes>
                 <Route exact path='/new' Component={New} />

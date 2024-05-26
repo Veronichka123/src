@@ -415,7 +415,7 @@ function Service_admin(props) {
                     show={ShowCreateChapter}
                     onHide={() => { SetShowCrChapter(false); setErrors({ sectionName: "", serviceName: "", serviceCost: "", serviceDescription: "" }) }}>
                     <Modal.Header closeButton>
-                        <Modal.Title>
+                        <Modal.Title className='admin-service-modal-title'>
                             Добавить раздел
                         </Modal.Title>
                     </Modal.Header>
@@ -435,7 +435,7 @@ function Service_admin(props) {
                     show={ShowEditChapter}
                     onHide={() => { SetShowEdChapter(false); setErrors({ sectionName: "", serviceName: "", serviceCost: "", serviceDescription: "" }) }}>
                     <Modal.Header closeButton>
-                        <Modal.Title>
+                        <Modal.Title className='admin-service-modal-title'>
                             Изменить раздел
                         </Modal.Title>
                     </Modal.Header>
@@ -454,7 +454,7 @@ function Service_admin(props) {
                     show={ShowCreateService}
                     onHide={() => { SetShowCrService(false); setErrors({ sectionName: "", serviceName: "", serviceCost: "", serviceDescription: "" }) }}>
                     <Modal.Header closeButton>
-                        <Modal.Title>
+                        <Modal.Title className='admin-service-modal-title'>
                             Добавить услугу
                         </Modal.Title>
                     </Modal.Header>
@@ -481,7 +481,7 @@ function Service_admin(props) {
                     show={ShowEditService}
                     onHide={() => { SetShowEdService(false); setErrors({ sectionName: "", serviceName: "", serviceCost: "", serviceDescription: "" }) }}>
                     <Modal.Header closeButton>
-                        <Modal.Title>
+                        <Modal.Title className='admin-service-modal-title'>
                             Изменить услугу
                         </Modal.Title>
                     </Modal.Header>

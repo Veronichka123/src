@@ -21,8 +21,9 @@
 }
 
 .request-control-input {
-    background-color: #EFF4FB;
-    border: 0;
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1.5px solid #1A4BB3;
     border-radius: 10px;
     height: 45px;
 }
@@ -32,7 +33,6 @@
     background: #1A4BB3;
     border: none;
     border-radius: 10px;
-    opacity: .76;
     height: 40px;
 }
 
@@ -72,6 +72,10 @@
     font-size: 22px;
     background-color: #FFFFFF;
     border-radius: 20%;
+}
+
+.sevice-modal-title{
+    color: #1A4BB3;
 }
 
 @media (orientation: portrait){

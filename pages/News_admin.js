@@ -257,7 +257,7 @@ function News_admin(props) {
                                         <Col>
                                             <Container className='admin-card-new px-5 py-4 mb-4 shadow rounded'>
                                                 <Container fluid className='cnt-admin-name-new p-0'>
-                                                <p className='mb-1 admin-name-new'><span className="fw-bold">Наименование:</span> {news.title}</p>
+                                                    <p className='mb-1 admin-name-new'><span className="fw-bold">Наименование:</span> {news.title}</p>
                                                 </Container>
                                                 <p className='mb-1 name-count-photo'><span className="fw-bold">Дата создания: </span>{
                                                     ' ' + news.creationDateTime.substring(8, 10) + '.' +
@@ -288,21 +288,21 @@ function News_admin(props) {
                     onHide={() => { SetShowCrNew(false); setErrors({ title: "", content: "", albumLink: "", pictures: "" }) }}
                     size="lg">
                     <Modal.Header closeButton>
-                        <Modal.Title>
+                        <Modal.Title className='news-modal-title'>
                             Создание новости
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form className='pt-4'>
                             <Form.Group controlId='NameChapter'>
-                                <Form.Control type='text' placeholder='Введите название новости' name="title" onChange={handleChange} className='new-control-input' />
+                                <Form.Control type='text' placeholder='Введите название новости' name="title" onChange={handleChange} className='new-control-input shadow-sm' />
                                 <Form.Label className='mb-3 mx-1 text-danger'>{errors.title}</Form.Label>
-                                <Form.Control as="textarea" placeholder='Введите содержание новости' name="content" onChange={handleChange} className='new-description-input' />
+                                <Form.Control as="textarea" placeholder='Введите содержание новости' name="content" onChange={handleChange} className='new-description-input shadow-sm' />
                                 <Form.Label className='mb-3 mx-1 text-danger'>{errors.content}</Form.Label>
                                 <InputGroup>
                                     <Form.Control
                                         placeholder="Вставьте ссылку на альбом"
-                                        className='new-control-input'
+                                        className='shadow-sm new-control-input'
                                         name="albumLink"
                                         onChange={handleChange}
                                     />
@@ -316,7 +316,7 @@ function News_admin(props) {
                         </Form>
                         <Container fluid className='container-phonos-links scrollspy-example scrollspy-example' >
                             {newsData.pictures.length > 0 ? newsData.pictures.map((picture, i) => (
-                                <Container className='link-photo-for-news d-flex mt-3  align-items-center text-wrap'>
+                                <Container className='link-photo-for-news d-flex mt-3  align-items-center text-wrap shadow-sm'>
                                     {picture.mainPicture ?
                                         <Form.Check
                                             data-index={i}
@@ -344,12 +344,14 @@ function News_admin(props) {
                                         alt='Logo'
                                     /></div>
                                     <p className='p-2 d-flex align-items-center m-0'>Фото {i + 1}</p>
-                                    <a href={picture.pictureLink} target="_blank"><p className='p-2 d-flex align-items-center m-0 text-break'>{picture.pictureLink}</p></a>
-                                    <Button className="ms-auto p-2 del-photo d-flex align-items-center m-0" data-index={i} onClick={handleDeletePicture}>Удалить фото</Button>
+                                    <Container className='cnt-for-link'>
+                                        <a href={picture.pictureLink} target="_blank"><p className='p-2 d-flex align-items-center m-0 text-break link-to-photo'>{picture.pictureLink}</p></a>
+                                    </Container>
+                                    <Button className="ms-auto p-2 del-photo d-flex align-items-center m-0" data-index={i} onClick={handleDeletePicture}><i class="bi bi-x"></i></Button>
                                 </Container>
                             )) : <p className='mx-1 my-2'>Тут будут отображаться фото с альбома</p>}
                         </Container>
-                        <Button className="mt-3 mb-2 btn_form_new" onClick={handleCreateNews}>Сохранить</Button>
+                        <Button className="mt-3 mb-2 btn_form_new shadow-sm" onClick={handleCreateNews}>Сохранить</Button>
                     </Modal.Body>
                 </Modal>
 
@@ -358,22 +360,22 @@ function News_admin(props) {
                     onHide={() => { SetShowUpdateNew(false); setErrors({ title: "", content: "", albumLink: "", pictures: "" }); setNewsData({ title: "", content: "", albumLink: null, pictures: [] }) }}
                     size="lg">
                     <Modal.Header closeButton>
-                        <Modal.Title>
+                        <Modal.Title className='news-modal-title'>
                             Изменение новости
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form className='pt-4'>
                             <Form.Group controlId='NameChapter'>
-                                <Form.Control type='text' placeholder='Введите название новости' name="title" defaultValue={newsData.title} onChange={handleChange} className='new-control-input' />
+                                <Form.Control type='text' placeholder='Введите название новости' name="title" defaultValue={newsData.title} onChange={handleChange} className='new-control-input shadow-sm' />
                                 <Form.Label className='mb-3 mx-1 text-danger'>{errors.title}</Form.Label>
-                                <Form.Control as="textarea" placeholder='Введите содержание новости' name="content" defaultValue={newsData.content} onChange={handleChange} className='new-description-input' />
+                                <Form.Control as="textarea" placeholder='Введите содержание новости' name="content" defaultValue={newsData.content} onChange={handleChange} className='new-description-input shadow-sm' />
                                 <Form.Label className='mb-3 mx-1 text-danger'>{errors.content}</Form.Label>
                                 <InputGroup>
                                     <Form.Control
                                         defaultValue={newsData.albumLink}
                                         placeholder="Вставьте ссылку на альбом"
-                                        className='new-control-input'
+                                        className='new-control-input shadow-sm'
                                         name="albumLink"
                                         onChange={handleChange}
                                     />
@@ -387,13 +389,13 @@ function News_admin(props) {
                         </Form>
                         <Container fluid className='container-phonos-links scrollspy-example scrollspy-example' >
                             {newsData.pictures.length > 0 ? newsData.pictures.map((picture, i) => (
-                                <Container className='link-photo-for-news d-flex mt-3  align-items-center text-wrap'>
+                                <Container className='link-photo-for-news d-flex mt-3  align-items-center text-wrap shadow-sm'>
                                     {picture.mainPicture ?
                                         <Form.Check
                                             data-index={i}
                                             defaultChecked
                                             onChange={handleMainPictureChange}
-                                            className='mx-1'
+                                            className='mx-1 r-button-main-photo'
                                             type={'radio'}
                                             name="mainPicture"
                                         />
@@ -414,9 +416,11 @@ function News_admin(props) {
                                         className='mx-auto d-block photo-format'
                                         alt='Logo'
                                     /></div>
-                                    <p className='p-2 d-flex align-items-center m-0'>Фото {i + 1}</p>
-                                    <a href={picture.pictureLink} target="_blank"><p className='p-2 d-flex align-items-center m-0 text-break'>{picture.pictureLink}</p></a>
-                                    <Button className="ms-auto p-2 del-photo d-flex align-items-center m-0" data-index={i} onClick={handleDeletePicture}>Удалить фото</Button>
+                                    <p className='p-2 d-flex align-items-center m-0 link-photo-number '>Фото {i + 1}</p>
+                                    <Container className='cnt-for-link'>
+                                        <a href={picture.pictureLink} target="_blank"><p className='p-2 d-flex align-items-center m-0 text-break link-to-photo'>{picture.pictureLink}</p></a>
+                                    </Container>
+                                    <Button className="ms-auto p-2 del-photo d-flex align-items-center m-0" data-index={i} onClick={handleDeletePicture}><i class="bi bi-x"></i></Button>
                                 </Container>
                             )) : <p className='mx-1 my-2'>Тут будут отображаться фото с альбома</p>}
                         </Container>

@@ -72,18 +72,18 @@ function New(props) {
     }, [index]);
 
     const months = {
-        "01": "января",
-        "02": "февраля",
-        "03": "марта",
-        "04": "апреля",
-        "05": "мая",
-        "06": "июня",
-        "07": "июля",
-        "08": "августа",
-        "09": "сентября",
-        "10": "октября",
-        "11": "ноября",
-        "12": "декабря"
+        1: "января",
+        2: "февраля",
+        3: "марта",
+        4: "апреля",
+        5: "мая",
+        6: "июня",
+        7: "июля",
+        8: "августа",
+        9: "сентября",
+        10: "октября",
+        11: "ноября",
+        12: "декабря"
     }
 
     useEffect(() => {
@@ -96,6 +96,51 @@ function New(props) {
                 console.log(error);
             });
     }, []);
+
+    const getDate = (news) => {
+        const monthsDays = {
+            1: 31,
+            2: 28,
+            3: 31,
+            4: 30,
+            5: 31,
+            6: 30,
+            7: 31,
+            8: 31,
+            9: 30,
+            10: 31,
+            11: 30,
+            12: 31
+        }
+
+        let hour = parseInt(news.creationDateTime.substring(11, 13)) + 3;
+        let minute = parseInt(news.creationDateTime.substring(14, 16));
+        let day = parseInt(news.creationDateTime.substring(8, 10));
+        let month = parseInt(news.creationDateTime.substring(5, 7));
+        let year = parseInt(news.creationDateTime.substring(0, 4));
+
+        if(hour >= 24){
+            hour = hour - 24;
+
+            day++;
+
+            if(day > monthsDays[month]){
+                if(month == 2 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)){
+                    day = 29;
+                }
+                else{
+                    month++;
+                    day = 1;
+                }
+
+                if(month > 12){
+                    month = 1;
+                    year++;
+                }
+            }
+        }
+        return `${day < 10 ? '0' + day : day} ${months[month]} ${year < 10 ? '0' + year : year} г. в ${hour < 10 ? '0' + hour : hour}:${minute < 10 ? '0' + minute : minute}`
+    }
 
     return (
         <>
@@ -154,11 +199,11 @@ function New(props) {
 
                     <Container fluid className='d-flex justify-content-center p-0 mt-3'>
                         <Container fluid className='new-all-card px-5 py-4'>
-                            <p className='mt-2 text-new'>{newsData.content} </p>
+                            <p style={{ whiteSpace: "pre-line" }} className='mt-2 text-new'>{newsData.content} </p>
                             <Container fluid className='d-flex justifi-content-start p-0'>
                                 <i class="bi bi-clock text-secondary fw-light text-date-publication me-2"></i>
                                 <p className='text-secondary fw-light text-date-publication'>Дата публикации: </p>
-                                <p className='text-secondary fw-light text-date-publication ms-2'>{newsData.creationDateTime.substring(8, 10)} {months[newsData.creationDateTime.substring(5, 7)]} {newsData.creationDateTime.substring(0, 4)} г. в {parseInt(newsData.creationDateTime.substring(11, 13)) + 3}:{newsData.creationDateTime.substring(14, 16)}</p>
+                                <p className='text-secondary fw-light text-date-publication ms-2'>{getDate(newsData)}</p>
                             </Container>
 
                         </Container>

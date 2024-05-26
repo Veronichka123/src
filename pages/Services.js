@@ -158,30 +158,30 @@ function Services() {
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Форма заполнения заявки</Modal.Title>
+                    <Modal.Title className='sevice-modal-title'>Форма заполнения заявки</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form className='px-4'>
                         <p className='text-secondary'>Подача заявки на услугу</p>
                         <h5 className='mb-4'>{service_name}</h5>
                         <Form.Group controlId='fromBasicRequestName'>
-                            <Form.Control value={userData.name} onChange={handleChange} type='text' name="name" placeholder='Имя' className='request-control-input mb-3' />
+                            <Form.Control value={userData.name} onChange={handleChange} type='text' name="name" placeholder='Имя' className='request-control-input mb-3 shadow-sm' />
                         </Form.Group>
 
                         <Form.Group controlId='fromBasicRequestSurname'>
-                            <Form.Control value={userData.surname} onChange={handleChange} type='text' name="surname" placeholder='Фамилия' className='request-control-input mb-3' />
+                            <Form.Control value={userData.surname} onChange={handleChange} type='text' name="surname" placeholder='Фамилия' className='request-control-input mb-3 shadow-sm' />
                         </Form.Group>
 
                         <Form.Group controlId='fromBasicRequestSurname'>
-                            <Form.Control value={userData.patronymic} onChange={handleChange} type='text' name="patronymic" placeholder='Отчество' className='request-control-input mb-3' />
+                            <Form.Control value={userData.patronymic} onChange={handleChange} type='text' name="patronymic" placeholder='Отчество' className='request-control-input mb-3 shadow-sm' />
                         </Form.Group>
 
                         <Form.Group controlId='fromBasicRequestPhoneNumber'>
-                            <Form.Control value={phoneNumber} onChange={handleChangePhoneNumber} type='text' name="phoneNumber" placeholder='Номер телефона' className='request-control-input mb-3' />
+                            <Form.Control value={phoneNumber} onChange={handleChangePhoneNumber} type='text' name="phoneNumber" placeholder='Номер телефона' className='request-control-input mb-3 shadow-sm' />
                         </Form.Group>
 
                         <Form.Group controlId='fromBasicRequestEmail'>
-                            <Form.Control value={userData.email} disabled={userData.email !== "" && userData.id} onChange={userData.email !== "" && userData.id ? '' : handleChange} type='Email' name="email" placeholder='Email' className='request-control-input mb-4' />
+                            <Form.Control value={userData.email} disabled={userData.email !== "" && userData.id} onChange={userData.email !== "" && userData.id ? '' : handleChange} type='Email' name="email" placeholder='Email' className='request-control-input mb-4 shadow-sm' />
                         </Form.Group>
                         <p className='text-center opacity-75'>После оставления заявки, с Вами свяжется сотрудник ДОСААФ</p>
                         <Button className="mt-4 mb-3 btn_form_reguest mx-auto d-block" onClick={handleSendRequest}>Отправить заявку</Button>

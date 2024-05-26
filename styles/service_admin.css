@@ -135,8 +135,9 @@
 }
 
 .chapter-service-control-input {
-    background-color: #EFF4FB;
-    border: 0.5px solid #5189CC;
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1.5px solid #1A4BB3;
     border-radius: 10px;
     height: 45px;
 }
@@ -146,13 +147,13 @@
     background: #1A4BB3;
     border: none;
     border-radius: 10px;
-    opacity: .76;
     height: 40px;
 }
 
 .chapter-service-description-input {
-    background-color: #EFF4FB;
-    border: 0.5px solid #5189CC;
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1.5px solid #1A4BB3;
     border-radius: 10px;
     height: 150px;
 }
@@ -162,7 +163,6 @@
     background: #DA3232;
     border: none;
     border-radius: 10px;
-    opacity: .76;
     height: 40px;
 }
 
@@ -211,15 +211,17 @@
 }
 
 @media (max-width: 991.9px) {
-    
+
     .cnt-width-name-section {
         width: 100%;
     }
-    .cnt-name-ed-del-section{
+
+    .cnt-name-ed-del-section {
         display: flex;
         flex-direction: column;
     }
-    .cnt-width-btn-ed-del{
+
+    .cnt-width-btn-ed-del {
         display: flex;
         margin-bottom: 15px;
     }
@@ -228,4 +230,8 @@
         margin-left: 0px !important;
     }
 
+}
+
+.admin-service-modal-title {
+    color: #1A4BB3;
 }
