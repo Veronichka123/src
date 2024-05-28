@@ -12,6 +12,8 @@ import Request_admin from './Request_admin';
 import News_admin from './News_admin';
 import Partners_admin from './Partners_admin';
 import Anonses_admin from './Anonses_admin';
+import Educational_materials_admin from './Educational_materials_admin';
+import Testing_admin from './Testing_admin';
 function Panel_admin() {
     return (
         <>
@@ -46,7 +48,7 @@ function Panel_admin() {
                                 <Col>
                                     <Container className='py-5 center-block text-center m-3 panel-cards shadow-sm'>
                                         <h5 className='mb-4'>Управление тестами</h5>
-                                        <Button type="submit" href='/' className="d-flex justify-content-center align-items-center btn-admin-panel-cards mx-auto d-block">Перейти</Button>
+                                        <Button type="submit" href='/testing_admin' className="d-flex justify-content-center align-items-center btn-admin-panel-cards mx-auto d-block">Перейти</Button>
                                     </Container>
                                 </Col>
                                 <Col>
@@ -59,6 +61,12 @@ function Panel_admin() {
                                     <Container className='py-5 center-block text-center m-3 panel-cards shadow-sm'>
                                         <h5 className='mb-4'>Упраление услугами</h5>
                                         <Button type="submit" href='/service_admin' className="d-flex justify-content-center align-items-center btn-admin-panel-cards mx-auto d-block">Перейти</Button>
+                                    </Container>
+                                </Col>  
+                                <Col>
+                                    <Container className='py-5 center-block text-center m-3 panel-cards shadow-sm'>
+                                        <h5 className='mb-4'>Упраление учебными материалами</h5>
+                                        <Button type="submit" href='/educational_materials_admin' className="d-flex justify-content-center align-items-center btn-admin-panel-cards mx-auto d-block">Перейти</Button>
                                     </Container>
                                 </Col>                               
                             </Row>
@@ -73,6 +81,8 @@ function Panel_admin() {
                 <Route exact path='/news_admin' Component={News_admin} />
                 <Route exact path='/partners_admin' Component={Partners_admin} />
                 <Route exact path='/anonses_admin' Component={Anonses_admin} />
+                <Route exact path='/educational_materials_admin' Component={Educational_materials_admin} />
+                <Route exact path='/testing_admin' Component={Testing_admin} />
             </Routes>
         </>
     );

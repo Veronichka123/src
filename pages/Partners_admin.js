@@ -10,6 +10,7 @@ import { Modal } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import '../styles/educational_materials.css';
+import '../styles/titles-sizes.css';
 import axios from 'axios';
 
 function Partners_admin(props) {
@@ -244,8 +245,8 @@ function Partners_admin(props) {
 
 
                             <Container className='d-flex p-0' fluid>
-                                <p className='d-flex align-items-center m-0 title-add-partner'>Добавить партнера?</p>
-                                <Button className='ms-4 btn-admin-partner' onClick={() => SetShowCrPartner(true)}>Добавить</Button>
+                                <p className='d-flex align-items-center m-0 title-admin-add'>Добавить партнера?</p>
+                                <Button className='ms-4 btn-admin-add' onClick={() => SetShowCrPartner(true)}>Добавить</Button>
                             </Container>
                             <Row xs={1} md={1} lg={2} xl={3} className=''>
 

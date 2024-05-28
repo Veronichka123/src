@@ -413,7 +413,7 @@ function Service_admin(props) {
                 </Container >
                 <Modal
                     show={ShowCreateChapter}
-                    onHide={() => { SetShowCrChapter(false); setErrors({ sectionName: "", serviceName: "", serviceCost: "", serviceDescription: "" }) }}>
+                    onHide={() => { SetShowCrChapter(false); setErrors({ sectionName: "", serviceName: "", serviceCost: "", serviceDescription: "" }); setDataServiceSection({name:""}) }}>
                     <Modal.Header closeButton>
                         <Modal.Title className='admin-service-modal-title'>
                             Добавить раздел
@@ -433,7 +433,7 @@ function Service_admin(props) {
 
                 <Modal
                     show={ShowEditChapter}
-                    onHide={() => { SetShowEdChapter(false); setErrors({ sectionName: "", serviceName: "", serviceCost: "", serviceDescription: "" }) }}>
+                    onHide={() => { SetShowEdChapter(false); setErrors({ sectionName: "", serviceName: "", serviceCost: "", serviceDescription: "" }); setDataServiceSection({name:""}) }}>
                     <Modal.Header closeButton>
                         <Modal.Title className='admin-service-modal-title'>
                             Изменить раздел
@@ -452,7 +452,7 @@ function Service_admin(props) {
 
                 <Modal
                     show={ShowCreateService}
-                    onHide={() => { SetShowCrService(false); setErrors({ sectionName: "", serviceName: "", serviceCost: "", serviceDescription: "" }) }}>
+                    onHide={() => { SetShowCrService(false); setErrors({ sectionName: "", serviceName: "", serviceCost: "", serviceDescription: "" }); setDataService({ name: "", description: "", cost: 0 }) }}>
                     <Modal.Header closeButton>
                         <Modal.Title className='admin-service-modal-title'>
                             Добавить услугу
@@ -479,7 +479,7 @@ function Service_admin(props) {
 
                 <Modal
                     show={ShowEditService}
-                    onHide={() => { SetShowEdService(false); setErrors({ sectionName: "", serviceName: "", serviceCost: "", serviceDescription: "" }) }}>
+                    onHide={() => { SetShowEdService(false); setErrors({ sectionName: "", serviceName: "", serviceCost: "", serviceDescription: "" }); setDataService({ name: "", description: "", cost: 0 })}}>
                     <Modal.Header closeButton>
                         <Modal.Title className='admin-service-modal-title'>
                             Изменить услугу

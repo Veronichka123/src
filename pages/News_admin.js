@@ -232,6 +232,52 @@ function News_admin(props) {
         });
     }
 
+    const getDate = (news) => {
+        const months = {
+            1: 31,
+            2: 28,
+            3: 31,
+            4: 30,
+            5: 31,
+            6: 30,
+            7: 31,
+            8: 31,
+            9: 30,
+            10: 31,
+            11: 30,
+            12: 31
+        }
+
+        let hour = parseInt(news.creationDateTime.substring(11, 13)) + 3;
+        let minute = parseInt(news.creationDateTime.substring(14, 16));
+        let day = parseInt(news.creationDateTime.substring(8, 10));
+        let month = parseInt(news.creationDateTime.substring(5, 7));
+        let year = parseInt(news.creationDateTime.substring(0, 4));
+
+        if(hour >= 24){
+            hour = hour - 24;
+
+            day++;
+
+            if(day > months[month]){
+                if(month == 2 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)){
+                    day = 29;
+                }
+                else{
+                    month++;
+                    day = 1;
+                }
+
+                if(month > 12){
+                    month = 1;
+                    year++;
+                }
+            }
+        }
+
+        return `${day < 10 ? '0' + day : day}.${month < 10 ? '0' + month : month}.${year < 10 ? '0' + year : year}`;
+    }
+
     if (isAdmin) {
         return (
             <>
@@ -259,11 +305,7 @@ function News_admin(props) {
                                                 <Container fluid className='cnt-admin-name-new p-0'>
                                                     <p className='mb-1 admin-name-new'><span className="fw-bold">Наименование:</span> {news.title}</p>
                                                 </Container>
-                                                <p className='mb-1 name-count-photo'><span className="fw-bold">Дата создания: </span>{
-                                                    ' ' + news.creationDateTime.substring(8, 10) + '.' +
-                                                    news.creationDateTime.substring(5, 7) + '.' +
-                                                    news.creationDateTime.substring(0, 4)
-                                                }</p>
+                                                <p className='mb-1 name-count-photo'><span className="fw-bold">Дата создания: </span>{getDate(news)}</p>
                                                 <p className='mb-3 name-count-photo'><span className="fw-bold">Фото: </span> {news.pictures.length} фотографий</p>
                                                 <div className='d-flex justify-content-between'>
                                                     <Button className='btn-admin-new-edit' data-id={news.id} onClick={handleShowUpdate}>Изменить</Button>
@@ -347,7 +389,7 @@ function News_admin(props) {
                                     <Container className='cnt-for-link'>
                                         <a href={picture.pictureLink} target="_blank"><p className='p-2 d-flex align-items-center m-0 text-break link-to-photo'>{picture.pictureLink}</p></a>
                                     </Container>
-                                    <Button className="ms-auto p-2 del-photo d-flex align-items-center m-0" data-index={i} onClick={handleDeletePicture}><i class="bi bi-x"></i></Button>
+                                    <Button className="ms-auto p-2 del-photo d-flex align-items-center m-0" data-index={i} onClick={handleDeletePicture}><i class="bi bi-x" style={{pointerEvents: 'none'}}></i></Button>
                                 </Container>
                             )) : <p className='mx-1 my-2'>Тут будут отображаться фото с альбома</p>}
                         </Container>
@@ -420,7 +462,7 @@ function News_admin(props) {
                                     <Container className='cnt-for-link'>
                                         <a href={picture.pictureLink} target="_blank"><p className='p-2 d-flex align-items-center m-0 text-break link-to-photo'>{picture.pictureLink}</p></a>
                                     </Container>
-                                    <Button className="ms-auto p-2 del-photo d-flex align-items-center m-0" data-index={i} onClick={handleDeletePicture}><i class="bi bi-x"></i></Button>
+                                    <Button className="ms-auto p-2 del-photo d-flex align-items-center m-0" data-index={i} onClick={handleDeletePicture}><i class="bi bi-x" style={{pointerEvents: 'none'}}></i></Button>
                                 </Container>
                             )) : <p className='mx-1 my-2'>Тут будут отображаться фото с альбома</p>}
                         </Container>

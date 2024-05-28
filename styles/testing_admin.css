@@ -1,0 +1,57 @@
+.main-cnt-admin-testing {
+    width: 90%;
+}
+
+.admin-card-test {
+    background: #FFFFFF;
+}
+
+.cnt-admin-name-test {
+    height: 70px;
+}
+
+.admin-name-card-test {
+    font-size: 18px;
+    -webkit-line-clamp: 2;
+    /* Число отображаемых строк */
+    display: -webkit-box;
+    /* Включаем флексбоксы */
+    -webkit-box-orient: vertical;
+    /* Вертикальная ориентация */
+    overflow: hidden;
+    /* Обрезаем все, что не помещается в область */
+}
+
+.card-test-count-questions {
+    font-size: 18px;
+}
+
+.btn-admin-test-card-edit {
+    border-radius: 10px;
+    height: 37px;
+    width: 45%;
+    background-color: #FFFFFF;
+    border: 1.5px solid #1A4BB3;
+    color: #1A4BB3;
+
+    &:hover {
+        background-color: #1A4BB3;
+        border: 1.5px solid #1A4BB3;
+        color: #FFFFFF;
+    }
+}
+
+.btn-admin-test-card-delete {
+    border-radius: 10px;
+    height: 37px;
+    width: 45%;
+    background-color: #FFFFFF;
+    border: 1.5px solid #DA3232;
+    color: #DA3232;
+
+    &:hover {
+        background-color: #DA3232;
+        border: 1.5px solid #DA3232;
+        color: #FFFFFF;
+    }
+}

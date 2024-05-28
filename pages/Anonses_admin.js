@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import '../styles/titles-sizes.css';
 import axios, { all } from 'axios';
 
 function Anonses_admin(props) {
@@ -243,8 +244,8 @@ function Anonses_admin(props) {
 
 
                             <Container className='d-flex p-0' fluid>
-                                <p className='d-flex align-items-center m-0 title-add-anons'>Добавить анонс?</p>
-                                <Button className='ms-4 btn-admin-anons' onClick={() => SetShowCrAnons(true)}>Добавить</Button>
+                                <p className='d-flex align-items-center m-0 title-admin-add'>Добавить анонс?</p>
+                                <Button className='ms-4 btn-admin-add' onClick={() => SetShowCrAnons(true)}>Добавить</Button>
                             </Container>
                             {allAnnouncements && allAnnouncements.length > 0 ?
                                 <Row xs={1} md={2} lg={2} className=''>

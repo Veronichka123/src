@@ -19,6 +19,8 @@ import New from '../pages/New';
 import Partners_admin from '../pages/Partners_admin';
 import Anonses_admin from '../pages/Anonses_admin';
 import Educational_materials from '../pages/Educational_materials';
+import Educational_materials_admin from '../pages/Educational_materials_admin';
+import Testing_admin from '../pages/Testing_admin';
 import '../styles/header.css';
 import axios from 'axios';
 
@@ -51,7 +53,7 @@ class Header extends Component {
     render() {
         return (
             <>
-                <Navbar expand='lg' className='border-bottom border-2 shadow-sm bg-white'>
+                <Navbar expand='md' className='border-bottom border-2 shadow-sm bg-white'>
                     <Container fluid>
                         <Navbar.Brand href="/">
                             <img
@@ -68,16 +70,16 @@ class Header extends Component {
 
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="ms-auto">
-                                <Nav.Link href='/' className='list_item'>ГЛАВНАЯ</Nav.Link>
-                                <Nav.Link href='/services' className='ms-5 list_item'>УСЛУГИ</Nav.Link>
-                                <Nav.Link href='/news' className='ms-5 list_item'>НОВОСТИ</Nav.Link>
-                                <Nav.Link href='/contacts' className='ms-5 list_item'>КОНТАКТЫ</Nav.Link>
+                                <Nav.Link href='/' className='list_item d-flex justify-content-end'>ГЛАВНАЯ</Nav.Link>
+                                <Nav.Link href='/services' className='ms-5 list_item d-flex justify-content-end'>УСЛУГИ</Nav.Link>
+                                <Nav.Link href='/news' className='ms-5 list_item d-flex justify-content-end'>НОВОСТИ</Nav.Link>
+                                <Nav.Link href='/contacts' className='ms-5 list_item d-flex justify-content-end'>КОНТАКТЫ</Nav.Link>
                             </Nav>
-                            <Nav className="ms-auto">
+                            <Nav className="ms-auto d-flex flex-column justify-content-end">
                                 {this.state.user ? 
-                                <Button className='btn_nav btn-succes' href='/my_page'>{this.state.user}</Button> :
+                                <Button className='btn_nav btn-succes ms-auto' href='/my_page'>{this.state.user}</Button> :
                                 localStorage.getItem("token") ? '' :
-                                <Button className='btn_nav btn-succes' href='/login'>ВОЙТИ</Button> 
+                                <Button className='btn_nav btn-succes ms-auto' href='/login'>ВОЙТИ</Button> 
                                 }
                             </Nav>
                         </Navbar.Collapse>
@@ -104,6 +106,8 @@ class Header extends Component {
                         <Route exact path='/partners_admin' Component={Partners_admin} />
                         <Route exact path='/anonses_admin' Component={Anonses_admin} />
                         <Route exact path='/educational_materials' Component={Educational_materials} />
+                        <Route exact path='/educational_materials_admin' Component={Educational_materials_admin} />
+                        <Route exact path='/testing_admin' Component={Testing_admin} />
                     </Routes>
                 </Router>
 
