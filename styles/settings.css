@@ -1,0 +1,62 @@
+.main-cnt-settings {
+    width: 90%;
+    max-width: 1400px;
+}
+
+.settings-change-contact-data {
+    background: #FFFFFF;
+    width: 70%;
+}
+
+.settings-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: #1A4BB3;
+}
+
+.settings-title-icon {
+    font-size: 26px;
+    color: #1A4BB3;
+    -webkit-text-stroke: 0.3px;
+}
+
+.settings-contact-input {
+    width: 80%;
+    background-color: #FFFFFF;
+    border: 2px solid #1A4BB3;
+    border-radius: 10px;
+    height: 45px;
+}
+
+.settings-name-titles {
+    font-size: 18px;
+}
+
+.btn-settings-save-changes {
+    background: #1A4BB3;
+    border: none;
+    width: 210px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.btn-change-password{
+    width: 180px;
+    height: 40px;
+    background-color: #FFFFFF;
+    border: 1.5px solid #1A4BB3;
+    border-radius: 10px;
+    color: #1A4BB3;
+
+    &:hover {
+        background-color: #1A4BB3;
+        border: 1.5px solid #1A4BB3;
+        color: #FFFFFF;
+    }
+}
+
+.mailing-agreement-title{
+    font-size: 18px;
+}

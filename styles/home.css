@@ -1,5 +1,6 @@
 .home-cnt{
     width: 90%;
+    max-width: 1400px;
 }
 .banner-cnt{
     background-color: #EAE9EF;

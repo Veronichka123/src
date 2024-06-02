@@ -85,15 +85,15 @@ function Login() {
                     <h3 className='text-center'>Вход</h3>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Control type="email" placeholder="Email" className='control_input mx-auto d-block' name="email" value={data.email}
+                        <Form.Control type="email" placeholder="Email" className='control_input mx-auto d-block shadow-sm' name="email" value={data.email}
                             onChange={handleChange} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Control type="password" placeholder="Пароль" className='control_input mx-auto d-block' name="password" value={data.password}
+                        <Form.Control type="password" placeholder="Пароль" className='control_input mx-auto d-block shadow-sm' name="password" value={data.password}
                             onChange={handleChange} />
                     </Form.Group>
-                    <Link className='link_login'>Забыли пароль?</Link>
+                    <Link to= '/forgot_password' className='link_login'>Забыли пароль?</Link>
                     <p className='text-danger text-center mt-2'>{error}</p>
                     <Button type="submit" onClick={handleSubmit} className="mt-4 mb-3 btn_login mx-auto d-block">
                         Войти
@@ -101,9 +101,6 @@ function Login() {
                     <Link to='/registration' className='link_login d-flex justify-content-center'>Зарегистироваться</Link>
                     
                 </Form>
-                <Routes>
-                    <Route exact path='/registration' Component={Registration} />
-                </Routes>
             </>
         );
     }

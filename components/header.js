@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from '../pages/Home';
 import Services from '../pages/Services';
 import News from '../pages/News';
+import Contacts from '../pages/Contacts';
 import Registration from '../pages/Registration';
 import Login from '../pages/Login';
 import logo from './dosaaf_logo.png';
@@ -21,8 +22,16 @@ import Anonses_admin from '../pages/Anonses_admin';
 import Educational_materials from '../pages/Educational_materials';
 import Educational_materials_admin from '../pages/Educational_materials_admin';
 import Testing_admin from '../pages/Testing_admin';
+import Create_test_admin from '../pages/Create_test_admin';
+import Forgot_password from '../pages/Forgot_password';
+import Password_recovery from '../pages/Password_recovery';
+import Activate from '../pages/Activate';
+import Test_passing from '../pages/Test_passing';
+import Update_test_admin from '../pages/Update_test_admin';
+import Settings from '../pages/Settings';
 import '../styles/header.css';
 import axios from 'axios';
+
 
 class Header extends Component {
     constructor(props) {
@@ -93,6 +102,7 @@ class Header extends Component {
                         <Route exact path='/' Component={Home} />
                         <Route exact path='/services' Component={Services} />
                         <Route exact path='/news' Component={News} />
+                        <Route exact path='/contacts' Component={Contacts} />
                         <Route exact path='/new' Component={New} />
                         <Route exact path='/registration' Component={Registration} />
                         <Route exact path='/my_page' Component={My_page} />
@@ -108,6 +118,13 @@ class Header extends Component {
                         <Route exact path='/educational_materials' Component={Educational_materials} />
                         <Route exact path='/educational_materials_admin' Component={Educational_materials_admin} />
                         <Route exact path='/testing_admin' Component={Testing_admin} />
+                        <Route exact path='/create_test_admin' Component={Create_test_admin} />
+                        <Route exact path='/forgot_password' Component={Forgot_password} />
+                        <Route exact path='/password_recovery' Component={Password_recovery} />
+                        <Route exact path='/activate' Component={Activate} />
+                        <Route exact path='/test_passing' Component={Test_passing} />
+                        <Route exact path='/update_test_admin' Component={Update_test_admin} />
+                        <Route exact path='/settings' Component={Settings} />
                     </Routes>
                 </Router>
 

@@ -1,0 +1,53 @@
+.main-cnt-contacts {
+    width: 90%;
+    max-width: 1400px;
+}
+
+.contacts-our-office {
+    background: #FFFFFF;
+}
+
+.cnt-mark {
+    background: #EAE9EF;
+    width: 40px;
+    height: 40px;
+}
+
+.cnt-label-info {
+    width: 60%;
+}
+
+.cnt-contacts-icon {
+    font-size: 25px;
+    color: #1A4BB3;
+    font-weight: 500;
+}
+
+.contact-title-section {
+    font-size: 20px;
+    color: #1A4BB3;
+    font-weight: 500;
+}
+
+.icon-label {
+    font-size: 18px;
+    color: #1A4BB3;
+}
+
+.label-title {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.label-desc{
+    font-size: 16px;
+}
+
+.contact-cnt-map{
+    background: #FFFFFF;
+}
+
+.contact-map{
+    width: 100%;
+    height: 450px;
+}

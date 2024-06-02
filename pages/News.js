@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/news.css';
+import '../styles/loading.css';
 import { Button, Container } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -32,6 +33,8 @@ function News(props) {
     const [selectDate, setSelectDate] = useState([{ name: "Дате (новые)", value: "desc" }, { name: "Дате (старые)", value: "asc" }]);
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         window.addEventListener("resize", (event) => setWindowWidth(window.innerWidth));
@@ -80,6 +83,7 @@ function News(props) {
             .get("/news?page=" + selectedPage + "&limit=" + newsPerPage + query + sort)
             .then((response) => {
                 setAllNews(response.data);
+                setLoading(false);
             })
             .catch((error) => {
                 console.log(error);
@@ -328,56 +332,69 @@ function News(props) {
                         </Form.Select>
                     </Container>
                 </Container>
+                {loading ?
+                    <Container fluid className='d-flex justify-center'>
+                        <svg className="spinner align-self-center mt-4 mb-4 mx-auto" viewBox="0 0 50 50">
+                            <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
+                        </svg>
+                    </Container>
+                :
+                    <Row xs={1} md={2}>
+                        {allNews ? allNews.map((news) => (
+                            <Col className='p-0'>
+                                <Container fluid className='d-flex justify-content-center mt-4'>
+                                    <Container fluid className='new-card shadow p-5 mx-0 d-flex flex-column'>
+                                        <Container className='cnt-title-news p-0'>
+                                            <h5>{news.title}</h5>
+                                        </Container>
+                                        <p className='text-secondary fw-light'>{getDate(news)}</p>
 
-                <Row xs={1} md={2}>
-                    {allNews ? allNews.map((news) => (
-                        <Col className='p-0'>
-                            <Container fluid className='d-flex justify-content-center mt-4'>
-                                <Container fluid className='new-card shadow p-5 mx-0 d-flex flex-column'>
-                                    <Container className='cnt-title-news p-0'>
-                                        <h5>{news.title}</h5>
+                                        {news.pictures && news.pictures.length > 0 ?
+
+                                            <div className="p-1">
+                                                <Image
+                                                    src={news.pictures.filter(picture => picture.mainPicture)[0].pictureLink}
+                                                    width="100%"
+                                                    className='mx-auto d-block format-new-photo'
+                                                    alt='Logo'
+                                                />
+                                            </div>
+                                            : ""
+                                        }
+
+                                        {news.pictures && news.pictures.length > 0 ?
+
+                                            <p className='mt-2 text-break' style={{ whiteSpace: "pre-line" }}>{news.content.length > 150 ? news.content.substring(0, 150) + "..." : news.content}</p>
+                                            :
+                                            <p className='mt-2 text-break' style={{ whiteSpace: "pre-line" }}>{news.content.length > 800 ? news.content.substring(0, 800) + "..." : news.content}</p>
+                                        }
+                                        <Button className='btn-go-to-new mt-auto' onClick={goToNews} data-newsId={news.id}>Узнать больше</Button>
                                     </Container>
-                                    <p className='text-secondary fw-light'>{getDate(news)}</p>
-
-                                    {news.pictures && news.pictures.length > 0 ?
-
-                                        <div className="p-1">
-                                            <Image
-                                                src={news.pictures.filter(picture => picture.mainPicture)[0].pictureLink}
-                                                width="100%"
-                                                className='mx-auto d-block format-new-photo'
-                                                alt='Logo'
-                                            />
-                                        </div>
-                                        : ""
-                                    }
-
-                                    {news.pictures && news.pictures.length > 0 ?
-
-                                        <p className='mt-2 text-break' style={{ whiteSpace: "pre-line" }}>{news.content.length > 150 ? news.content.substring(0, 150) + "..." : news.content}</p>
-                                        :
-                                        <p className='mt-2 text-break' style={{ whiteSpace: "pre-line" }}>{news.content.length > 800 ? news.content.substring(0, 800) + "..." : news.content}</p>
-                                    }
-                                    <Button className='btn-go-to-new mt-auto' onClick={goToNews} data-newsId={news.id}>Узнать больше</Button>
                                 </Container>
-                            </Container>
-                        </Col>
-                    )) : "Новостей нет"}
-                </Row>
-                <Pagination className='d-flex justify-content-center mt-5'>
-                    {allNews ?
-                        windowWidth < 550 ?
-                            getPaginationItemsForPhone()
-                            :
-                            getPaginationItems()
-                        : ""}
-                </Pagination>
+                            </Col>
+                        )) : "Новостей нет"}
+                    </Row>
+                }
+                
+                {!loading ? 
+                    <Pagination className='d-flex justify-content-center mt-5'>
+                        {allNews ?
+                            windowWidth < 550 ?
+                                getPaginationItemsForPhone()
+                                :
+                                getPaginationItems()
+                            : ""}
+                    </Pagination>
+                    
+                : ""}
+
                 {
-                    windowWidth < 550 && allNews ?
+                    windowWidth < 550 && allNews && !loading ?
                         <p className='text-center'>Показана страница {selectedPage} из {pageCount}</p>
                         :
                         ""
                 }
+                
             </Container>
             <Routes>
                 <Route exact path='/new' Component={New} />

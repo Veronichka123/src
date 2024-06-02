@@ -87,7 +87,7 @@ function Registration() {
             setErrors(prevState => ({...prevState, email: "email не должен быть пустой"}))
             noErrors = false;
         }
-        else if(data.surname.length > 320){
+        else if(data.email.length > 320){
             setErrors(prevState => ({...prevState, email: "email не должен быть длиннее 320 символов"}))
             noErrors = false;
         }
@@ -166,37 +166,37 @@ function Registration() {
                     </Container>
                     <h3 className='text-center'>Регистрация</h3>
                     <Form.Group className="mt-3" controlId="formBasicName">
-                        <Form.Control type="text" placeholder="Имя" className='control_input mx-auto d-block' name="name" value={data.name}
+                        <Form.Control type="text" placeholder="Имя" className='control_input mx-auto d-block shadow-sm' name="name" value={data.name}
                             onChange={handleChange} />
                         <Form.Label className="mb-3 mx-1 text-danger">{errors.name}</Form.Label>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicSurname">
-                        <Form.Control type="text" placeholder="Фамилия" className='control_input mx-auto d-block' name="surname" value={data.surname}
+                        <Form.Control type="text" placeholder="Фамилия" className='control_input mx-auto d-block shadow-sm' name="surname" value={data.surname}
                             onChange={handleChange}/>
                             <Form.Label className="mb-3 mx-1 text-danger">{errors.surname}</Form.Label>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPatronymic">
-                        <Form.Control type="text" placeholder="Отчество" className='control_input mx-auto d-block' name="patronymic" value={data.patronymic}
+                        <Form.Control type="text" placeholder="Отчество" className='control_input mx-auto d-block shadow-sm' name="patronymic" value={data.patronymic}
                             onChange={handleChange}/>
                         <Form.Label className="mb-3 mx-1 text-danger">{errors.patronymic}</Form.Label>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicEmail">
-                        <Form.Control type="email" placeholder="Email" className='control_input mx-auto d-block' name="email" value={data.email}
+                        <Form.Control type="email" placeholder="Email" className='control_input mx-auto d-block shadow-sm' name="email" value={data.email}
                             onChange={handleChange}/>
                         <Form.Label className="mb-3 mx-1 text-danger">{errors.email}</Form.Label>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPassword">
-                        <Form.Control type="password" placeholder="Пароль" className='control_input mx-auto d-block' name="password" value={data.password}
+                        <Form.Control type="password" placeholder="Пароль" className='control_input mx-auto d-block shadow-sm' name="password" value={data.password}
                             onChange={handleChange}/>
                         <Form.Label className="mb-3 mx-1 text-danger">{errors.password}</Form.Label>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPasswordRepeat">
-                        <Form.Control type="password" placeholder="Повторный пароль" onChange={handleChangeRepeatPassword} className='control_input mx-auto d-block' />
+                        <Form.Control type="password" placeholder="Повторный пароль" onChange={handleChangeRepeatPassword} className='control_input mx-auto d-block shadow-sm' />
                         <Form.Label className="mb-3 mx-1 text-danger">{errors.repeatPassword}</Form.Label>
                     </Form.Group>
                     <p className='text-danger text-center'>{mainError}</p>
@@ -206,10 +206,6 @@ function Registration() {
                     <p className='text-secondary text-center mt-2 mb-1'>Уже зарегистрированы?</p>
                     <Link to='/login' className='link_login d-flex justify-content-center'>Войти</Link>
                 </Form>
-
-                <Routes>
-                    <Route exact path='/login' Component={Login} />
-                </Routes>
 
             </>
         );

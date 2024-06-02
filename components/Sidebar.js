@@ -85,7 +85,7 @@ class Sidebar extends Component {
                             ''}
                             
                             <li className="nav-item text-white fs-4 mt-2 cnt-names-sect">
-                                <a href="/" className="nav-link text-dark fs-5 p-1 cnt-icon-text-sidebar" aria-current="page">
+                                <a href="/settings" className="nav-link text-dark fs-5 p-1 cnt-icon-text-sidebar" aria-current="page">
                                     <i className='bi bi-gear icon-sidebar'></i>
                                     <p className='ms-2 d-none d-md-inline text-sidebar'>Настройки</p>
                                 </a>
@@ -106,12 +106,6 @@ class Sidebar extends Component {
 
             </div>
 
-            <Routes>
-                <Route exact path='/requests' Component={requests} />
-                <Route exact path='/testing' Component={testing} />
-                <Route exact path='/panel_admin' Component={panel_admin} />
-                <Route exact path='/educational_materials' Component={Educational_materials} />
-            </Routes>
             </>
         );
     }

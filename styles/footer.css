@@ -4,6 +4,7 @@
 
 .footer-w {
     width: 90%;
+    max-width: 1400px;
 }
 
 .partners-title {
@@ -22,9 +23,6 @@
     background-color: #FFFFFF;
     aspect-ratio: 1;
     position: relative;
-    &:hover {
-        transform: scale(1.08);
-    }
     border-radius: 10px;
 }
 .photo-partner{

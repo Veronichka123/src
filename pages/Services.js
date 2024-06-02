@@ -19,7 +19,6 @@ function Services() {
             .get("/service/all")
             .then((response) => {
                 setServices(response.data);
-                console.log(response.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -33,18 +32,66 @@ function Services() {
     const [userData, setUserData] = useState({ name: "", surname: "", patronymic: "", email: "" });
     const [phoneNumber, setPhoneNumber] = useState("");
 
+    const [errors, setErrors] = useState({name: "", surname: "", patronymic: "", email: "", phoneNumber: ""});
+
 
     const handleChange = (event) => {
         setUserData({ ...userData, [event.target.name]: event.target.value });
+        setErrors(prevState => ({...prevState, [event.target.name]: ""}))
     };
 
     const handleChangePhoneNumber = (event) => {
+        let value = event.target.value;
+
+        if(event.nativeEvent.inputType != "deleteContentBackward" && ['1', '2','3','4','5','6','7','8','9','0'].indexOf(event.nativeEvent.data) == -1){
+            event.target.value = value.substring(0, value.length - 1);    
+            return;
+        }
+        else if(event.nativeEvent.inputType == "deleteContentBackward"){
+            if(value.length == 13){
+                event.target.value = value.substring(0, 12);
+            }
+            else if(value.length == 10){
+                event.target.value = value.substring(0, 9);
+            }
+            else if(value.length == 5){
+                event.target.value = value.substring(0, 3);
+            }
+            else if(value.length == 1){
+                event.target.value = "";
+            }
+        }
+        else{
+            if(value.length == 1){
+                event.target.value = '(' + value;
+            }
+            else if(value.length == 4){
+                event.target.value = value + ') ';
+            }
+            else if(value.length == 10){
+                event.target.value = value.substring(0, 9);
+                event.target.value += ("-" + event.nativeEvent.data);
+            }
+            else if(value.length == 13){
+                event.target.value = value.substring(0, 12);
+                event.target.value += ("-" + event.nativeEvent.data);
+            }
+            else if(value.length == 16){
+                event.target.value = value.substring(0, 15); 
+            }
+        }
+
+        setErrors(prevState => ({...prevState, phoneNumber: ""}))
         setPhoneNumber(event.target.value);
     };
 
     const handleClose = () => {
         setServiceId(-1);
         setShow(false);
+        if(!userData.id){
+            setUserData({ name: "", surname: "", patronymic: "", email: "" });
+        }
+        setPhoneNumber("");
     }
 
     useEffect(() => {
@@ -84,31 +131,90 @@ function Services() {
         setServiceId(e.target.dataset.id);
     };
 
+    const validate = () => {
+        let noErrors = true;
+
+        if(!userData.name){
+            setErrors(prevState => ({...prevState, name: "имя не должно быть пустым"}))
+            noErrors = false;
+        }
+        else if(userData.name.length > 50){
+            setErrors(prevState => ({...prevState, name: "имя не должно быть длиннее 50 символов"}))
+            noErrors = false;
+        }
+
+        if(!userData.surname){
+            setErrors(prevState => ({...prevState, surname: "фамилия не должна быть пустой"}))
+            noErrors = false;
+        }
+        else if(userData.surname.length > 50){
+            setErrors(prevState => ({...prevState, surname: "фамилия не должна быть длиннее 50 символов"}))
+            noErrors = false;
+        }
+
+        if(userData.patronymic.length > 50){
+            setErrors(prevState => ({...prevState, patronymic: "отчество не должно быть длиннее 50 символов"}))
+            noErrors = false;
+        }
+
+        let rEmail = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i);
+
+        if(!userData.email){
+            setErrors(prevState => ({...prevState, email: "email не должен быть пустой"}))
+            noErrors = false;
+        }
+        else if(userData.email.length > 320){
+            setErrors(prevState => ({...prevState, email: "email не должен быть длиннее 320 символов"}))
+            noErrors = false;
+        }
+        else if(!rEmail.test(userData.email)){
+            setErrors(prevState => ({...prevState, email: "email должен быть в формате dosaaf_123@dosaaf.ru"}))
+            noErrors = false;
+        }
+
+        let rPhone = new RegExp(/^[+]7\s[(]\d{3}[)]\s\d{3}[-]\d{2}[-]\d{2}$/i);
+
+        if(!phoneNumber){
+            setErrors(prevState => ({...prevState, phoneNumber: "номер телефона не должен быть пустым"}));
+            noErrors = false;
+        }
+        else if(!rPhone.test("+7 " + phoneNumber)){
+            setErrors(prevState => ({...prevState, phoneNumber: "номер телефона заполнен неправильно"}))
+            noErrors = false;
+        }
+
+        return noErrors;
+    }
+
     const handleSendRequest = (e) => {
-        if (phoneNumber === "" || userData.email === "" || userData.name === "" || userData.surname === "") {
-            console.log("поля не заполнены");
+        if (!validate()) {
             return;
         }
+
         axios
-            .post("/request?serviceId=" + serviceId,
-                {
-                    "userName": userData.name,
-                    "userSurname": userData.surname,
-                    "userPatronymic": userData.patronymic,
-                    "userEmail": userData.email,
-                    "userPhoneNumber": phoneNumber
-                },
-                {
-                    headers: {
-                        Authorization: localStorage.getItem("token") ? 'Bearer ' + localStorage.getItem("token") : ''
-                    }
-                })
-            .then((response) => {
-                setUserData(response.data);
+        .post("/request?serviceId=" + serviceId,
+            {
+                "userName": userData.name,
+                "userSurname": userData.surname,
+                "userPatronymic": userData.patronymic,
+                "userEmail": userData.email,
+                "userPhoneNumber": "+7 " + phoneNumber
+            },
+            {
+                headers: {
+                    Authorization: localStorage.getItem("token") ? 'Bearer ' + localStorage.getItem("token") : ''
+                }
             })
-            .catch((error) => {
-                console.log(error);
-            });
+        .then((response) => {
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+ 
+        if(!userData.id){
+            setUserData({ name: "", surname: "", patronymic: "", email: "" });
+        }
+        setPhoneNumber("");
         setShow(false);
         setPhoneNumber("");
     }
@@ -165,25 +271,31 @@ function Services() {
                         <p className='text-secondary'>Подача заявки на услугу</p>
                         <h5 className='mb-4'>{service_name}</h5>
                         <Form.Group controlId='fromBasicRequestName'>
-                            <Form.Control value={userData.name} onChange={handleChange} type='text' name="name" placeholder='Имя' className='request-control-input mb-3 shadow-sm' />
+                            <Form.Control value={userData.name} onChange={handleChange} type='text' name="name" placeholder='Имя' className='request-control-input shadow-sm' />
+                            <Form.Label className='mx-1 text-danger'>{errors.name}</Form.Label>
                         </Form.Group>
 
                         <Form.Group controlId='fromBasicRequestSurname'>
-                            <Form.Control value={userData.surname} onChange={handleChange} type='text' name="surname" placeholder='Фамилия' className='request-control-input mb-3 shadow-sm' />
+                            <Form.Control value={userData.surname} onChange={handleChange} type='text' name="surname" placeholder='Фамилия' className='request-control-input shadow-sm' />
+                            <Form.Label className='mx-1 text-danger'>{errors.surname}</Form.Label>
                         </Form.Group>
 
                         <Form.Group controlId='fromBasicRequestSurname'>
-                            <Form.Control value={userData.patronymic} onChange={handleChange} type='text' name="patronymic" placeholder='Отчество' className='request-control-input mb-3 shadow-sm' />
+                            <Form.Control value={userData.patronymic} onChange={handleChange} type='text' name="patronymic" placeholder='Отчество' className='request-control-input shadow-sm' />
+                            <Form.Label className='mx-1 text-danger'>{errors.patronymic}</Form.Label>
                         </Form.Group>
 
-                        <Form.Group controlId='fromBasicRequestPhoneNumber'>
-                            <Form.Control value={phoneNumber} onChange={handleChangePhoneNumber} type='text' name="phoneNumber" placeholder='Номер телефона' className='request-control-input mb-3 shadow-sm' />
+                        <Form.Group controlId='fromBasicRequestPhoneNumber' className='d-flex justify-space-between'>
+                            <Form.Control style={{width: "50px"}} defaultValue="+7" readOnly={true} disabled={true} type='text' name="phoneNumber" placeholder='Номер телефона' className='request-control-input shadow-sm' />
+                            <Form.Control style={{marginLeft: "5px"}} onChange={handleChangePhoneNumber} onPaste={(e) => {e.preventDefault();}} type='text' name="phoneNumber" placeholder='Номер телефона' className='request-control-input shadow-sm' />
                         </Form.Group>
+                        <Form.Label className='mx-1 text-danger'>{errors.phoneNumber}</Form.Label>
 
                         <Form.Group controlId='fromBasicRequestEmail'>
-                            <Form.Control value={userData.email} disabled={userData.email !== "" && userData.id} onChange={userData.email !== "" && userData.id ? '' : handleChange} type='Email' name="email" placeholder='Email' className='request-control-input mb-4 shadow-sm' />
+                            <Form.Control value={userData.email} disabled={userData.id} onChange={userData.id ? '' : handleChange} type='Email' name="email" placeholder='Email' className='request-control-input shadow-sm' />
+                            <Form.Label className='mx-1 mb-3 text-danger'>{errors.email}</Form.Label>
                         </Form.Group>
-                        <p className='text-center opacity-75'>После оставления заявки, с Вами свяжется сотрудник ДОСААФ</p>
+                        <p className='text-center opacity-75'>После подачи заявки с Вами свяжется сотрудник ДОСААФ</p>
                         <Button className="mt-4 mb-3 btn_form_reguest mx-auto d-block" onClick={handleSendRequest}>Отправить заявку</Button>
                     </Form>
                 </Modal.Body>

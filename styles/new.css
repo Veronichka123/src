@@ -1,5 +1,6 @@
 .main-new{
     width: 90%;
+    max-width: 1400px;
 }
 .preview-photo {
     aspect-ratio: 1;

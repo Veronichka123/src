@@ -76,7 +76,11 @@ function News_admin(props) {
 
     useEffect(() => {
         axios
-            .get("/news/all")
+            .get("/news/all", {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 setAllNews(response.data);
             })
@@ -146,10 +150,22 @@ function News_admin(props) {
             return;
         }
 
-        axios.post("/news", newsData).then((response) => {
+        axios.post("/news", newsData, {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("token")
+            }
+        }).then((response) => {
             setAllNews(prevAllNews => [...prevAllNews, response.data]);
             SetShowCrNew(false);
             setNewsData({ title: "", content: "", albumLink: null, pictures: [] });
+
+            axios.get("/news/notify/" + response.data.id, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            }).then((response) => {
+            }).catch((error) => { console.log(error) });
+
         }).catch((error) => { console.log(error) });
     }
 
