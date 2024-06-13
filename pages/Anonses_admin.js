@@ -76,8 +76,8 @@ function Anonses_admin(props) {
             setErrors(prevErrors => ({ ...prevErrors, title: "заголовок анонса не должен быть пустым" }))
             noErrors = false;
         }
-        else if (data.title.length > 200) {
-            setErrors(prevErrors => ({ ...prevErrors, title: "заголовок анонса не должен быть длинее 200 символов" }))
+        else if (data.title.length > 120) {
+            setErrors(prevErrors => ({ ...prevErrors, title: "заголовок анонса не должен быть длинее 120 символов" }))
             noErrors = false;
         }
 
@@ -85,8 +85,8 @@ function Anonses_admin(props) {
             setErrors(prevErrors => ({ ...prevErrors, content: "содержание не должно быть пустое" }))
             noErrors = false;
         }
-        else if (data.content.length > 1000) {
-            setErrors(prevErrors => ({ ...prevErrors, content: "содержание не должно быть длиннее 1000 символов" }))
+        else if (data.content.length > 900) {
+            setErrors(prevErrors => ({ ...prevErrors, content: "содержание не должно быть длиннее 900 символов" }))
             noErrors = false;
         }
 

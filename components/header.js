@@ -29,6 +29,7 @@ import Activate from '../pages/Activate';
 import Test_passing from '../pages/Test_passing';
 import Update_test_admin from '../pages/Update_test_admin';
 import Settings from '../pages/Settings';
+import Groups_mailings from '../pages/Groups_mailings';
 import '../styles/header.css';
 import axios from 'axios';
 
@@ -62,16 +63,15 @@ class Header extends Component {
     render() {
         return (
             <>
-                <Navbar expand='md' className='border-bottom border-2 shadow-sm bg-white'>
+                <Navbar expand='lg' className='border-bottom border-2 shadow-sm bg-white'>
                     <Container fluid>
-                        <Navbar.Brand href="/">
+                        <Navbar.Brand href="/" className='d-flex align-items-center'>
                             <img
                                 src={logo}
-                                height="60"
-                                width="60"
-                                className=''
+                                className='logo-brand'
                                 alt='Logo'
-                            />{' '} ДОСААФ КОСТРОМА
+                            />
+                            <p className='mb-0 ms-2 label-brand'>ДОСААФ КОСТРОМА</p>
 
                         </Navbar.Brand>
 
@@ -79,10 +79,10 @@ class Header extends Component {
 
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="ms-auto">
-                                <Nav.Link href='/' className='list_item d-flex justify-content-end'>ГЛАВНАЯ</Nav.Link>
-                                <Nav.Link href='/services' className='ms-5 list_item d-flex justify-content-end'>УСЛУГИ</Nav.Link>
-                                <Nav.Link href='/news' className='ms-5 list_item d-flex justify-content-end'>НОВОСТИ</Nav.Link>
-                                <Nav.Link href='/contacts' className='ms-5 list_item d-flex justify-content-end'>КОНТАКТЫ</Nav.Link>
+                                <Nav.Link href='/' className='list_item d-flex justify-content-end'><p className='mb-0'>ГЛАВНАЯ</p></Nav.Link>
+                                <Nav.Link href='/services' className='ms-5 list_item d-flex justify-content-end'><p className='mb-0'>УСЛУГИ</p></Nav.Link>
+                                <Nav.Link href='/news' className='ms-5 list_item d-flex justify-content-end'><p className='mb-0'>НОВОСТИ</p></Nav.Link>
+                                <Nav.Link href='/contacts' className='ms-5 list_item d-flex justify-content-end'><p className='mb-0'>КОНТАКТЫ</p></Nav.Link>
                             </Nav>
                             <Nav className="ms-auto d-flex flex-column justify-content-end">
                                 {this.state.user ? 
@@ -125,6 +125,7 @@ class Header extends Component {
                         <Route exact path='/test_passing' Component={Test_passing} />
                         <Route exact path='/update_test_admin' Component={Update_test_admin} />
                         <Route exact path='/settings' Component={Settings} />
+                        <Route exact path='/groups_mailing' Component={Groups_mailings} />
                     </Routes>
                 </Router>
 

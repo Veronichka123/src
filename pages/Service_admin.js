@@ -90,7 +90,7 @@ function Service_admin(props) {
             setErrors(prevState => ({ ...prevState, serviceDescription: "описание услуги не может быть пустым" }));
             noErrors = false;
         }
-        else if (dataService.description.length > 2000) {
+        else if (dataService.description.length > 200) {
             setErrors(prevState => ({ ...prevState, serviceName: "название услуги не может быть длинее 200 символов" }));
             noErrors = false;
         }
@@ -118,7 +118,11 @@ function Service_admin(props) {
         }
 
         axios
-            .post("/service?serviceSectionId=" + serviceSectionId, dataService) //отправляем id раздела, данные об услуге
+            .post("/service?serviceSectionId=" + serviceSectionId, dataService, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            }) //отправляем id раздела, данные об услуге
             .then((response) => {
                 const serviceResponse = response.data; //получаем услугу
                 const index = serviceSections.findIndex(item => item.id === serviceResponse['sectionId']); //Ищем нужный раздел
@@ -166,7 +170,11 @@ function Service_admin(props) {
         }
 
         axios
-            .post("/service/section", dataServiceSection)
+            .post("/service/section", dataServiceSection, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 setServiceSections(prevServices => [...prevServices, response.data])
                 SetShowCrChapter(false);
@@ -204,7 +212,11 @@ function Service_admin(props) {
         if (serviceId === -1) return;
 
         axios
-            .get("/service/" + serviceId)
+            .get("/service/" + serviceId, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 setServiceName(response.data['name']);
                 SetShowDelService(true);
@@ -216,7 +228,11 @@ function Service_admin(props) {
 
     const handleDeleteService = (event) => {
         axios
-            .delete("/service/" + serviceId)
+            .delete("/service/" + serviceId, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 const deletedServiceId = response.data;
 
@@ -247,7 +263,11 @@ function Service_admin(props) {
 
     const handleDeleteChapter = (event) => {
         axios
-            .delete("/service/section/" + deleteServiceSectionId)
+            .delete("/service/section/" + deleteServiceSectionId, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 const deletedServiceSectionId = response.data;
 
@@ -271,7 +291,11 @@ function Service_admin(props) {
         if (deleteServiceSectionId === -1) return;
 
         axios
-            .get("/service/section/" + deleteServiceSectionId)
+            .get("/service/section/" + deleteServiceSectionId, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 setServiceSectionName(response.data['name']);
                 SetShowDelServiceChapter(true);
@@ -283,7 +307,11 @@ function Service_admin(props) {
 
     const handleUpdateClick = (e) => {
         axios
-            .get("/service/" + e.target.dataset.id)
+            .get("/service/" + e.target.dataset.id, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 setDataService(response.data);
                 SetShowEdService(true);
@@ -299,7 +327,11 @@ function Service_admin(props) {
         }
 
         axios
-            .put("/service", dataService)
+            .put("/service", dataService, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 const updatedService = response.data;
                 const index = serviceSections.findIndex(section => section.id == response.data.sectionId);
@@ -322,7 +354,11 @@ function Service_admin(props) {
 
     const handleUpdateSectionClick = (e) => {
         axios
-            .get("/service/section/" + e.target.dataset.id)
+            .get("/service/section/" + e.target.dataset.id, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 setDataServiceSection(response.data);
                 SetShowEdChapter(true);
@@ -343,7 +379,11 @@ function Service_admin(props) {
         }
         console.log(dataServiceSection);
         axios
-            .put("/service/section", dataServiceSection)
+            .put("/service/section", dataServiceSection, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 const updatedSection = response.data;
                 const index = serviceSections.findIndex(section => section.id == response.data.id);

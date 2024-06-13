@@ -32,63 +32,63 @@ function Services() {
     const [userData, setUserData] = useState({ name: "", surname: "", patronymic: "", email: "" });
     const [phoneNumber, setPhoneNumber] = useState("");
 
-    const [errors, setErrors] = useState({name: "", surname: "", patronymic: "", email: "", phoneNumber: ""});
+    const [errors, setErrors] = useState({ name: "", surname: "", patronymic: "", email: "", phoneNumber: "" });
 
 
     const handleChange = (event) => {
         setUserData({ ...userData, [event.target.name]: event.target.value });
-        setErrors(prevState => ({...prevState, [event.target.name]: ""}))
+        setErrors(prevState => ({ ...prevState, [event.target.name]: "" }))
     };
 
     const handleChangePhoneNumber = (event) => {
         let value = event.target.value;
 
-        if(event.nativeEvent.inputType != "deleteContentBackward" && ['1', '2','3','4','5','6','7','8','9','0'].indexOf(event.nativeEvent.data) == -1){
-            event.target.value = value.substring(0, value.length - 1);    
+        if (event.nativeEvent.inputType != "deleteContentBackward" && ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'].indexOf(event.nativeEvent.data) == -1) {
+            event.target.value = value.substring(0, value.length - 1);
             return;
         }
-        else if(event.nativeEvent.inputType == "deleteContentBackward"){
-            if(value.length == 13){
+        else if (event.nativeEvent.inputType == "deleteContentBackward") {
+            if (value.length == 13) {
                 event.target.value = value.substring(0, 12);
             }
-            else if(value.length == 10){
+            else if (value.length == 10) {
                 event.target.value = value.substring(0, 9);
             }
-            else if(value.length == 5){
+            else if (value.length == 5) {
                 event.target.value = value.substring(0, 3);
             }
-            else if(value.length == 1){
+            else if (value.length == 1) {
                 event.target.value = "";
             }
         }
-        else{
-            if(value.length == 1){
+        else {
+            if (value.length == 1) {
                 event.target.value = '(' + value;
             }
-            else if(value.length == 4){
+            else if (value.length == 4) {
                 event.target.value = value + ') ';
             }
-            else if(value.length == 10){
+            else if (value.length == 10) {
                 event.target.value = value.substring(0, 9);
                 event.target.value += ("-" + event.nativeEvent.data);
             }
-            else if(value.length == 13){
+            else if (value.length == 13) {
                 event.target.value = value.substring(0, 12);
                 event.target.value += ("-" + event.nativeEvent.data);
             }
-            else if(value.length == 16){
-                event.target.value = value.substring(0, 15); 
+            else if (value.length == 16) {
+                event.target.value = value.substring(0, 15);
             }
         }
 
-        setErrors(prevState => ({...prevState, phoneNumber: ""}))
+        setErrors(prevState => ({ ...prevState, phoneNumber: "" }))
         setPhoneNumber(event.target.value);
     };
 
     const handleClose = () => {
         setServiceId(-1);
         setShow(false);
-        if(!userData.id){
+        if (!userData.id) {
             setUserData({ name: "", surname: "", patronymic: "", email: "" });
         }
         setPhoneNumber("");
@@ -134,52 +134,52 @@ function Services() {
     const validate = () => {
         let noErrors = true;
 
-        if(!userData.name){
-            setErrors(prevState => ({...prevState, name: "имя не должно быть пустым"}))
+        if (!userData.name) {
+            setErrors(prevState => ({ ...prevState, name: "имя не должно быть пустым" }))
             noErrors = false;
         }
-        else if(userData.name.length > 50){
-            setErrors(prevState => ({...prevState, name: "имя не должно быть длиннее 50 символов"}))
-            noErrors = false;
-        }
-
-        if(!userData.surname){
-            setErrors(prevState => ({...prevState, surname: "фамилия не должна быть пустой"}))
-            noErrors = false;
-        }
-        else if(userData.surname.length > 50){
-            setErrors(prevState => ({...prevState, surname: "фамилия не должна быть длиннее 50 символов"}))
+        else if (userData.name.length > 50) {
+            setErrors(prevState => ({ ...prevState, name: "имя не должно быть длиннее 50 символов" }))
             noErrors = false;
         }
 
-        if(userData.patronymic.length > 50){
-            setErrors(prevState => ({...prevState, patronymic: "отчество не должно быть длиннее 50 символов"}))
+        if (!userData.surname) {
+            setErrors(prevState => ({ ...prevState, surname: "фамилия не должна быть пустой" }))
+            noErrors = false;
+        }
+        else if (userData.surname.length > 50) {
+            setErrors(prevState => ({ ...prevState, surname: "фамилия не должна быть длиннее 50 символов" }))
+            noErrors = false;
+        }
+
+        if (userData.patronymic.length > 50) {
+            setErrors(prevState => ({ ...prevState, patronymic: "отчество не должно быть длиннее 50 символов" }))
             noErrors = false;
         }
 
         let rEmail = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i);
 
-        if(!userData.email){
-            setErrors(prevState => ({...prevState, email: "email не должен быть пустой"}))
+        if (!userData.email) {
+            setErrors(prevState => ({ ...prevState, email: "email не должен быть пустой" }))
             noErrors = false;
         }
-        else if(userData.email.length > 320){
-            setErrors(prevState => ({...prevState, email: "email не должен быть длиннее 320 символов"}))
+        else if (userData.email.length > 320) {
+            setErrors(prevState => ({ ...prevState, email: "email не должен быть длиннее 320 символов" }))
             noErrors = false;
         }
-        else if(!rEmail.test(userData.email)){
-            setErrors(prevState => ({...prevState, email: "email должен быть в формате dosaaf_123@dosaaf.ru"}))
+        else if (!rEmail.test(userData.email)) {
+            setErrors(prevState => ({ ...prevState, email: "email должен быть в формате dosaaf_123@dosaaf.ru" }))
             noErrors = false;
         }
 
         let rPhone = new RegExp(/^[+]7\s[(]\d{3}[)]\s\d{3}[-]\d{2}[-]\d{2}$/i);
 
-        if(!phoneNumber){
-            setErrors(prevState => ({...prevState, phoneNumber: "номер телефона не должен быть пустым"}));
+        if (!phoneNumber) {
+            setErrors(prevState => ({ ...prevState, phoneNumber: "номер телефона не должен быть пустым" }));
             noErrors = false;
         }
-        else if(!rPhone.test("+7 " + phoneNumber)){
-            setErrors(prevState => ({...prevState, phoneNumber: "номер телефона заполнен неправильно"}))
+        else if (!rPhone.test("+7 " + phoneNumber)) {
+            setErrors(prevState => ({ ...prevState, phoneNumber: "номер телефона заполнен неправильно" }))
             noErrors = false;
         }
 
@@ -192,26 +192,26 @@ function Services() {
         }
 
         axios
-        .post("/request?serviceId=" + serviceId,
-            {
-                "userName": userData.name,
-                "userSurname": userData.surname,
-                "userPatronymic": userData.patronymic,
-                "userEmail": userData.email,
-                "userPhoneNumber": "+7 " + phoneNumber
-            },
-            {
-                headers: {
-                    Authorization: localStorage.getItem("token") ? 'Bearer ' + localStorage.getItem("token") : ''
-                }
+            .post("/request?serviceId=" + serviceId,
+                {
+                    "userName": userData.name,
+                    "userSurname": userData.surname,
+                    "userPatronymic": userData.patronymic,
+                    "userEmail": userData.email,
+                    "userPhoneNumber": "+7 " + phoneNumber
+                },
+                {
+                    headers: {
+                        Authorization: localStorage.getItem("token") ? 'Bearer ' + localStorage.getItem("token") : ''
+                    }
+                })
+            .then((response) => {
             })
-        .then((response) => {
-        })
-        .catch((error) => {
-            console.log(error);
-        });
- 
-        if(!userData.id){
+            .catch((error) => {
+                console.log(error);
+            });
+
+        if (!userData.id) {
             setUserData({ name: "", surname: "", patronymic: "", email: "" });
         }
         setPhoneNumber("");
@@ -223,34 +223,33 @@ function Services() {
         <>
             <Container fluid className='p-0 main-service-cnt'>
                 <Container className='mt-2 d-flex justify-content-center' >
-                    <h5 className='border-bottom p-2 border-primary border-opacity-50'>УСЛУГИ ДОСААФ КОСТРОМА</h5>
+                    <p className='border-bottom p-2 border-primary border-opacity-50 main-section-title mb-0'>УСЛУГИ ДОСААФ КОСТРОМА</p>
                 </Container>
                 {services.map((serviceSection) => (serviceSection.services && serviceSection.services.length > 0 ?
-                    <Container className='mt-5 p-0' fluid>
+                    <Container className='p-0' fluid>
                         <Container className='d-flex justify-content-start p-0' fluid>
-                            <p className='border-bottom px-1 border-secondary border-opacity-50 border-1 section-title'>{serviceSection.name}</p>
+                            <p className='border-bottom px-1 border-secondary border-opacity-50 border-1 section-title mb-0 mt-5'>{serviceSection.name}</p>
                         </Container>
-                        <Container fluid>
-                            <Row xs={1} md={2} lg={3}>
+                        <Container fluid className='p-0'>
+                            <Row xs={1} md={2} lg={2} xl={2} xxl={3}>
                                 {serviceSection['services'].map((service) => (
-                                    <Col className='pe-4 ps-0'>
-                                        <Container className='py-4 px-4 mt-4 center-block service-cards d-flex flex-column shadow'>
-                                            <p className='mb-4 service-title fw-bold'>{service.name}</p>
-                                            <Container className='service-description mb-1 p-0'><p className='text-secondary' style={{ whiteSpace: "pre-line" }}>{service.description}</p></Container>
-                                            <div className='border-price px-2 py-3 mb-4 border border-secondary border-opacity-50'>
-                                                <div className='d-flex flex-row py-auto'>
-                                                    
-                                                    <div className='ms-3'>
-                                                        <p className='mb-2 stoimost fw-light my-auto'>Стоимость : </p>
-                                                        <p className='price-value fw-bold my-auto'>{service.cost} ₽</p>
-                                                    </div>
-
-                                                    <i className='bi bi-wallet2 wallet px-2 py-1 me-3 shadow-sm my-auto mx-auto'></i>
-
+                                    <Col className='ms-0'>
+                                        <Container fluid className='py-4 px-4 mt-3 ms-0 center-block service-cards d-flex flex-column shadow'>
+                                            <Container fluid className='p-0 cnt-service-title'>
+                                                <p className='service-title fw-bold mb-0'>{service.name}</p>
+                                            </Container>
+                                            <Container className='service-description mt-1 p-0'>
+                                                <p className='text-secondary mb-0 description-text' style={{ whiteSpace: "pre-line" }}>{service.description}</p>
+                                            </Container>
+                                            <div className='border-price p-3 border border-secondary border-opacity-50 d-flex flex-row mt-2 shadow-sm'>
+                                                <div className='my-auto'>
+                                                    <p className='stoimost fw-light mb-0'>Стоимость : </p>
+                                                    <p className='price-value fw-bold mb-0 mt-1'>{service.cost} ₽</p>
                                                 </div>
 
+                                                <i className='bi bi-cash-stack wallet px-2 py-1 me-0 shadow-sm my-auto mx-auto'></i>
                                             </div>
-                                            <Button type="submit" data-id={service.id} className="btn-service mt-auto"
+                                            <Button type="submit" data-id={service.id} className="btn-service mt-5"
                                                 onClick={handleShow}>Подать заявку</Button>
                                         </Container>
                                     </Col>
@@ -286,8 +285,8 @@ function Services() {
                         </Form.Group>
 
                         <Form.Group controlId='fromBasicRequestPhoneNumber' className='d-flex justify-space-between'>
-                            <Form.Control style={{width: "50px"}} defaultValue="+7" readOnly={true} disabled={true} type='text' name="phoneNumber" placeholder='Номер телефона' className='request-control-input shadow-sm' />
-                            <Form.Control style={{marginLeft: "5px"}} onChange={handleChangePhoneNumber} onPaste={(e) => {e.preventDefault();}} type='text' name="phoneNumber" placeholder='Номер телефона' className='request-control-input shadow-sm' />
+                            <Form.Control style={{ width: "50px" }} defaultValue="+7" readOnly={true} disabled={true} type='text' name="phoneNumber" placeholder='Номер телефона' className='request-control-input shadow-sm' />
+                            <Form.Control style={{ marginLeft: "5px" }} onChange={handleChangePhoneNumber} onPaste={(e) => { e.preventDefault(); }} type='text' name="phoneNumber" placeholder='Номер телефона' className='request-control-input shadow-sm' />
                         </Form.Group>
                         <Form.Label className='mx-1 text-danger'>{errors.phoneNumber}</Form.Label>
 

@@ -10,6 +10,7 @@ import { useState, useEffect, useRef, createRef } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
+import Compon_breadcrumps from '../components/Compon_breadcumps';
 
 function New(props) {
     const [PhotoGalleryShow, setPhotoGalleryShow] = useState(false);
@@ -23,6 +24,12 @@ function New(props) {
     const [chousenPicture, setChousenPicture] = useState(null);
 
     const [index, setIndex] = useState(-1);
+
+    const links = [
+        { url: '/news', title: 'Новости' },
+        { url: '/new', title: 'Просмотр новости' }
+    ];
+
 
     const handleSelect = (selectedIndex, e) => {
         chousenPicture.classList.remove('active');
@@ -119,21 +126,21 @@ function New(props) {
         let month = parseInt(news.creationDateTime.substring(5, 7));
         let year = parseInt(news.creationDateTime.substring(0, 4));
 
-        if(hour >= 24){
+        if (hour >= 24) {
             hour = hour - 24;
 
             day++;
 
-            if(day > monthsDays[month]){
-                if(month == 2 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)){
+            if (day > monthsDays[month]) {
+                if (month == 2 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)) {
                     day = 29;
                 }
-                else{
+                else {
                     month++;
                     day = 1;
                 }
 
-                if(month > 12){
+                if (month > 12) {
                     month = 1;
                     year++;
                 }
@@ -146,9 +153,11 @@ function New(props) {
         <>
             {newsData ?
                 <Container fluid className='mt-5 main-new p-0'>
+                    <Compon_breadcrumps links={links} />
+
                     <p className='new-title fw-bold'>{newsData ? newsData.title : ""}</p>
                     {newsData.pictures && newsData.pictures.length > 0 ?
-                        <Row xs={3} md={4} lg={6}>
+                        <Row xs={3} sm={4} md={4} lg={6}>
                             {newsData.pictures.length > 12 ?
                                 newsData.pictures.slice(0, 11).map((picture, i) => (
                                     <Col>
@@ -181,7 +190,7 @@ function New(props) {
                             {newsData.pictures.length > 12 ?
                                 <Col>
                                     <Container fluid className="preview-photo p-0 mt-3" onClick={() => setPhotoGalleryShow(true)}>
-                                        <div className='go-to-all-photo d-flex justify-content-center align-items-center'><div><p className='text-light m-0 text-center'>Увидеть все фото</p> <p className='text-light text-center m-0 pt-2 fw-bolder'>{newsData.pictures.length} фото</p></div></div>
+                                        <div className='go-to-all-photo d-flex justify-content-center align-items-center'><div><p className='text-light m-0 text-center show-all-photo'>Увидеть все фото</p> <p className='text-light text-center m-0 pt-2 fw-bolder count-photo-new'>{newsData.pictures.length} фото</p></div></div>
                                         <Image
                                             src={newsData.pictures[11].pictureLink}
                                             height="100%"
@@ -198,7 +207,7 @@ function New(props) {
                         : ""}
 
                     <Container fluid className='d-flex justify-content-center p-0 mt-3'>
-                        <Container fluid className='new-all-card px-5 py-4'>
+                        <Container fluid className='new-all-card p-4 shadow'>
                             <p style={{ whiteSpace: "pre-line" }} className='mt-2 text-new'>{newsData.content} </p>
                             <Container fluid className='d-flex justifi-content-start p-0'>
                                 <i class="bi bi-clock text-secondary fw-light text-date-publication me-2"></i>

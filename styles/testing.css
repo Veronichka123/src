@@ -9,12 +9,12 @@
 }
 
 .test-progress .progress-bar {
-    background-color: #1A4BB3;
+    background: #1A4BB3;
     /* Измените на нужный вам цвет заполненной области */
 }
 
 .test-progress {
-    height: 20px;
+    height: 25px;
     background-color: #EAE9EF;
     /* Измените на нужный вам цвет незаполненной области */
 }

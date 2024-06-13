@@ -22,10 +22,19 @@
 .titles-anons-card {
     color: #1A4BB3;
     font-size: 18px;
+    
 }
 
 .name-anons-card {
     font-size: 18px;
+    -webkit-line-clamp: 2;
+    /* Число отображаемых строк */
+    display: -webkit-box;
+    /* Включаем флексбоксы */
+    -webkit-box-orient: vertical;
+    /* Вертикальная ориентация */
+    overflow: hidden;
+    /* Обрезаем все, что не помещается в область */
 }
 
 .format-anons-photo {

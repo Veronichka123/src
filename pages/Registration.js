@@ -26,6 +26,8 @@ function Registration() {
 
     const [mainError, setMainError] = useState("");
 
+    const [registerOver, setRegisterOver] = useState(false);
+
     useEffect(() => {
         if(localStorage.getItem("token")){
             axios.get('/user', {
@@ -126,10 +128,17 @@ function Registration() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
+        if(registerOver){
+            window.location.assign("login");
+            return;
+        }
+
         if(!validate()){
             return;
         }
-        
+
+        setRegisterOver(true);
+
         axios
             .post("/user/signup", data)
             .then((response) => {
@@ -152,62 +161,64 @@ function Registration() {
 
     if(!isAuthorized){
         return (
-            <>
+            <Container fluid className='main-cnt-autorization p-0'>
                 <Form className='form_registration mx-auto px-5 py-4 mb-5 bg-white mt-3'>
                     <Container>
                         <Image
                             src={logo}
-                            height="80"
-                            width="80"
-                            className='mx-auto d-block'
+                            className='mx-auto d-block registration-logo'
                             alt='Logo'
                         />
-                        <p className='fw-light text-secondary text-center mb-2'>ДОСААФ КОСТРОМА</p>
+                        <p className='fw-light text-secondary text-center mb-2 organization-name-title'>ДОСААФ КОСТРОМА</p>
                     </Container>
-                    <h3 className='text-center'>Регистрация</h3>
-                    <Form.Group className="mt-3" controlId="formBasicName">
-                        <Form.Control type="text" placeholder="Имя" className='control_input mx-auto d-block shadow-sm' name="name" value={data.name}
-                            onChange={handleChange} />
-                        <Form.Label className="mb-3 mx-1 text-danger">{errors.name}</Form.Label>
-                    </Form.Group>
+                    <p className='text-center entrance-title'>Регистрация</p>
+                    {registerOver ?
+                        <p className='text-primary text-center'>На вашу почту будет направлено письмо с подтверждением</p>
+                    :
+                        <><Form.Group className="mt-0" controlId="formBasicName">
+                            <Form.Control type="text" placeholder="Имя" className='control_input mx-auto d-block shadow-sm' name="name" value={data.name}
+                                onChange={handleChange} />
+                            <Form.Label className="mx-1 text-danger">{errors.name}</Form.Label>
+                        </Form.Group>
 
-                    <Form.Group controlId="formBasicSurname">
-                        <Form.Control type="text" placeholder="Фамилия" className='control_input mx-auto d-block shadow-sm' name="surname" value={data.surname}
-                            onChange={handleChange}/>
-                            <Form.Label className="mb-3 mx-1 text-danger">{errors.surname}</Form.Label>
-                    </Form.Group>
+                        <Form.Group controlId="formBasicSurname">
+                            <Form.Control type="text" placeholder="Фамилия" className='control_input mx-auto d-block shadow-sm' name="surname" value={data.surname}
+                                onChange={handleChange}/>
+                                <Form.Label className="mx-1 text-danger">{errors.surname}</Form.Label>
+                        </Form.Group>
 
-                    <Form.Group controlId="formBasicPatronymic">
-                        <Form.Control type="text" placeholder="Отчество" className='control_input mx-auto d-block shadow-sm' name="patronymic" value={data.patronymic}
-                            onChange={handleChange}/>
-                        <Form.Label className="mb-3 mx-1 text-danger">{errors.patronymic}</Form.Label>
-                    </Form.Group>
+                        <Form.Group controlId="formBasicPatronymic">
+                            <Form.Control type="text" placeholder="Отчество" className='control_input mx-auto d-block shadow-sm' name="patronymic" value={data.patronymic}
+                                onChange={handleChange}/>
+                            <Form.Label className="mx-1 text-danger">{errors.patronymic}</Form.Label>
+                        </Form.Group>
 
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Control type="email" placeholder="Email" className='control_input mx-auto d-block shadow-sm' name="email" value={data.email}
-                            onChange={handleChange}/>
-                        <Form.Label className="mb-3 mx-1 text-danger">{errors.email}</Form.Label>
-                    </Form.Group>
+                        <Form.Group controlId="formBasicEmail">
+                            <Form.Control type="email" placeholder="Email" className='control_input mx-auto d-block shadow-sm' name="email" value={data.email}
+                                onChange={handleChange}/>
+                            <Form.Label className="mx-1 text-danger">{errors.email}</Form.Label>
+                        </Form.Group>
 
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Control type="password" placeholder="Пароль" className='control_input mx-auto d-block shadow-sm' name="password" value={data.password}
-                            onChange={handleChange}/>
-                        <Form.Label className="mb-3 mx-1 text-danger">{errors.password}</Form.Label>
-                    </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Control type="password" placeholder="Пароль" className='control_input mx-auto d-block shadow-sm' name="password" value={data.password}
+                                onChange={handleChange}/>
+                            <Form.Label className="mx-1 text-danger">{errors.password}</Form.Label>
+                        </Form.Group>
 
-                    <Form.Group controlId="formBasicPasswordRepeat">
-                        <Form.Control type="password" placeholder="Повторный пароль" onChange={handleChangeRepeatPassword} className='control_input mx-auto d-block shadow-sm' />
-                        <Form.Label className="mb-3 mx-1 text-danger">{errors.repeatPassword}</Form.Label>
-                    </Form.Group>
+                        <Form.Group controlId="formBasicPasswordRepeat">
+                            <Form.Control type="password" placeholder="Повторный пароль" onChange={handleChangeRepeatPassword} className='control_input mx-auto d-block shadow-sm' />
+                            <Form.Label className="mx-1 text-danger">{errors.repeatPassword}</Form.Label>
+                        </Form.Group></>
+                    }
                     <p className='text-danger text-center'>{mainError}</p>
-                    <Button onClick = {handleSubmit} className="mt-4 mb-3 btn_registration mx-auto d-block">
-                        Зарегистрироваться
+                    <Button onClick = {handleSubmit} className="mt-4 mb-3 btn_registration mx-auto d-block shadow-sm">
+                        {registerOver ? "Продолжить" : "Зарегистрироваться"}
                     </Button>
                     <p className='text-secondary text-center mt-2 mb-1'>Уже зарегистрированы?</p>
-                    <Link to='/login' className='link_login d-flex justify-content-center'>Войти</Link>
+                    <Link to='/login' className='link_login d-flex justify-content-center'><p className='mb-0'>Войти</p></Link>
                 </Form>
 
-            </>
+            </Container>
         );
     }
 }

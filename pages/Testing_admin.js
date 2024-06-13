@@ -37,14 +37,18 @@ function Testing_admin(props) {
                     setIsAdmin(true);
                 }
             })
-                .catch((error) => {
-                    console.log(error);
-                })
+            .catch((error) => {
+                window.location.assign("login");
+            })
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
-        axios.get('/test/all')
+        axios.get('/test/all', {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("token")
+            }
+        })
         .then((response) => {
             setAllTests(response.data);
         })
@@ -54,7 +58,11 @@ function Testing_admin(props) {
     })
 
     const handleDeleteClick = (e) => {
-        axios.get('/test/' + e.target.dataset.id)
+        axios.get('/test/' + e.target.dataset.id, {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("token")
+            }
+        })
         .then((response) => {
             setTestData(response.data);
             setShowTestDelete(true);
@@ -78,6 +86,10 @@ function Testing_admin(props) {
         .catch((error) => {
             console.log(error);
         })
+    }
+
+    const handleUpdateClick = (e) => {
+        window.location.assign("update_test_admin?id=" + e.target.dataset.id);
     }
 
     if(isAdmin){
@@ -106,7 +118,7 @@ function Testing_admin(props) {
                                             </Container>
                                             <p className='mb-1 card-test-count-questions'><span className="fw-bold">Количество вопросов: </span>{test.questions.length}</p>
                                             <div className='d-flex justify-content-between mt-3'>
-                                                <Button className='btn-admin-test-card-edit d-flex justify-content-center align-items-center' data-id={test.id}><p className='m-0 test-card-btn-text' style={{pointerEvents: 'none'}}>Изменить</p> <i class="bi bi-pencil test-card-btn-icon" style={{pointerEvents: 'none'}}></i></Button>
+                                                <Button className='btn-admin-test-card-edit d-flex justify-content-center align-items-center' data-id={test.id} onClick={handleUpdateClick}><p className='m-0 test-card-btn-text' style={{pointerEvents: 'none'}}>Изменить</p> <i class="bi bi-pencil test-card-btn-icon" style={{pointerEvents: 'none'}}></i></Button>
                                                 <Button className='btn-admin-test-card-delete d-flex justify-content-center align-items-center' data-id={test.id} onClick={handleDeleteClick}><p className='m-0 test-card-btn-text' style={{pointerEvents: 'none'}}>Удалить</p> <i class="bi bi-trash3 test-card-btn-icon" style={{pointerEvents: 'none'}}></i></Button>
                                             </div>
                                         </Container>

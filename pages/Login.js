@@ -69,39 +69,37 @@ function Login() {
 
     if(!isAuthorized){
         return (
-            <>
+            <Container fluid className='main-cnt-autorization p-0'>
                 <Form className='form_registration mx-auto px-5 py-4 mb-5 bg-white mt-3'>
                     <Container>
                         <Image
                             src={logo}
-                            height="80"
-                            width="80"
-                            className='mx-auto d-block'
+                            className='mx-auto d-block registration-logo'
                             alt='Logo'
                         />
-                        <p className='fw-light text-secondary text-center mb-3'>ДОСААФ КОСТРОМА</p>
+                        <p className='fw-light text-secondary text-center mb-3 organization-name-title'>ДОСААФ КОСТРОМА</p>
                     </Container>
 
-                    <h3 className='text-center'>Вход</h3>
+                    <p className='text-center entrance-title'>Вход</p>
 
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Group controlId="formBasicEmail">
                         <Form.Control type="email" placeholder="Email" className='control_input mx-auto d-block shadow-sm' name="email" value={data.email}
                             onChange={handleChange} />
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Group className='mt-3' controlId="formBasicPassword">
                         <Form.Control type="password" placeholder="Пароль" className='control_input mx-auto d-block shadow-sm' name="password" value={data.password}
                             onChange={handleChange} />
                     </Form.Group>
-                    <Link to= '/forgot_password' className='link_login'>Забыли пароль?</Link>
+                    <Link to= '/forgot_password' className='link_login'><p className='mt-2 mb-0'>Забыли пароль?</p></Link>
                     <p className='text-danger text-center mt-2'>{error}</p>
-                    <Button type="submit" onClick={handleSubmit} className="mt-4 mb-3 btn_login mx-auto d-block">
+                    <Button type="submit" onClick={handleSubmit} className="mt-4 mb-3 btn_login mx-auto d-block shadow-sm">
                         Войти
                     </Button>
-                    <Link to='/registration' className='link_login d-flex justify-content-center'>Зарегистироваться</Link>
+                    <Link to='/registration' className='link_login d-flex justify-content-center'><p className='m-0'>Зарегистироваться</p></Link>
                     
                 </Form>
-            </>
+            </Container>
         );
     }
 }

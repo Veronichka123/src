@@ -23,14 +23,11 @@
     width: 180px;
 }
 
-.my_reguest {
-    width: 96%;
-    margin-right: 4%;
-}
 
-.request-title {
-    font-size: 16px;
-    color: rgba(0, 0, 0, .65)
+
+.my_reguest-title{
+    font-size: 20px;
+    font-weight: 700;
 }
 
 .success-reguest {
@@ -53,4 +50,54 @@
 }
 .size-table-text{
     font-size: 16px;
+}
+
+@media (max-width: 900px) {
+    .size-table-text{
+        font-size: 14px;
+    }
+
+    .my_reguest-title{
+        font-size: 18px;
+    }
+
+}
+
+@media (max-width: 600px) {
+    .size-table-text{
+        font-size: 12px;
+        padding: 2px !important;
+
+    }
+
+    .my_reguest-title{
+        font-size: 16px;
+    }
+
+}
+
+@media (max-width: 460px) {
+    .size-table-text{
+        font-size: 10px;
+        padding: 2px !important;
+
+    }
+
+    .my_reguest-title{
+        font-size: 14px;
+    }
+
+}
+
+@media (max-width: 360px) {
+    .size-table-text{
+        font-size: 9px;
+        padding: 1px !important;
+
+    }
+
+    .my_reguest-title{
+        font-size: 14px;
+    }
+
 }

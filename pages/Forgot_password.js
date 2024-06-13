@@ -15,7 +15,8 @@ function Forgot_password(props) {
 
     const [email, setEmail] = useState("");
 
-    const [showSuccess, setShowSuccess] = useState(false);
+    const [showMessage, setShowMessage] = useState(null);
+    const [isSuccess, setIsSuccess] = useState(false);
 
     const [loading, setLoading] = useState(false);
 
@@ -67,8 +68,13 @@ function Forgot_password(props) {
         if(loading){
             return;
         }
+
+        if(!isSuccess && showMessage){
+            setShowMessage(null);
+            return;
+        }
         
-        if(showSuccess){
+        if(showMessage){
             window.location.assign("login");
             return;
         }
@@ -82,33 +88,33 @@ function Forgot_password(props) {
         axios
         .get("/user/password/forgot/" + email)
         .then((response) => {
-            setShowSuccess(true);
+            setShowMessage("На ваш Email было направлено письмо с ссылкой для восстановления пароля");
+            setIsSuccess(true);
             setLoading(false);
         })
         .catch((error) => {
-            console.log(error);
+            setIsSuccess(false);
+            setShowMessage(error.response.data);
+            setLoading(false);
         });
     }
     if(!isAuthorized){
         return (
-            <>
+            <Container fluid className='main-cnt-autorization p-0'>
                 <Form className='form_registration d-flex flex-column mx-auto px-5 py-4 mb-5 bg-white mt-3'>
                     <Container>
                         <Image
                             src={logo}
-                            height="80"
-                            width="80"
-                            className='mx-auto d-block'
+                            className='mx-auto d-block registration-logo'
                             alt='Logo'
                         />
-                        <p className='fw-light text-secondary text-center mb-3'>ДОСААФ КОСТРОМА</p>
+                        <p className='fw-light text-secondary text-center mb-3 organization-name-title'>ДОСААФ КОСТРОМА</p>
                     </Container>
 
-                    <h4 className='text-center'>Восстановление пароля</h4>
+                    <p className='text-center entrance-title'>Восстановление пароля</p>
 
-                    {showSuccess ? 
-                        <p className='text-primary text-center mt-2'>На ваш Email было направлено письмо с ссылкой для восстановления пароля</p>
-
+                    {showMessage ? 
+                        <p className={'text-center mt-2 ' + (isSuccess ? " text-primary" : " text-danger")}>{showMessage}</p>
                     :
                         loading ? 
                             <svg className="spinner align-self-center mt-4 mb-4" viewBox="0 0 50 50">
@@ -116,7 +122,7 @@ function Forgot_password(props) {
                             </svg>
                             
                         :    
-                            <Form.Group className="mb-3 mt-4" controlId="formBasicEmail">
+                            <Form.Group className="mb-3 mt-3" controlId="formBasicEmail">
                                 <Form.Control type="email" placeholder="Укажите Вашу почту" className='control_input mx-auto d-block shadow-sm' name="email" 
                                 onChange={handleOnChange}/>
                                 <Form.Label className='text-danger mx-1'>{errors.email}</Form.Label>
@@ -127,10 +133,10 @@ function Forgot_password(props) {
                         Продолжить
                     </Button>
 
-                    <Link to='/login' className='link_login d-flex justify-content-center'>Вернуться ко входу</Link>
+                    <Link to='/login' className='link_login d-flex justify-content-center'><p className='mb-0'>Вернуться ко входу</p></Link>
 
                 </Form>
-            </>
+            </Container>
         );
     }
 }

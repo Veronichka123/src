@@ -56,17 +56,15 @@ class Footer extends Component {
                     <Container fluid className='d-flex justify-content-start'>
                         <img
                             src={logo}
-                            height="40"
-                            width="40"
                             alt='Logo'
-                            className = 'my-auto'
+                            className = 'my-auto footer-logo'
                         />
-                        <p className='my-auto mx-2 text-secondary'>|</p>
-                        <p className='my-auto text-secondary'>Официальный сайт ДОСААФ Кострома</p>
+                        <p className='my-auto mx-2 text-secondary fw-light'>|</p>
+                        <p className='my-auto text-secondary footer-text'>Официальный сайт ДОСААФ Кострома</p>
                     </Container>
-                    <Container fluid className='d-flex flex-column'>
-                        <p className='my-auto ms-auto text-secondary p-1 text-break'>Адрес: Кострома, ул. Галичская 47б</p>
-                        <p className='my-auto ms-auto text-secondary p-1 text-break'>Email: dosaaf_kostroma@gmail.com</p>
+                    <Container fluid className='d-flex flex-column palk'>
+                        <p className='my-auto ms-auto text-secondary p-1 footer-text'>Адрес: Кострома, ул. Галичская 47б</p>
+                        <p className='my-auto ms-auto text-secondary p-1 footer-text'>Email: dosaaf_kostroma@gmail.com</p>
                     </Container>
                 </Container>
             </Container>

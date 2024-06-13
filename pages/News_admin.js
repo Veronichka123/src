@@ -50,7 +50,11 @@ function News_admin(props) {
     const handleDeleteNews = (e) => {
         SetShowDeleteNews(false);
         axios
-            .delete("/news/" + newsData.id)
+            .delete("/news/" + newsData.id, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 SetShowDeleteNews(false);
                 const item = allNews.filter(news => news.id != response.data);
@@ -102,7 +106,11 @@ function News_admin(props) {
 
         setErrors(prevState => ({ ...prevState, albumLink: "" }))
 
-        axios.get("/newspicture?albumLink=" + newsData.albumLink).then((response) => {
+        axios.get("/newspicture?albumLink=" + newsData.albumLink, {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("token")
+            }
+        }).then((response) => {
             setNewsData(prevState => ({ ...prevState, pictures: response.data }));
         })
             .catch((error) => {
@@ -159,7 +167,7 @@ function News_admin(props) {
             SetShowCrNew(false);
             setNewsData({ title: "", content: "", albumLink: null, pictures: [] });
 
-            axios.get("/news/notify/" + response.data.id, {
+            axios.post("/news/notify/" + response.data.id, {
                 headers: {
                     Authorization: 'Bearer ' + localStorage.getItem("token")
                 }
@@ -208,7 +216,11 @@ function News_admin(props) {
             return;
         }
 
-        axios.put("/news", newsData).then((response) => {
+        axios.put("/news", newsData, {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("token")
+            }
+        }).then((response) => {
 
             const updatedNews = response.data;
 
@@ -343,7 +355,7 @@ function News_admin(props) {
 
                 <Modal
                     show={ShowCreateNew}
-                    onHide={() => { SetShowCrNew(false); setErrors({ title: "", content: "", albumLink: "", pictures: "" }) }}
+                    onHide={() => { SetShowCrNew(false); setErrors({ title: "", content: "", albumLink: "", pictures: "" }); setNewsData({ title: "", content: "", albumLink: null, pictures: [] }) }}
                     size="lg">
                     <Modal.Header closeButton>
                         <Modal.Title className='news-modal-title'>

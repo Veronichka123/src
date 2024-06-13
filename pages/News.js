@@ -44,7 +44,7 @@ function News(props) {
     useEffect(() => {
         let path = "/news/count";
 
-        if (searchParams.get("search")) {
+        if (searchParams.get("search")) { //по поиску
             path += `?query=${searchParams.get("search")}`;
         }
 
@@ -312,19 +312,19 @@ function News(props) {
         <>
             <Container className='cont-news mt-0 px-0 pb-4' fluid>
 
-                <Container className='pt-2 d-flex justify-content-center' >
-                    <h5 className='border-bottom p-2 border-primary border-opacity-50'>НОВОСТИ ДОСААФ КОСТРОМА</h5>
-                </Container>
-                <Container fluid className='p-4 mt-5 cnt-search shadow'>
-                    <Container fluid className='d-flex'>
+            <Container className='mt-2 d-flex justify-content-center' >
+                <p className='border-bottom p-2 border-primary border-opacity-50 main-section-title mb-0'>НОВОСТИ ДОСААФ КОСТРОМА</p>
+            </Container>
+                <Container fluid className='p-4 mt-4 cnt-search shadow'>
+                    <Container fluid className='d-flex p-0'>
                         <InputGroup className='me-4'>
-                            <Form.Control onChange={handleSearchChange} value={searchQuery} placeholder="Поиск новости" />
+                            <Form.Control onChange={handleSearchChange} value={searchQuery} placeholder="Поиск новости" className='search-new-input'/>
                         </InputGroup>
                         <Button className='px-3 btn-search' onClick={handleSearch}><i className='bi bi-search pe-none'></i></Button>
                     </Container>
                     <hr className='hrsearch'></hr>
                     <Container fluid className='d-flex justify-content-start'>
-                        <p className='my-auto me-3'>Сортировать по: </p>
+                        <p className='my-auto me-3 sort-by-title'>Сортировать по: </p>
                         <Form.Select className='select-sort' onChange={handleDateChange}>
                             {selectDate.map((select) => (
                                 <option selected={select.value === searchParams.get("sort")} defaultValue={select.value}>{select.name}</option>
@@ -339,15 +339,15 @@ function News(props) {
                         </svg>
                     </Container>
                 :
-                    <Row xs={1} md={2}>
+                    <Row xs={1} lg={2}>
                         {allNews ? allNews.map((news) => (
                             <Col className='p-0'>
                                 <Container fluid className='d-flex justify-content-center mt-4'>
-                                    <Container fluid className='new-card shadow p-5 mx-0 d-flex flex-column'>
-                                        <Container className='cnt-title-news p-0'>
-                                            <h5>{news.title}</h5>
+                                    <Container fluid className='new-card shadow p-5 mx-0 d-flex flex-column shadow'>
+                                        <Container fluid className='cnt-title-news p-0'>
+                                            <p className='news-title'>{news.title}</p>
                                         </Container>
-                                        <p className='text-secondary fw-light'>{getDate(news)}</p>
+                                        <p className='text-secondary fw-light news-date-publication'>{getDate(news)}</p>
 
                                         {news.pictures && news.pictures.length > 0 ?
 
@@ -364,9 +364,9 @@ function News(props) {
 
                                         {news.pictures && news.pictures.length > 0 ?
 
-                                            <p className='mt-2 text-break' style={{ whiteSpace: "pre-line" }}>{news.content.length > 150 ? news.content.substring(0, 150) + "..." : news.content}</p>
+                                            <p className='mt-2 text-break news-content-text-with-photo' style={{ whiteSpace: "pre-line" }}>{news.content.length > 150 ? news.content.substring(0, 250) + "..." : news.content}</p>
                                             :
-                                            <p className='mt-2 text-break' style={{ whiteSpace: "pre-line" }}>{news.content.length > 800 ? news.content.substring(0, 800) + "..." : news.content}</p>
+                                            <p className='mt-2 text-break news-content-text-no-photo' style={{ whiteSpace: "pre-line" }}>{news.content.length > 900 ? news.content.substring(0, 900) + "..." : news.content}</p>
                                         }
                                         <Button className='btn-go-to-new mt-auto' onClick={goToNews} data-newsId={news.id}>Узнать больше</Button>
                                     </Container>

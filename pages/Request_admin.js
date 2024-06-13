@@ -33,18 +33,21 @@ function Request_admin(props) {
                     setIsAdmin(true);
                 }
             })
-                .catch((error) => {
-                    console.log(error);
-                })
+            .catch((error) => {
+                window.location.assign("login");
+            })
         }
     }, []);
 
     useEffect(() => {
         axios
-            .get("/request/all")
+            .get("/request/all", {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 SetRequests(response.data);
-                console.log(response.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -53,7 +56,11 @@ function Request_admin(props) {
 
     const handleAcceptRequest = (event) => {
         axios
-            .put("/request/accept/" + event.target.dataset.request)
+            .get("/request/accept/" + event.target.dataset.request, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 const acceptedRequest = response.data;
 
@@ -71,6 +78,19 @@ function Request_admin(props) {
                 updatedRequests.accepted.push(acceptedRequest);
 
                 SetRequests(updatedRequests);
+
+                axios
+                .get("/request/notify/" + response.data.id, {
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("token")
+                    }
+                })
+                .then((responseNotification) => {
+                
+                })
+                .catch((error) => {
+                    console.log(error);
+                });       
             })
             .catch((error) => {
                 console.log(error);
@@ -79,7 +99,11 @@ function Request_admin(props) {
 
     const handleRejectRequest = (event) => {
         axios
-            .put("/request/reject/" + event.target.dataset.request)
+            .get("/request/reject/" + event.target.dataset.request, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 const rejectedRequest = response.data;
 
@@ -97,6 +121,19 @@ function Request_admin(props) {
                 updatedRequests.rejected.push(rejectedRequest);
 
                 SetRequests(updatedRequests);
+
+                axios
+                .get("/request/notify/" + response.data.id, {
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("token")
+                    }
+                })
+                .then((responseNotification) => {
+                
+                })
+                .catch((error) => {
+                    console.log(error);
+                });       
             })
             .catch((error) => {
                 console.log(error);
@@ -105,7 +142,11 @@ function Request_admin(props) {
 
     const handleAcceptRejectedRequest = (event) => {
         axios
-            .put("/request/accept/" + event.target.dataset.request)
+            .get("/request/accept/" + event.target.dataset.request, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 const acceptedRequest = response.data;
 
@@ -125,7 +166,11 @@ function Request_admin(props) {
                 SetRequests(updatedRequests);
 
                 axios
-                .get("/request/notify/" + response.data.id)
+                .get("/request/notify/" + response.data.id, {
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("token")
+                    }
+                })
                 .then((responseNotification) => {
                 
                 })
@@ -140,7 +185,11 @@ function Request_admin(props) {
 
     const handleRejectAcceptedRequest = (event) => {
         axios
-            .put("/request/reject/" + event.target.dataset.request)
+            .get("/request/reject/" + event.target.dataset.request, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
             .then((response) => {
                 const rejectedRequest = response.data;
 
@@ -160,7 +209,11 @@ function Request_admin(props) {
                 SetRequests(updatedRequests);
 
                 axios
-                .get("/request/notify/" + response.data.id)
+                .get("/request/notify/" + response.data.id, {
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("token")
+                    }
+                })
                 .then((responseNotification) => {
                 })
                 .catch((error) => {
@@ -171,6 +224,52 @@ function Request_admin(props) {
                 console.log(error);
             });
     }
+
+    const getDate = (date) => {
+        const months = {
+            1: 31,
+            2: 28,
+            3: 31,
+            4: 30,
+            5: 31,
+            6: 30,
+            7: 31,
+            8: 31,
+            9: 30,
+            10: 31,
+            11: 30,
+            12: 31
+        }
+
+        let hour = parseInt(date.substring(11, 13)) + 3;
+        let day = parseInt(date.substring(8, 10));
+        let month = parseInt(date.substring(5, 7));
+        let year = parseInt(date.substring(0, 4));
+
+        if (hour >= 24) {
+            hour = hour - 24;
+
+            day++;
+
+            if (day > months[month]) {
+                if (month == 2 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)) {
+                    day = 29;
+                }
+                else {
+                    month++;
+                    day = 1;
+                }
+
+                if (month > 12) {
+                    month = 1;
+                    year++;
+                }
+            }
+        }
+
+        return `${day < 10 ? '0' + day : day}.${month < 10 ? '0' + month : month}.${year < 10 ? '0' + year : year}`;
+    }
+
     if(isAdmin){
         return (
             <>
@@ -193,12 +292,7 @@ function Request_admin(props) {
                                     <Container fluid className={showtab === 1 ? 'tab-pane fade show active' : "tab-pane fade show"}>
                                         {allRequests.examine.length != 0 ? allRequests.examine.map((request) => (
                                             <Container fluid className='cont-new-requests px-5 py-3 mt-4 shadow rounded'>
-                                                <p className='text-secondary mb-4'>Заявка № {request.id} от
-                                                    {request.date ?
-                                                        ' ' + request.date.substring(8, 10) + '.' +
-                                                        request.date.substring(5, 7) + '.' +
-                                                        request.date.substring(0, 4) :
-                                                        ""}</p>
+                                                <p className='text-secondary mb-4'>Заявка № {request.id} от {request.date ? getDate(request.date) : ""}</p>
                                                 <p className='text-secondary mb-3'>Имя: <span className='text-dark'>{request.userSurname + " " + request.userName + " " + request.userPatronymic}</span></p>
                                                 <p className='text-secondary mb-3'>Почта: <span className='text-dark'>{request.userEmail}</span></p>
                                                 <p className='text-secondary'>Услуга: <span className='text-dark'>{request.serviceName}</span></p>
@@ -214,12 +308,7 @@ function Request_admin(props) {
                                     <Container fluid className={showtab === 2 ? 'tab-pane fade show active' : "tab-pane fade"}>
                                         {allRequests.accepted.length != 0 ? allRequests.accepted.map((request) => (
                                             <Container fluid className='cont-accept-requests px-5 py-3 mt-4 shadow rounded'>
-                                                <p className='text-secondary mb-4'>Заявка № {request.id} от
-                                                    {request.date ?
-                                                        ' ' + request.date.substring(8, 10) + '.' +
-                                                        request.date.substring(5, 7) + '.' +
-                                                        request.date.substring(0, 4) :
-                                                        ""}</p>
+                                                <p className='text-secondary mb-4'>Заявка № {request.id} от {request.date ? getDate(request.date) : ""}</p>
                                                 <p className='text-secondary mb-3'>Имя: <span className='text-dark'>{request.userSurname + " " + request.userName + " " + request.userPatronymic}</span></p>
                                                 <p className='text-secondary mb-3'>Почта: <span className='text-dark'>{request.userEmail}</span></p>
                                                 <p className='text-secondary'>Услуга: <span className='text-dark'>{request.serviceName}</span></p>
@@ -234,12 +323,7 @@ function Request_admin(props) {
                                     <Container fluid className={showtab === 3 ? 'tab-pane fade show active' : "tab-pane fade"}>
                                         {allRequests.rejected.length != 0 ? allRequests.rejected.map((request) => (
                                             <Container fluid className='cont-reject-requests px-5 py-3 mt-4 shadow rounded'>
-                                                <p className='text-secondary mb-4'>Заявка № {request.id} от
-                                                    {request.date ?
-                                                        ' ' + request.date.substring(8, 10) + '.' +
-                                                        request.date.substring(5, 7) + '.' +
-                                                        request.date.substring(0, 4) :
-                                                        ""}</p>
+                                                <p className='text-secondary mb-4'>Заявка № {request.id} от {request.date ? getDate(request.date) : ""}</p>
                                                 <p className='text-secondary mb-3'>Имя: <span className='text-dark'>{request.userSurname + " " + request.userName + " " + request.userPatronymic}</span></p>
                                                 <p className='text-secondary mb-3'>Почта: <span className='text-dark'>{request.userEmail}</span></p>
                                                 <p className='text-secondary'>Услуга: <span className='text-dark'>{request.serviceName}</span></p>

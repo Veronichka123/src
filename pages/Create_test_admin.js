@@ -9,17 +9,24 @@ import { Form } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Compon_breadcrumps from '../components/Compon_breadcumps';
 
 function Create_test_admin(props) {
     const [CreateQuestion, SetCreateQuestion] = useState(false);
-    
-    const [testData, setTestData] = useState({name: "", questions: []})
 
-    const [creationQuestionData, setCreationQuestionData] = useState({name: "", questionType: "TYPE_SIMPLE"});
+    const [testData, setTestData] = useState({ name: "", questions: [] })
 
-    const [errors, setErrors] = useState({name: "", questions: [], creation: ""})
+    const [creationQuestionData, setCreationQuestionData] = useState({ name: "", questionType: "TYPE_SIMPLE" });
+
+    const [errors, setErrors] = useState({ name: "", questions: [], creation: "" })
 
     const [isAdmin, setIsAdmin] = useState(false);
+
+    const links = [
+        { url: '/panel_admin', title: 'Панель администратора' },
+        { url: '/testing_admin', title: 'Тесты' },
+        { url: '/create_admin_test', title: 'Создание теста' }
+    ];
 
     useEffect(() => {
         if (!localStorage.getItem("token")) {
@@ -45,50 +52,54 @@ function Create_test_admin(props) {
     }, [])
 
     const handleChangeTestName = (e) => {
-        setTestData({...testData, name: e.target.value});
-        setErrors(prevState => ({...prevState, name: ""}))
+        setTestData({ ...testData, name: e.target.value });
+        setErrors(prevState => ({ ...prevState, name: "" }))
     }
 
     const handleSelectType = (e) => {
-        setCreationQuestionData({...creationQuestionData, questionType: e.target.value});
+        setCreationQuestionData({ ...creationQuestionData, questionType: e.target.value });
     }
 
     const handleCreationQuestionName = (e) => {
-        setCreationQuestionData({...creationQuestionData, name: e.target.value});
+        setCreationQuestionData({ ...creationQuestionData, name: e.target.value });
     }
 
     const handleAddQuestion = (e) => {
         const updatedTest = testData;
 
-        if(creationQuestionData.questionType != "TYPE_TEXT"){
-            updatedTest.questions.push({...creationQuestionData, answers: [
-                {
-                    name: "",
-                    rightAnswer: true
-                },
-                {
-                    name: "",
-                    rightAnswer: false
-                }
-            ]})
+        if (creationQuestionData.questionType != "TYPE_TEXT") {
+            updatedTest.questions.push({
+                ...creationQuestionData, answers: [
+                    {
+                        name: "",
+                        rightAnswer: true
+                    },
+                    {
+                        name: "",
+                        rightAnswer: false
+                    }
+                ]
+            })
         }
-        else{
-            updatedTest.questions.push({...creationQuestionData, answers: [
-                {
-                    name: "",
-                    rightAnswer: true
-                }
-            ]})
+        else {
+            updatedTest.questions.push({
+                ...creationQuestionData, answers: [
+                    {
+                        name: "",
+                        rightAnswer: true
+                    }
+                ]
+            })
         }
 
         const questionErrors = [...errors.questions];
 
         questionErrors.push("");
 
-        setErrors({...errors, questions: questionErrors})
+        setErrors({ ...errors, questions: questionErrors })
 
         setTestData(updatedTest);
-        setCreationQuestionData({name: "", questionType: "TYPE_SIMPLE"});
+        setCreationQuestionData({ name: "", questionType: "TYPE_SIMPLE" });
         SetCreateQuestion(false);
     }
 
@@ -116,7 +127,7 @@ function Create_test_admin(props) {
         const questionErrors = [...errors.questions];
 
         questionErrors.splice(e.target.dataset.index, 1);
-        setErrors({...errors, questions: questionErrors});
+        setErrors({ ...errors, questions: questionErrors });
 
         const updatedTestData = {
             ...testData,
@@ -134,7 +145,7 @@ function Create_test_admin(props) {
         question[e.target.dataset.index].answers.splice(e.target.dataset.answer, 1);
 
         //Если это вопрос с одиночным выбором, то устанавливаем правильным вставший на его место вопрос
-        if(isBeenRight){
+        if (isBeenRight) {
             question[e.target.dataset.index].answers[e.target.dataset.answer].rightAnswer = true;
         }
 
@@ -207,21 +218,21 @@ function Create_test_admin(props) {
     const validate = (e) => {
         let noErrors = true;
 
-        if(!testData.name){
-            setErrors(prevState => ({...prevState, name: "Название теста не должно быть пустым"}))
+        if (!testData.name) {
+            setErrors(prevState => ({ ...prevState, name: "Название теста не должно быть пустым" }))
             noErrors = false;
         }
-        else if(testData.name.length > 250){
-            setErrors(prevState => ({...prevState, name: "Название теста не должно быть длинее 250 символов"}))
+        else if (testData.name.length > 250) {
+            setErrors(prevState => ({ ...prevState, name: "Название теста не должно быть длинее 250 символов" }))
             noErrors = false;
         }
-        
-        if(testData.questions.length == 0){
-            setErrors(prevState => ({...prevState, creation: "Добавьте хотя бы один вопрос"}))
+
+        if (testData.questions.length == 0) {
+            setErrors(prevState => ({ ...prevState, creation: "Добавьте хотя бы один вопрос" }))
             noErrors = false;
         }
-        else{
-            setErrors(prevState => ({...prevState, creation: ""}))
+        else {
+            setErrors(prevState => ({ ...prevState, creation: "" }))
         }
 
         testData.questions.forEach((question, i) => {
@@ -230,46 +241,46 @@ function Create_test_admin(props) {
             let checkError = false;
 
             question.answers.forEach((answer, j) => {
-                if(answer.rightAnswer && question.questionType == "TYPE_MULTIPLE"){
+                if (answer.rightAnswer && question.questionType == "TYPE_MULTIPLE") {
                     checkForMultiple = true;
                 }
 
-                if(!answer.name){
+                if (!answer.name) {
                     questionErrors[i] = "Заполните все названия ответов"
                     noErrors = false;
                     checkError = true;
-                    setErrors(prevState => ({...prevState, questions: questionErrors}))
+                    setErrors(prevState => ({ ...prevState, questions: questionErrors }))
                 }
-                else if(answer.name.length > 250){
-                    questionErrors[i] = "Название ответа не должно быть длинее 250 символов (ответ №" + (j+1) + ")"
+                else if (answer.name.length > 250) {
+                    questionErrors[i] = "Название ответа не должно быть длинее 250 символов (ответ №" + (j + 1) + ")"
                     noErrors = false;
                     checkError = true;
-                    setErrors(prevState => ({...prevState, questions: questionErrors}))
+                    setErrors(prevState => ({ ...prevState, questions: questionErrors }))
                 }
             })
-            
-            if(!checkError){
+
+            if (!checkError) {
                 questionErrors[i] = "" //Если не было ошибки в вариантах ответа
-                setErrors(prevState => ({...prevState, questions: questionErrors}));
+                setErrors(prevState => ({ ...prevState, questions: questionErrors }));
             }
 
-            if(!checkForMultiple && question.questionType == "TYPE_MULTIPLE"){
+            if (!checkForMultiple && question.questionType == "TYPE_MULTIPLE") {
                 questionErrors[i] = "Отметьте хотя бы один ответ, который будет правильным"
                 noErrors = false;
-                setErrors(prevState => ({...prevState, questions: questionErrors}))
+                setErrors(prevState => ({ ...prevState, questions: questionErrors }))
                 return;
             }
-            
-            if(!question.name){
+
+            if (!question.name) {
                 console.log(12111111111)
                 questionErrors[i] = "Название вопроса не должно быть пустым"
-                setErrors(prevState => ({...prevState, questions: questionErrors}))
+                setErrors(prevState => ({ ...prevState, questions: questionErrors }))
                 noErrors = false;
                 return;
             }
-            else if(question.name.length > 250){
+            else if (question.name.length > 250) {
                 questionErrors[i] = "Название вопроса не должно быть длинее 250 символов"
-                setErrors(prevState => ({...prevState, questions: questionErrors}))
+                setErrors(prevState => ({ ...prevState, questions: questionErrors }))
                 noErrors = false;
                 return;
             }
@@ -279,25 +290,25 @@ function Create_test_admin(props) {
     }
 
     const handleSaveTest = (e) => {
-        if(!validate()){
+        if (!validate()) {
             return;
         }
 
         axios
-        .post("/test", testData, {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem("token")
-            }
-        })
-        .then((response) => {
-            window.location.assign("testing_admin");
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            .post("/test", testData, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
+            .then((response) => {
+                window.location.assign("testing_admin");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
-    if(isAdmin){
+    if (isAdmin) {
         return (
             <>
                 <Container fluid className='main-cnt-create-test-admin p-0'>
@@ -309,7 +320,7 @@ function Create_test_admin(props) {
                         <Col xs={3} sm={3} md={5} lg={3}><Sidebar /></Col>
                         <Col xs={9} sm={9} md={7} lg={9}>
 
-
+                            <Compon_breadcrumps links={links} />
                             <Container className='p-0' fluid>
                                 <p className='d-flex align-items-center m-0 title-admin-add'>Создание теста</p>
                                 <Form.Control type='text' placeholder='Введите наименование теста' name="name" onChange={handleChangeTestName} className='create-test-name-admin-input shadow-sm mt-4' />
@@ -317,7 +328,7 @@ function Create_test_admin(props) {
                                 <p className='d-flex align-items-center m-0 title-admin-add mt-4'>Вопросы</p>
                                 {testData.questions && testData.questions.length > 0 ?
                                     testData.questions.map((question, i) => (
-                                        question.questionType == "TYPE_SIMPLE" ? 
+                                        question.questionType == "TYPE_SIMPLE" ?
                                             <Container fluid className='card-question-admin-single-choice p-4 rounded mt-3 shadow-sm'>
                                                 <Container className='d-flex justify-content-end p-0'>
                                                     <Button className='btn-delete-question-admin shadow-sm ms-2 d-flex justify-content-center align-items-center' data-index={i} onClick={handleDeleteQuestion}><i class="bi bi-trash3 icon_disabled"></i></Button>
@@ -341,15 +352,15 @@ function Create_test_admin(props) {
                                                                         type="radio"
                                                                         name="Items" />
                                                                     <Form.Control type='text' placeholder='Введите наименование вопроса' name="name" value={answer.name} data-index={i} data-answer={answerIndex} onChange={handleChangeAnswerName} className='create-test-name-admin-input shadow-sm' />
-                                                                    {question.answers.length > 2 ? 
+                                                                    {question.answers.length > 2 ?
                                                                         <Button className='btn-delete-question-variant shadow-sm ms-2 d-flex justify-content-center align-items-center' data-index={i} data-answer={answerIndex} onClick={handleDeleteAnswer}>
-                                                                        <p className='text-del-variant-answer m-0' style={{pointerEvents: 'none'}}>Удалить</p>
-                                                                        <i class="bi bi-trash3 icon-del-variant-answer" style={{pointerEvents: 'none'}}></i></Button>
-                                                                    : ""}
+                                                                            <p className='text-del-variant-answer m-0' style={{ pointerEvents: 'none' }}>Удалить</p>
+                                                                            <i class="bi bi-trash3 icon-del-variant-answer" style={{ pointerEvents: 'none' }}></i></Button>
+                                                                        : ""}
                                                                 </Container>
                                                             ))
-                                                        : ""}
-                                                         <Container className='d-flex justify-content-start p-0 mt-4 cnt-btn-plus-question' fluid>
+                                                            : ""}
+                                                        <Container className='d-flex justify-content-start p-0 mt-4 cnt-btn-plus-question' fluid>
                                                             <Button className='btn-plus-question fw-light d-flex justify-content-center align-items-center' data-index={i} onClick={handleAddAnswer}><i className='bi bi-plus icon_disabled'></i></Button>
                                                             <p className='text-secondary ms-3 d-block mt-auto my-auto name-variant-answers'>Добавить вариант ответа</p>
                                                         </Container>
@@ -357,68 +368,68 @@ function Create_test_admin(props) {
                                                     </Form.Group>
                                                 </Form>
                                             </Container>
-                                        
-                                        : question.questionType == "TYPE_MULTIPLE" ? 
-                                            <Container fluid className='card-question-admin-multiple-choice p-4 rounded mt-3 shadow-sm'>
-                                                <Container className='d-flex justify-content-end p-0'>
-                                                    <Button className='btn-delete-question-admin shadow-sm ms-2 d-flex justify-content-center align-items-center' data-index={i} onClick={handleDeleteQuestion} ><i class="bi bi-trash3 icon_disabled"></i></Button>
+
+                                            : question.questionType == "TYPE_MULTIPLE" ?
+                                                <Container fluid className='card-question-admin-multiple-choice p-4 rounded mt-3 shadow-sm'>
+                                                    <Container className='d-flex justify-content-end p-0'>
+                                                        <Button className='btn-delete-question-admin shadow-sm ms-2 d-flex justify-content-center align-items-center' data-index={i} onClick={handleDeleteQuestion} ><i class="bi bi-trash3 icon_disabled"></i></Button>
+                                                    </Container>
+                                                    <p className='m-0 titles-question-card-admin'>Наименование вопроса:</p>
+                                                    <Form.Control type='text' placeholder='Введите наименование вопроса' name="name" defaultValue={question.name} onChange={handleChangeQuestionName} data-index={i} className='create-test-name-question-admin-input shadow-sm mt-1' />
+                                                    <p className='m-0 titles-question-card-admin mt-2'>Тип вопроса:</p>
+                                                    <p className='m-0 name-question-card-admin'>Множественный выбор</p>
+                                                    <Form>
+                                                        <Form.Group className="mb-3 mt-4 form-variant-answers">
+                                                            <Form.Label className='text-secondary name-variant-answers'>Варианты ответов</Form.Label>
+                                                            {question.answers.length > 0 ?
+                                                                question.answers.map((answer, answerIndex) => (
+                                                                    <Container fluid className='d-flex p-0 align-items-center mt-1'>
+                                                                        <Form.Check
+                                                                            onChange={handleMultipleAnswerRightChange}
+                                                                            data-index={i}
+                                                                            data-answer={answerIndex}
+                                                                            inline
+                                                                            defaultChecked={answer.rightAnswer}
+                                                                            type="checkbox"
+                                                                            name="Items" />
+                                                                        <Form.Control type='text' placeholder='Введите наименование ответа' value={answer.name} data-index={i} data-answer={answerIndex} onChange={handleChangeAnswerName} name="name" className='create-test-name-admin-input shadow-sm' />
+                                                                        {question.answers.length > 2 ?
+                                                                            <Button className='btn-delete-question-variant shadow-sm ms-2 d-flex justify-content-center align-items-center' data-index={i} data-answer={answerIndex} onClick={handleDeleteAnswer}>
+                                                                                <p className='text-del-variant-answer m-0' style={{ pointerEvents: 'none' }}>Удалить</p>
+                                                                                <i class="bi bi-trash3 icon-del-variant-answer" style={{ pointerEvents: 'none' }}></i></Button>
+                                                                            : ""}
+                                                                    </Container>
+                                                                ))
+                                                                : ""}
+                                                            <Container className='d-flex justify-content-start p-0 mt-4 cnt-btn-plus-question' fluid>
+                                                                <Button className='btn-plus-question fw-light d-flex justify-content-center align-items-center' data-index={i} onClick={handleAddAnswer}><i className='bi bi-plus icon_disabled'></i></Button>
+                                                                <p className='text-secondary ms-3 d-block mt-auto my-auto name-variant-answers'>Добавить вариант ответа</p>
+                                                            </Container>
+                                                            <p className='mx-1 my-1 text-danger'>{errors.questions[i]}</p>
+                                                        </Form.Group>
+                                                    </Form>
                                                 </Container>
-                                                <p className='m-0 titles-question-card-admin'>Наименование вопроса:</p>
-                                                <Form.Control type='text' placeholder='Введите наименование вопроса' name="name" defaultValue={question.name} onChange={handleChangeQuestionName} data-index={i} className='create-test-name-question-admin-input shadow-sm mt-1' />
-                                                <p className='m-0 titles-question-card-admin mt-2'>Тип вопроса:</p>
-                                                <p className='m-0 name-question-card-admin'>Множественный выбор</p>
-                                                <Form>
-                                                    <Form.Group className="mb-3 mt-4 form-variant-answers">
-                                                        <Form.Label className='text-secondary name-variant-answers'>Варианты ответов</Form.Label>
-                                                        {question.answers.length > 0 ?
-                                                            question.answers.map((answer, answerIndex) => (
-                                                                <Container fluid className='d-flex p-0 align-items-center mt-1'>
-                                                                    <Form.Check 
-                                                                        onChange={handleMultipleAnswerRightChange}
-                                                                        data-index={i}
-                                                                        data-answer={answerIndex}
-                                                                        inline
-                                                                        defaultChecked={answer.rightAnswer}
-                                                                        type="checkbox"
-                                                                        name="Items" />
-                                                                    <Form.Control type='text' placeholder='Введите наименование ответа' value={answer.name} data-index={i} data-answer={answerIndex} onChange={handleChangeAnswerName} name="name" className='create-test-name-admin-input shadow-sm' />
-                                                                    {question.answers.length > 2 ? 
-                                                                        <Button className='btn-delete-question-variant shadow-sm ms-2 d-flex justify-content-center align-items-center' data-index={i} data-answer={answerIndex} onClick={handleDeleteAnswer}>
-                                                                        <p className='text-del-variant-answer m-0' style={{pointerEvents: 'none'}}>Удалить</p>
-                                                                        <i class="bi bi-trash3 icon-del-variant-answer" style={{pointerEvents: 'none'}}></i></Button>
-                                                                    : ""}
-                                                                </Container>
-                                                            ))
-                                                        : ""}
-                                                         <Container className='d-flex justify-content-start p-0 mt-4 cnt-btn-plus-question' fluid>
-                                                            <Button className='btn-plus-question fw-light d-flex justify-content-center align-items-center' data-index={i} onClick={handleAddAnswer}><i className='bi bi-plus icon_disabled'></i></Button>
-                                                            <p className='text-secondary ms-3 d-block mt-auto my-auto name-variant-answers'>Добавить вариант ответа</p>
-                                                        </Container> 
-                                                        <p className='mx-1 my-1 text-danger'>{errors.questions[i]}</p>
-                                                    </Form.Group>
-                                                </Form>
-                                            </Container>
-                                        :
-                                            <Container fluid className='card-question-admin-text-reply p-4 rounded mt-3 shadow-sm'>
-                                                <Container className='d-flex justify-content-end p-0'>
-                                                    <Button className='btn-delete-question-admin shadow-sm ms-2 d-flex justify-content-center align-items-center' data-index={i} onClick={handleDeleteQuestion}><i class="bi bi-trash3 icon_disabled"></i></Button>
+                                                :
+                                                <Container fluid className='card-question-admin-text-reply p-4 rounded mt-3 shadow-sm'>
+                                                    <Container className='d-flex justify-content-end p-0'>
+                                                        <Button className='btn-delete-question-admin shadow-sm ms-2 d-flex justify-content-center align-items-center' data-index={i} onClick={handleDeleteQuestion}><i class="bi bi-trash3 icon_disabled"></i></Button>
+                                                    </Container>
+                                                    <p className='m-0 titles-question-card-admin'>Наименование вопроса:</p>
+                                                    <Form.Control type='text' placeholder='Введите наименование вопроса' defaultValue={question.name} name="name" onChange={handleChangeQuestionName} data-index={i} className='create-test-name-question-admin-input shadow-sm mt-1' />
+                                                    <p className='m-0 titles-question-card-admin mt-2'>Тип вопроса:</p>
+                                                    <p className='m-0 name-question-card-admin'>Текстовый ответ</p>
+                                                    <Form>
+                                                        <Form.Group className="mb-3 mt-2 form-variant-answers">
+                                                            <Form.Label className='text-secondary name-variant-answers'>Ответ</Form.Label>
+
+                                                            <Form.Control type='text' placeholder='Введите правильный ответ на вопрос' name="name" data-index={i} data-answer={0} onChange={handleChangeAnswerName} className='create-test-name-admin-input shadow-sm' />
+
+                                                        </Form.Group>
+                                                    </Form>
+                                                    <p className='mx-1 my-0 text-danger'>{errors.questions[i]}</p>
                                                 </Container>
-                                                <p className='m-0 titles-question-card-admin'>Наименование вопроса:</p>
-                                                <Form.Control type='text' placeholder='Введите наименование вопроса' defaultValue={question.name} name="name" onChange={handleChangeQuestionName} data-index={i} className='create-test-name-question-admin-input shadow-sm mt-1' />
-                                                <p className='m-0 titles-question-card-admin mt-2'>Тип вопроса:</p>
-                                                <p className='m-0 name-question-card-admin'>Текстовый ответ</p>
-                                                <Form>
-                                                    <Form.Group className="mb-3 mt-2 form-variant-answers">
-                                                        <Form.Label className='text-secondary name-variant-answers'>Ответ</Form.Label>
-            
-                                                        <Form.Control type='text' placeholder='Введите правильный ответ на вопрос' name="name" data-index={i} data-answer={0} onChange={handleChangeAnswerName} className='create-test-name-admin-input shadow-sm' />
-            
-                                                    </Form.Group>
-                                                </Form>
-                                                <p className='mx-1 my-0 text-danger'>{errors.questions[i]}</p>
-                                            </Container>
                                     ))
-                                : ""}
+                                    : ""}
 
                                 <Container className='d-flex justify-content-start p-0 mt-4 cnt-btn-plus-question' fluid>
                                     <Button className='btn-plus-question fw-light d-flex justify-content-center align-items-center' onClick={() => SetCreateQuestion(true)}><i className='bi bi-plus icon_disabled'></i></Button>
@@ -442,9 +453,9 @@ function Create_test_admin(props) {
                     </Modal.Header>
                     <Modal.Body>
                         <Form>
-                            <Form.Control type='text' placeholder='Введите наименование вопроса' name="name" 
-                            onChange={handleCreationQuestionName}
-                            className='create-question-name-admin-input shadow-sm' />
+                            <Form.Control type='text' placeholder='Введите наименование вопроса' name="name"
+                                onChange={handleCreationQuestionName}
+                                className='create-question-name-admin-input shadow-sm' />
                             <Container fluid className='d-flex justify-content-between align-items-center p-0 mt-3'>
                                 <p className='title-type-question m-0'>Тип вопроса</p>
                                 <Form.Select onChange={handleSelectType} className='select-type-question shadow-sm'>

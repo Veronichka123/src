@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import Image from 'react-bootstrap/Image';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 function Home(props) {
@@ -15,17 +16,17 @@ function Home(props) {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
-        window.addEventListener("resize", (event) => {setWindowWidth(window.innerWidth); console.log(windowWidth)});
+        window.addEventListener("resize", (event) => { setWindowWidth(window.innerWidth);});
     })
 
     useEffect(() => {
         axios.get('/announcement/all')
-        .then((response) => {
-            setAllAnnouncements(response.data);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            .then((response) => {
+                setAllAnnouncements(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }, []);
 
     return (
@@ -38,64 +39,95 @@ function Home(props) {
                 <Row xs={1} md={1} lg={3} className='mt-3'>
 
                     <Col>
-                        <Container fluid className="shadow p-4 mt-3 ms-0 function-banner d-flex pt-auto align-items-center" >
-                            <i className='bi bi-clipboard-check banner-icon m-0'></i>
-                            <p className='function-banner-text my-0 ms-4'>Подача заявок на различные типы услуг</p>
-                        </Container>
+                        <Link to='/services' className='link_banner_function' >
+                            <Container fluid className="shadow p-4 mt-3 ms-0 function-banner d-flex pt-auto align-items-center" >
+                                <i className='bi bi-clipboard-check banner-icon m-0'></i>
+                                <p className='function-banner-text my-0 ms-4'>Подача заявок на различные типы услуг</p>
+                            </Container>
+                        </Link>
                     </Col>
 
                     <Col>
-                        <Container fluid className="shadow p-4 mt-3 ms-0 function-banner d-flex pt-auto align-items-center" >
-                            <i className='bi bi-newspaper banner-icon m-0'></i>
-                            <p className='function-banner-text my-0 ms-4'>Просмотр опубликованных новостей организации</p>
-                        </Container>
+                        <Link to='/news' className='link_banner_function' >
+                            <Container fluid className="shadow p-4 mt-3 ms-0 function-banner d-flex pt-auto align-items-center" >
+                                <i className='bi bi-newspaper banner-icon m-0'></i>
+                                <p className='function-banner-text my-0 ms-4'>Просмотр опубликованных новостей организации</p>
+                            </Container>
+                        </Link>
                     </Col>
                     <Col>
-                        <Container fluid className="shadow p-4 mt-3 ms-0 function-banner d-flex pt-auto align-items-center" >
-                            <i className='bi bi-pencil-square banner-icon m-0'></i>
-                            <p className='function-banner-text my-0 ms-4'>Прохождение пробных тестовых экзаменов </p>
-                        </Container>
+                        <Link to='/testing' className='link_banner_function' >
+                            <Container fluid className="shadow p-4 mt-3 ms-0 function-banner d-flex pt-auto align-items-center" >
+                                <i className='bi bi-pencil-square banner-icon m-0'></i>
+                                <p className='function-banner-text my-0 ms-4'>Прохождение пробных тестовых экзаменов </p>
+                            </Container>
+                        </Link>
                     </Col>
                 </Row>
                 <Button className='banner-btn mt-5'>Перейти в личный кабинет</Button>
             </Container>
 
             {allAnnouncements ? allAnnouncements.map((anons, i) => (
-                windowWidth < 800 ?
+                windowWidth < 1200 ?
                     anons.image ?
                         <Container fluid className='home-anons p-0 mt-4'>
-                            <Container className='d-flex flex-column p-0'>
-                                <Container className='anons-text p-5 shadow border-container-radius'>
-                                    <p className='anons-title fw-bold'>{anons.title}</p>
+                            <Container fluid className='d-flex flex-column p-0'>
+                                <Container fluid className='anons-text p-5 shadow border-container-radius d-flex flex-column'>
+
+                                    <p className='anons-title'>{anons.title}</p>
+
+
                                     <p className='anons-info mt-4'>{anons.content}</p>
+
+                                    <p className='photo-anons-title my-auto'>Фото анонса: </p>
+
                                 </Container>
-                                <Container className='anons-image-cnt p-0'>
+                                <Container fluid className='anons-image-cnt p-0'>
                                     <Image
                                         src={axios.defaults.baseURL + anons.imagePath}
-                                        className='mx-auto d-block anons-image image-container-radius'
+                                        className='mx-auto d-block anons-image image-container-radius shadow-sm'
                                         alt='Logo'
                                     />
                                 </Container>
                             </Container>
                         </Container>
-                    :
+                        :
                         <Container fluid className='home-anons p-0 mt-4'>
                             <Container fluid className='anons-text-without-photo p-5 shadow'>
-                                <p className='anons-title fw-bold'>{anons.title}</p>
+                                <p className='anons-title'>{anons.title}</p>
                                 <p className='anons-info mt-4'>{anons.content}</p>
                             </Container>
                         </Container>
-                :
-                    anons.image ? 
-                        i % 2 == 0 ? 
+                    :
+                    anons.image ?
+                        i % 2 == 0 ?
                             <Container fluid className='home-anons p-0 mt-4'>
                                 <Row>
-                                    <Col sm={7}>
+                                    <Col lg={7}>
                                         <Container className='anons-text p-5 shadow'>
-                                            <p className='anons-title fw-bold'>{anons.title}</p>
-                                            <p className='anons-info mt-4'>{anons.content}</p>
+                                            <Container fluid className='cnt-anons-title p-0'>
+                                                <p className='anons-title'>{anons.title}</p>
+                                            </Container>
+                                            <Container fluid className='cnt-anons-info p-0'>
+                                                <p className='anons-info mt-4'>{anons.content}</p>
+                                            </Container>
+
                                         </Container>
                                     </Col>
+                                    <Col lg={5}>
+                                        <Container className='anons-image-cnt p-0'>
+                                            <Image
+                                                src={axios.defaults.baseURL + anons.imagePath}
+                                                className='mx-auto d-block anons-image'
+                                                alt='Logo'
+                                            />
+                                        </Container>
+                                    </Col>
+                                </Row>
+                            </Container>
+                            :
+                            <Container fluid className='home-anons p-0 mt-4'>
+                                <Row>
                                     <Col sm={5}>
                                         <Container className='anons-image-cnt p-0'>
                                             <Image
@@ -103,42 +135,29 @@ function Home(props) {
                                                 className='mx-auto d-block anons-image'
                                                 alt='Logo'
                                             />
+                                        </Container>
+                                    </Col>
+                                    <Col sm={7}>
+                                        <Container className='anons-text p-5 shadow'>
+                                            <p className='anons-title'>{anons.title}</p>
+                                            <p className='anons-info mt-4'>{anons.content}</p>
                                         </Container>
                                     </Col>
                                 </Row>
                             </Container>
                         :
-                            <Container fluid className='home-anons p-0 mt-4'>
-                                <Row>
-                                    <Col sm={5}>
-                                        <Container className='anons-image-cnt p-0'>
-                                            <Image
-                                                src={axios.defaults.baseURL + anons.imagePath}
-                                                className='mx-auto d-block anons-image'
-                                                alt='Logo'
-                                            />
-                                        </Container>
-                                    </Col>
-                                    <Col sm={7}>
-                                        <Container className='anons-text p-5 shadow'>
-                                            <p className='anons-title fw-bold'>{anons.title}</p>
-                                            <p className='anons-info mt-4'>{anons.content}</p>
-                                        </Container>
-                                    </Col>
-                                </Row>
-                            </Container>
-                    :
                         <Container fluid className='home-anons p-0 mt-4'>
                             <Container fluid className='anons-text-without-photo p-5 shadow'>
-                                <p className='anons-title fw-bold'>{anons.title}</p>
+                                <p className='anons-title'>{anons.title}</p>
                                 <p className='anons-info mt-4'>{anons.content}</p>
                             </Container>
                         </Container>
-                ))
-                
-            :""}
+            ))
 
-        </Container>
+                : ""
+            }
+
+        </Container >
 
     );
 }
